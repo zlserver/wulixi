@@ -4,19 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.Converter;
-
-import sun.misc.BASE64Encoder;
 
 public class WebUtils {
 	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
@@ -108,7 +100,7 @@ public class WebUtils {
 			}
 	}
 	// 获取信息的md5值的base64编码
-		public static String getMd5(String message)
+	/*	public static String getMd5(String message)
 		{
 			try {
 			if( null == message)
@@ -122,7 +114,7 @@ public class WebUtils {
 			catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 			}
-		}
+		}*/
 		/**根据两个账号生成唯一的id,会话id根据两方账号链接起来在经过md5编码生成,
 		 * 两个账号链接策略：a,b账号中字符串比较大的在前面小的放在后面，在链接两个字符串中间会添加其他字符来保证唯一性。
 		 * @param accounta
