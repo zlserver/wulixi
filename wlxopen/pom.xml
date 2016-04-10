@@ -1,0 +1,243 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wlxopen</groupId>
+  <artifactId>wlxopen</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>wlxopen Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+ 
+  <properties>
+  	<spring.version>3.0.2.RELEASE</spring.version>  <!-- spring版本 -->
+  	<junit.version>4.10</junit.version>  <!-- 测试类 -->
+  	<jsr250.version>1.0</jsr250.version> <!-- JSR-250注解 -->
+    <jsp-api.version>2.0</jsp-api.version><!--  jsp -->
+    <servlet-api.version>3.1.0</servlet-api.version> <!-- servlet -->
+    <jstl.version>1.2</jstl.version>	<!-- jstl标签 -->
+    <standard.version>1.1.2</standard.version>
+    <mysqldriver.version>5.1.37</mysqldriver.version> <!-- mysql驱动 -->
+    <c3p0.version>0.9.1.2</c3p0.version><!--  数据源依赖版本 -->
+    <javassist.version>3.9.0.GA</javassist.version><!-- 提供@Resource,@Entity等注解接口，具体实现由Hibernate实现 -->
+     <log4j.version>2.4.1</log4j.version> <!--  日志类 -->
+    <!--  <slf4j.version>1.7.12</slf4j.version> --><!-- slf4j接口 -->
+     <beanutils.version>1.9.2</beanutils.version>  <!-- 将值映射到实体类中 -->
+     
+    <aspectjweaver.version>1.6.9</aspectjweaver.version> <!-- 开发切面编程所需要的包 -->
+    <cglib.version>3.1</cglib.version>  <!-- 动态代理 -->
+     <hibernate.version>3.6.10.Final</hibernate.version><!--  Hibernate -->
+     <!-- 上传文件需要的两个依赖包 -->
+     <commons-fileupload>1.3.1</commons-fileupload>
+     <commons-io>2.2</commons-io>
+  </properties>
+  
+  <dependencies>
+  <!-- junit测试类的依赖 -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+     <!-- log4j2 的结构和实现 -->
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j.version}</version>
+       </dependency>
+       <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-slf4j-impl</artifactId>
+		    <version>${log4j.version}</version>
+		</dependency>
+   
+	   <!-- 上传文件需要的两个包 -->
+	  <dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency> 
+    <!-- spring的依赖 -->
+    
+    	 <!-- 支持aop注解 -->
+  		<!--  <dependency>
+  			<groupId>org.springframework</groupId>
+  			<artifactId>spring-aop</artifactId>
+  			<version>${spring.version}</version>
+  		</dependency> 
+  		 -->
+	  	<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context</artifactId>
+	        <version>${spring.version}</version>
+	     </dependency>
+	  		
+	  <!-- 	<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context-support</artifactId>
+	        <version>${spring.version}</version>
+	     </dependency> -->
+	    <dependency>
+	           <groupId>org.springframework</groupId>
+	           <artifactId>spring-beans</artifactId>
+	           <version>${spring.version}</version>
+	     </dependency>
+	       <dependency>
+	           <groupId>org.springframework</groupId>
+	           <artifactId>spring-core</artifactId>
+	           <version>${spring.version}</version>
+	       </dependency> 
+	      
+	     <!-- 添加对SpringMVC的依赖 -->
+	      <dependency>
+           		<groupId>org.springframework</groupId>
+           		<artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+	      </dependency> 
+	       <dependency>
+	           <groupId>org.springframework</groupId>
+	           <artifactId>spring-webmvc</artifactId>
+	           <version>${spring.version}</version>
+	      </dependency> 
+       <!--数据源使用c3p0而不是commons-dbcp的-->
+       <dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+		</dependency>
+		 <!-- <dependency>
+           <groupId>org.aspectj</groupId>
+           <artifactId>aspectjweaver</artifactId>
+           <version>${aspectjweaver.version}</version>
+       </dependency> -->
+       
+		 <!-- Spring实现orm，提供了对hibernate的支持,HibernateTemplate就依赖该包 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+         <!-- 集成Hibernate需要的3个包 -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- 二级缓存包 -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>${hibernate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- <dependency>
+            	<groupId>org.slf4j</groupId>
+            	<artifactId>slf4j-api</artifactId>
+            	<version>1.7.12</version>
+            </dependency> -->
+            
+            <dependency>  <!-- 二进制字节码解析 -->
+                <groupId>javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
+            </dependency> 
+            
+	    <!--  将表单中的数据复制到bean中 -->
+	    <dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${beanutils.version}</version>
+		</dependency>
+         <!-- 依赖的持久化类库 mysql driver -->
+       <dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+           <version>${mysqldriver.version}</version>
+       </dependency> 
+       <!-- aop涉及到的包 -->
+        <!-- <dependency>
+           <groupId>org.aspectj</groupId>
+           <artifactId>aspectjweaver</artifactId>
+           <version>${aspectjweaver.version}</version>
+       </dependency>  -->
+       <!-- 动态代理依赖包 -->
+      <!--  <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>${cglib.version}</version>
+        </dependency> -->
+        
+        <dependency>
+        	<groupId>commons-dbcp</groupId>
+        	<artifactId>commons-dbcp</artifactId>
+        	<version>1.2.2</version>
+        </dependency>
+	       <!-- 使用JSR-250生命周期注解@PostConstruct和@PreDestroy注解bean的初始化和析构回调方法 -->
+	       <!-- <dependency>
+	       	<groupId>javax.annotation</groupId>
+	       	<artifactId>jsr250-api</artifactId>
+	       	<version>${jsr250.version}</version>
+	       </dependency> -->
+	       
+	         <!-- 依赖的Servlet+jsp+jstl标签 -->
+	    <dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>javax.servlet-api</artifactId>
+	        <version>${servlet-api.version}</version>
+	        <scope>provided</scope>
+	    </dependency>
+	     <dependency>
+	           <groupId>javax.servlet.jsp</groupId>
+	           <artifactId>jsp-api</artifactId>
+	           <version>${jsp-api.version}</version>
+	           <scope>provided</scope>
+	       </dependency>
+	      <!--  <dependency>
+	              <groupId>taglibs</groupId>
+	              <artifactId>standard</artifactId>
+	              <version>${standard.version}</version>
+	              <scope>runtime</scope>
+	       </dependency>-->
+	    <dependency>
+	        <groupId>javax.servlet</groupId>
+	        <artifactId>jstl</artifactId>
+	        <version>${jstl.version}</version>
+	    </dependency> 
+  </dependencies>
+  <build>
+  	<plugins>
+  	 <!-- 使用UTF-8编码处理资源文件 ,没有设置版本因为该插件在超级POM中设定了-->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
+          <configuration>
+              <encoding>UTF-8</encoding>
+          </configuration>
+      </plugin>
+  	</plugins>
+    <finalName>wlxopen</finalName>
+  </build>
+</project>
