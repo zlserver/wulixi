@@ -1,6 +1,7 @@
 package com.cnu.wlx.formbean;
 
 import javax.naming.spi.DirStateFactory.Result;
+import javax.servlet.http.HttpServletRequest;
 
 import com.cnu.wlx.bean.Admin;
 /**
@@ -12,7 +13,11 @@ import com.cnu.wlx.bean.Admin;
  */
 public class AdminForm  extends BaseForm{
 	private Admin admin;
-
+	/**
+	 * 校验码
+	 */
+	private String checkCode;
+	
 	public Admin getAdmin() {
 		return admin;
 	}
@@ -24,7 +29,7 @@ public class AdminForm  extends BaseForm{
 	 * 校验账号和密码是否合理
 	 * @return
 	 */
-	public boolean validate(){
+	public boolean validateAccountAndPass(){
 		if( admin==null || !validateStr(admin.getAccount()) || !validateStr(admin.getPassword()) ){
 			this.getResult().put("error", "账号密码有误!");
 			return false;
@@ -43,4 +48,32 @@ public class AdminForm  extends BaseForm{
 		}
 		return flage;
 	}
+	/**
+	 * 校验码是否匹配
+	 * @param request
+	 * @return
+	 */
+	public boolean validateCheckCode(HttpServletRequest request){
+		
+		//1.取出session中校验码
+		String chCode =(String) request.getSession().getAttribute("checkCode");
+		//有效字符串
+		if( validateStr(chCode)&& validateStr(checkCode)){
+			//2.比较客户端发来的校验码
+			if( chCode.equalsIgnoreCase(checkCode.trim())){
+				return true;
+			}
+		}
+		getResult().put("checkCode", "校验码不正确");
+		return false;
+	}
+
+	public String getCheckCode() {
+		return checkCode;
+	}
+
+	public void setCheckCode(String checkCode) {
+		this.checkCode = checkCode;
+	}
+	
 }

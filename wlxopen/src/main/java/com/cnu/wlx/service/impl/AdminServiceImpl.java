@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
 	public Admin login(String account, String password) {
 		String md5ps = WebUtils.MD5Encode(password.trim());
 		
-		Admin  ad =adminDao.find(account);
+		Admin  ad =adminDao.find(account.trim());
 		if( ad.equals(md5ps)){
 			return ad;
 		}else
@@ -52,7 +52,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 	public Admin find(String account) {
 		if( BaseForm.validateStr(account) ){
-			return adminDao.find(account);
+			return adminDao.find(account.trim());
 		}
 		return null;
 	}
