@@ -42,6 +42,11 @@ public class Admin {
 	 */
 	private Date createTime=new Date();
 	/**
+	 * 登录时间
+	 */
+	private Date loginTime ;
+	
+	/**
 	 * 启用状态，true:启用,默认启用
 	 */
 	private Boolean visible=true;
@@ -97,5 +102,26 @@ public class Admin {
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
 	}
+
+	public Date getLoginTime() {
+		return loginTime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public void setLoginTime(Date loginTime) {
+		this.loginTime = loginTime;
+	}
 	
+	/**
+	 * 登录次数加1
+	 */
+	public void updateLoginCount(){
+		this.loginCount+=1;
+	}
+	/**
+	 * 登录时间设为当前时间
+	 */
+	public void updateLoginTime(){
+		this.loginTime = new Date();
+	}
 }

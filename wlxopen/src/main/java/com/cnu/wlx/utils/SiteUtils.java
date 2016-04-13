@@ -46,9 +46,9 @@ public class SiteUtils {
 		
 	}
 	/**
-	 * 根据网页key读取网页路径
-	 * @param key
-	 * @return
+	 * 根据网页key在site.properties文件中读取网页路径。记录：admin.controlcenter=admincenter/main
+	 * @param key 网页路径的key值，admin.controlcenter
+	 * @return key值对应的路径，比如：admincenter/main
 	 */
 	public static String getSite(String key){
 		
@@ -58,4 +58,5 @@ public class SiteUtils {
 			throw new RuntimeException("网页路径key值不存在!");
 		
 	}
+	
 }

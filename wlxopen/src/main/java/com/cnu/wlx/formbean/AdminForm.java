@@ -30,22 +30,14 @@ public class AdminForm  extends BaseForm{
 	 * @return
 	 */
 	public boolean validateAccountAndPass(){
-		if( admin==null || !validateStr(admin.getAccount()) || !validateStr(admin.getPassword()) ){
-			this.getResult().put("error", "账号密码有误!");
-			return false;
-		}
 		//标识
 		boolean flage = true;
-		if(!validateLen(admin.getAccount(), 3, 20))
+		if(!validateLen(admin.getAccount(), 3, 20)||!validateLen(admin.getPassword(), 3, 20))
 		{
-			this.getResult().put("account", "账号长度在3-20之间!");
+			this.getResult().put("error", "账号或密码有误!");//账号长度在3-20之间!
 			flage = false;
 		}
-		if(!validateLen(admin.getPassword(), 3, 20))
-		{
-			this.getResult().put("password", "密码长度在3-20之间!");
-			flage = false;
-		}
+	
 		return flage;
 	}
 	/**
@@ -64,7 +56,7 @@ public class AdminForm  extends BaseForm{
 				return true;
 			}
 		}
-		getResult().put("checkCode", "校验码不正确");
+		getResult().put("error", "校验码不正确");
 		return false;
 	}
 

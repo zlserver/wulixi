@@ -1,4 +1,4 @@
-package com.cnu.wlx.action;
+package com.cnu.wlx.action.front;
 
 import java.io.IOException;
 
@@ -31,13 +31,7 @@ public class CheckCodeAction {
 	/**
 	 * 验证码高，默认20
 	 */
-	private int hight=20;	
-	/**
-	 * 验证码模式，
-	 * 模式1:4个中文 
-	 * 模式2:4个数字（默认）
-	 */
-	private int modle=2;
+	private int hight=30;	
 	/**
 	 * 生成校验码
 	 * @param response
@@ -46,7 +40,8 @@ public class CheckCodeAction {
 	@RequestMapping(value="checkCode")
 	public void generatorCheckCode(HttpServletResponse response,HttpServletRequest request){
 		
-		CheckCodeGenerator codeGenerator = new CheckCodeGenerator(hight, width, modle);
+		CheckCodeGenerator codeGenerator = new CheckCodeGenerator(hight, width);
+		
 		CheckCode checkCode =codeGenerator.getCheckCode();
 		
 		// 保存到session中

@@ -8,7 +8,7 @@
   
   <welcome-file-list>
       
-      <welcome-file>index.jsp</welcome-file>
+      <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -36,7 +36,7 @@
 	 <!-- Spring MVC处理的URL,/*处理所有请求，*.html只过滤html结尾的请求 -->
 	 <servlet-mapping>
 	 	<servlet-name>viewspace</servlet-name>
-	 	<url-pattern>*.do</url-pattern>
+	 	<url-pattern>*.html</url-pattern>
 	 </servlet-mapping> 
 	 
 	 <servlet>
@@ -47,6 +47,6 @@
 	 <!-- Spring MVC处理的URL,/*处理所有请求，*.html只过滤html结尾的请求 -->
 	 <servlet-mapping>
 	 	<servlet-name>userspace</servlet-name>
-	 	<url-pattern>*.html</url-pattern>
+	 	<url-pattern>*.uhtml</url-pattern>
 	 </servlet-mapping> 
 </web-app>

@@ -23,12 +23,13 @@ public class AdminServiceImpl implements AdminService{
 	
 	
 	public Admin login(String account, String password) {
-		String md5ps = WebUtils.MD5Encode(password.trim());
-		
-		Admin  ad =adminDao.find(account.trim());
-		if( ad.equals(md5ps)){
-			return ad;
-		}else
+		if( BaseForm.validateStr(account)&& BaseForm.validateStr(password)){
+			String md5ps = WebUtils.MD5Encode(password.trim());
+			
+			Admin  ad =adminDao.find(account.trim());
+			if( ad!=null && ad.getPassword().equals(md5ps))
+			 return ad;
+		}
 			return null;
 	}
 	public boolean add(AdminForm formbean) {
@@ -55,5 +56,14 @@ public class AdminServiceImpl implements AdminService{
 			return adminDao.find(account.trim());
 		}
 		return null;
+	}
+	@Override
+	public void update(Admin admin) {
+		// TODO Auto-generated method stub
+		if( admin!=null){
+			adminDao.update(admin);
+		}else{
+			throw new RuntimeException("更新用户为null");
+		}
 	}
 }

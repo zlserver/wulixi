@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>后台登录界面</title> 
+<title>登录界面</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
    /*更新验证码*/
@@ -31,16 +31,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      return false;
    }
   </script>
-</head>
+  
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/control/login.css">
+</head>     
 <body>
-<table>
-	<tr>
-		<td  class="td2">
-		<input class="userinput" type="text" name="checkCode" value="${form.checkCode }"/>
-		<img alt="" src="<c:url value='/common/checkCode.html'/>"  onclick="changeimage(this)"  style="cursor:hand">
-		  <span id="checkcode" >${form.errors.checkCode }</span> 
-		</td>
-	</tr>
-</table>
+	<div class="row-fluid">
+		<h1>0000</h1>
+		<span id="error" style="color: red;" >${formbean.result.error }</span> 
+		       
+		<form method="post" action='<c:url value="/common/login.uhtml" />' class="form-horizontal" style="width: 500px;">
+			<div align="center" class="form-group">
+				<label for="inputAccount" class="col-sm-2 control-label">账号</label>
+				<div class="col-sm-8">
+					<input type="text" value="${formbean.admin.account }"   required="required" class="form-control" id="account" name="admin.account">
+				    </div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword" class="col-sm-2 control-label">密码</label>
+				<div class="col-sm-8">
+					<input type="password" value="${formbean.admin.password}"   required="required" class="form-control" id="password" name="admin.password">
+					</div>
+			</div>
+			<div class="form-group">
+				<label for="checkCode" class="col-sm-2 control-label">验证码</label>
+				<div class="col-sm-8">
+				    <div class="col-sm-5" style="padding-left: 0px;padding-right: 0px;">
+				    	<input type="text"   required="required" class="form-control" value="${formbean.checkCode }" id="checkCode" name="checkCode">
+					</div>
+				    <div class="col-sm-3">
+				       <img alt="" src="<c:url value='/common/checkCode.uhtml'/>"  onclick="changeimage(this)"  style="cursor:hand">
+		            </div>
+					 </div>
+				
+			</div>
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary">登录</button>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

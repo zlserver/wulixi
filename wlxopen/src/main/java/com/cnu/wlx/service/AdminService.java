@@ -25,4 +25,9 @@ public interface AdminService {
 	 * @return
 	 */
 	public Admin find(String account);
+	/**
+	 * 更新用户信息
+	 * @param admin
+	 */
+	public void update(Admin admin);
 }
