@@ -13,29 +13,8 @@ import org.apache.commons.beanutils.BeanUtils;
 public class WebUtils {
 	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
 		"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
-	private final static String CONTEXT_URL="http://10.4.57.247:8080/wlxdoor/";
 	/*将表单类中的信息拷贝到对应的类中 */
 	public static void copyBean(Object dest,Object src){
-		// 为了把RegisterForm中String类型的birthday属性转换到User中的Date类型birthday属性
-				// 需要注册转换器 (String - Date)
-			/*	ConvertUtils.register(new Converter() {
-					
-					public Object convert(Class type, Object value) {
-						// TODO Auto-generated method stub
-						if(null== value)
-							return null;
-						String str = (String) value;
-						if( null== str || str.trim().equals(""))
-							return null;
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						try {
-							return sdf.parse(str);
-						} catch (ParseException e) {
-							throw new RuntimeException(e);
-						}
-					}
-				}, Date.class);
-*/
 				try {
 					// 通过BeanUtils类调用方法将表单类中的信息拷贝到对应的类中 ，拷贝过程中只支持8中基本数据类型
 					BeanUtils.copyProperties(dest, src);
@@ -44,6 +23,8 @@ public class WebUtils {
 					throw new RuntimeException(e);
 				}
 	}
+	
+	
 	
 	/**
 	 * 获取日期格式字符串
@@ -60,27 +41,7 @@ public class WebUtils {
 		return sdf.format(date);
 	}
 	
-	/**
-	 * 获取根目录 http://192.168.253.1:8080/wlxdoor/
-	 * @return
-	 */
-	public static String getContextUrl()
-	{
-		
-		return WebUtils.CONTEXT_URL;
-	}
-	/**
-	 * 得到webContent目录
-	 * @return
-	 */
-	public static File  getWebContentPath()
-	{
-		String pathString =WebUtils.class.getClassLoader().getResource("").getPath();
-		File file = new File(pathString);
-		File parentfile = file.getParentFile();
-		File pFile = parentfile.getParentFile();
-		return pFile;
-	}
+	/*
 	public static void closeInputOutStream(InputStream is ,OutputStream os)
 	{
 		if( is !=null )
@@ -100,7 +61,7 @@ public class WebUtils {
 			}
 	}
 	// 获取信息的md5值的base64编码
-	/*	public static String getMd5(String message)
+		public static String getMd5(String message)
 		{
 			try {
 			if( null == message)
@@ -114,13 +75,13 @@ public class WebUtils {
 			catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 			}
-		}*/
-		/**根据两个账号生成唯一的id,会话id根据两方账号链接起来在经过md5编码生成,
+		}
+		*//**根据两个账号生成唯一的id,会话id根据两方账号链接起来在经过md5编码生成,
 		 * 两个账号链接策略：a,b账号中字符串比较大的在前面小的放在后面，在链接两个字符串中间会添加其他字符来保证唯一性。
 		 * @param accounta
 		 * @param accountb
 		 * @return
-		 */
+		 *//*
 		public static String getUniteId(String accounta, String accountb) {
 			
 			try {
@@ -144,7 +105,8 @@ public class WebUtils {
 				throw new RuntimeException(e);
 				}
 		}
-	/**
+	*/
+	/*
 	 * 转换字节数组为16进制字串
 	 * 
 	 * @param b
@@ -169,7 +131,7 @@ public class WebUtils {
 		return hexDigits[d1] + hexDigits[d2];
 	}
 
-	/**
+	/*
 	 * url路径中的MD5编码，以防出现“=”号
 	 * @param origin 源数据
 	 * @return MD5数据，不含有"="可以放在连接路径中以防产生错误参数
@@ -187,11 +149,12 @@ public class WebUtils {
 		}
 		return resultString;
 	}
-/**
+	/*
+*//**
  * 获取后缀名，不包含小数点
  * @param filename
  * @return
- */
+ *//*
     public static String getExtFromFilename(String filename) {
         int dotPosition = filename.lastIndexOf('.');
         if (dotPosition != -1) {
@@ -223,11 +186,7 @@ public class WebUtils {
         }
         return "";
     }
-    //获取文件每页显示多少
-    public static Integer getFilePageSize()
-    {
-    	return 5;
-    }
+ 
     // storage, G M K B
     public static String convertStorage(long size) {
         long kb = 1024;
@@ -244,5 +203,5 @@ public class WebUtils {
             return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
         } else
             return String.format("%d B", size);
-    }
+    }*/
 }
