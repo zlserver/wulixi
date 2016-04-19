@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0"
-         xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
-  
   <welcome-file-list>
-      
-      <welcome-file>login.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   <listener>
-  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!--  1.从类路径下加载spring配置文件，classpath关键字特指在类路径下加载 -->
   <context-param>
-  	<param-name>contextConfigLocation</param-name>
-  	<param-value>classpath:wlx-service.xml</param-value>  <!-- 如果有多个配置文件可用逗号（建议）、空格分隔 -->
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:wlx-service.xml</param-value>
   </context-param>
-  
-  
-  
-   <!-- 配置SpringMVC相关信息，SpringMVC像struts一样，也通过一个Servlet截获URL请求，然后再进行相关的处理 -->
-	 
-	 <!-- Spring MVC的主控Servlet,在spring-webmvc包中，
-	  Spring MVC也拥有一个Spring配置文件，该配置文件的文件名和此处定义的Servlet名有一个契约：即采用：Servlet名-servlet.xml ,
-	  在这里Servlet名为viewspace,所以在/WEB-INF目录下必须提供一个viewspace-servlet.xml的Spring MVC配置文件.
-	  此处配置名为viewspace的DispatcherServlet,它默认自动加载/WEB-INF/viewspace-servlet.xml的Spring配置文件，启动Web层的Spring容器
-	  -->
-	  <servlet>
-	 	<servlet-name>viewspace</servlet-name>
-	 	<servlet-class> org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	 	<load-on-startup>2</load-on-startup>
-	 </servlet>
-	 <!-- Spring MVC处理的URL,/*处理所有请求，*.html只过滤html结尾的请求 -->
-	 <servlet-mapping>
-	 	<servlet-name>viewspace</servlet-name>
-	 	<url-pattern>*.html</url-pattern>
-	 </servlet-mapping> 
-	 
-	 <servlet>
-	 	<servlet-name>userspace</servlet-name>
-	 	<servlet-class> org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	 	<load-on-startup>2</load-on-startup>
-	 </servlet>
-	 <!-- Spring MVC处理的URL,/*处理所有请求，*.html只过滤html结尾的请求 -->
-	 <servlet-mapping>
-	 	<servlet-name>userspace</servlet-name>
-	 	<url-pattern>*.uhtml</url-pattern>
-	 </servlet-mapping> 
+  <!-- 编码过滤器 -->
+  <filter>
+        <filter-name>encodeFilter</filter-name>
+        <filter-class>com.cnu.wlx.filter.EncodeFilter</filter-class>
+        <init-param>
+        	<param-name>charset</param-name>
+        	<param-value>UTF-8</param-value>
+        </init-param>
+ </filter>
+ <filter-mapping>
+      <filter-name>encodeFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+ </filter-mapping>  
+ <!-- 管理员过滤器 -->
+  <filter>
+    <display-name>AdminFilter</display-name>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.cnu.wlx.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/control/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>viewspace</servlet-name>
+    <servlet-class> org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>viewspace</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>userspace</servlet-name>
+    <servlet-class> org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userspace</servlet-name>
+    <url-pattern>*.uhtml</url-pattern>
+  </servlet-mapping>
 </web-app>

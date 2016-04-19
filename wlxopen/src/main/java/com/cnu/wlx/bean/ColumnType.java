@@ -38,6 +38,10 @@ public class ColumnType {
 	private String name;
 	/**
 	 * 分类码，6个字符,唯一
+	 * 示例:AB101,前两个字母为英文字母。最大类为字母+数字的两位字符串，子类按两位递增,理论上只要字段不限字符串大小可以无限分级。
+	 * 最大类如AB1，AB2，CB3，CD5...；
+		二级栏目如：AB101，AB102，CB202，CB299...；
+		三级栏目如：AB10101，AB10298，CB20201...。
 	 */
 	private String classCode;
 	/**
@@ -70,18 +74,23 @@ public class ColumnType {
 	private Set<ColumnType> childrens = new HashSet<ColumnType>();
 	
 	
-	
-	public ColumnType(String name, String classCode, ColumnTypeDesEnum typeDes, String groupType) {
+	/**
+	 * 
+	 * @param name 栏目名称
+	 * @param classCode 分类码，6个字符,唯一
+	 * @param typeDes 分类说明，默认列表类，保存枚举类型的字符串,长度最大10字符
+	 */
+	public ColumnType(String name, String classCode, ColumnTypeDesEnum typeDes) {
 		super();
 		this.name = name;
 		this.classCode = classCode;
 		this.typeDes = typeDes;
-		this.groupType = groupType;
 	}
 	public ColumnType(String name, String classCode) {
 		super();
 		this.name = name;
 		this.classCode = classCode;
+		this.typeDes=ColumnTypeDesEnum.LIST_TYPE;
 	}
 	public ColumnType() {
 		super();
@@ -110,7 +119,7 @@ public class ColumnType {
 		this.classCode = classCode;
 	}
 	@Enumerated(value=EnumType.STRING)
-	@Column(nullable=false,length=10)
+	@Column(nullable=false,length=15)
 	public ColumnTypeDesEnum getTypeDes() {
 		return typeDes;
 	}

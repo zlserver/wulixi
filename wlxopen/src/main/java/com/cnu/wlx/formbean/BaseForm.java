@@ -4,11 +4,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseForm {
+	/*当前页*/
+	private int page = 1;  
+	/**
+	 * 每页显示最大数，默认10
+	 */
+	private int maxresult=10;
 	/**
 	 * 存放表单校验后的结果
 	 */
 	private Map<String,String> result=new HashMap<String,String>();
 
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page < 1 ? 1 : page;
+	}
+	public int getMaxresult() {
+		return maxresult;
+	}
+	public void setMaxresult(int maxresult) {
+		this.maxresult = maxresult;
+	}
+	public void setResult(Map<String, String> result) {
+		this.result = result;
+	}
 	public Map<String, String> getResult() {
 		return result;
 	}

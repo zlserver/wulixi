@@ -13,7 +13,7 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>自适应学习系统管理后台</title>
+<title>000系统管理后台</title>
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 
 <link rel="stylesheet"  href="css/control/admin-all.css">
@@ -67,20 +67,17 @@ function exit() {
 				</b>
 			</h1>
 			<div class="acc">
-				<div>
-					<a class="one">单词管理</a>
-					<ul class="kid">
-						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/listUI.html'/>" >单词资源</a></li>
-						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/word/statistics.html'/>" >统计信息</a></li>
-						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/wordtheme/list.html'/>" >单词主题</a></li>
+			  <c:forEach items="${topColumns }" var="column">
+			  	<div>
+					<a class="one">${column.name }</a>
+					 <ul class="kid">
+						<c:forEach items="${column.childrens }" var="child">
+						 <li><b class="tip"></b><a target="Conframe" href="<c:url value='${child.readUrl }'/>" >${child.name}</a></li>
+						</c:forEach>                                                     
 					</ul>
 				</div>
-				<div>
-					<a class="one">商店管理</a>
-					<ul class="kid">
-						<li><b class="tip"></b><a target="Conframe" href="<c:url value='admin/control/store/listtype.html'/>" >商品类型</a></li>
-						</ul>
-				</div>
+			  </c:forEach>
+			
 				<div id="logindes" >
 				 <p >登录用户:<font > ${admin.account } </font></p>
 				 <p >登录时间:<font > ${admin.loginTime} </font></p>
