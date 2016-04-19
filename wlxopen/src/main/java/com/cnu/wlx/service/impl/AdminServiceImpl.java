@@ -57,7 +57,6 @@ public class AdminServiceImpl implements AdminService{
 		}
 		return null;
 	}
-	@Override
 	public void update(Admin admin) {
 		// TODO Auto-generated method stub
 		if( admin!=null){
