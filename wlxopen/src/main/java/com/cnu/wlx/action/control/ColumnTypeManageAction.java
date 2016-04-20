@@ -10,12 +10,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.ColumnTypeForm;
-import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.utils.SiteUtils;
 
@@ -70,11 +70,11 @@ public class ColumnTypeManageAction {
 	 */
 	private LinkedHashMap<String ,String> generatorNavigation(String id){
 		
-		LinkedHashMap<String ,String> orderurlParams=new LinkedHashMap<>();
+		LinkedHashMap<String ,String> orderurlParams=new LinkedHashMap<String ,String>();
 		//存放栏目id
-		List<String>  listIds = new ArrayList<>();
+		List<String>  listIds = new ArrayList<String>();
 		//存放栏目名称
-		List<String> listNames= new ArrayList<>();
+		List<String> listNames= new ArrayList<String>();
 		if( BaseForm.validateStr(id)){
 			//遍历得到所有经过的栏目
 			ColumnType ct =columnTypeService.find(id);
