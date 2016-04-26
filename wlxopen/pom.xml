@@ -22,7 +22,7 @@
      <log4j.version>2.4.1</log4j.version> <!--  日志类 -->
     <!--  <slf4j.version>1.7.12</slf4j.version> --><!-- slf4j接口 -->
      <beanutils.version>1.9.2</beanutils.version>  <!-- 将值映射到实体类中 -->
-     
+     <json.version>2.4</json.version>
     <aspectjweaver.version>1.6.9</aspectjweaver.version> <!-- 开发切面编程所需要的包 -->
     <cglib.version>3.1</cglib.version>  <!-- 动态代理 -->
      <hibernate.version>3.6.10.Final</hibernate.version><!--  Hibernate -->
@@ -39,8 +39,14 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-    
-     <!-- log4j2 的结构和实现 -->
+    <!-- json格式依赖jar -->
+	<dependency>
+		<groupId>net.sf.json-lib</groupId>
+		<artifactId>json-lib</artifactId>
+		<version>${json.version}</version>
+		<classifier>jdk15</classifier>
+	</dependency>
+     <!-- log4j 的结构和实现 -->
       <dependency>
           <groupId>org.apache.logging.log4j</groupId>
           <artifactId>log4j-api</artifactId>
