@@ -27,7 +27,27 @@ public class ColumnTypeForm extends BaseForm {
 	 * 父类名称
 	 */
 	private String parentName;
+	/**
+	 * 父类的父类id
+	 */
+	private String doubleParentId;
+	/**
+	 * 父类的父类名称
+	 */
+	private String doubleParentName;
 	
+	public String getDoubleParentId() {
+		return doubleParentId;
+	}
+	public void setDoubleParentId(String doubleParentId) {
+		this.doubleParentId = doubleParentId;
+	}
+	public String getDoubleParentName() {
+		return doubleParentName;
+	}
+	public void setDoubleParentName(String doubleParentName) {
+		this.doubleParentName = doubleParentName;
+	}
 	public int getTypeDes() {
 		return typeDes;
 	}

@@ -126,7 +126,7 @@ public class ColumnTypeManageAction {
 		model.addAttribute("pageView", pageView);
 		
 		//构造导航栏
-		generatorNavigation(request, formbean.getParentId(),formbean.getParentName());
+		generatorNavigation(request, formbean);
 		
 		return SiteUtils.getPage("admin.column.list");
 	}
@@ -139,23 +139,35 @@ public class ColumnTypeManageAction {
 	}
 	
 	/**
-	 *  动态改变session中的导航条
-	 * @param request
-	 * @param id
-	 * @param name
+	 * 动态改变session中的导航条
+	 * @param request  
+	 * @param formbean 
 	 */
-	private void generatorNavigation(HttpServletRequest request,String id,String name){
+	private void generatorNavigation(HttpServletRequest request,ColumnTypeForm formbean){
 		//从session中获取栏目导航信息
 		HttpSession session =request.getSession();
 		LinkedHashMap<String,String> columnNavigation= (LinkedHashMap<String, String>)session.getAttribute("columnNavigation");
 		//如果不存在，第一次访问栏目,则新建
 		if(columnNavigation==null)
 			columnNavigation=new LinkedHashMap<String, String>();
+		//父类id
+		String id= formbean.getParentId();
+		//父类name
+		String name = formbean.getParentName();
+		//父类的父类id
+		String doubleParentId= formbean.getDoubleParentId();
+		//父类的父类name
+		String doubleParentName = formbean.getDoubleParentName();
+		
+		
 		//构造导航栏：顶层栏目》新闻栏目》学工新闻》院系新闻
 		if( BaseForm.validateStr(id)){
 			//id不为null
 			//如果id不存在navigation则新添加
 			if( !columnNavigation.containsKey(id)){
+				//如果父类的父类id不为空则先添加父类的父类
+				if(BaseForm.validateStr(doubleParentId))
+					columnNavigation.put(doubleParentId, doubleParentName);
 				columnNavigation.put(id, name);
 			}else{
 			  //如果id存在则从后往前删除子栏目，直到当前访问的栏目。
@@ -172,39 +184,8 @@ public class ColumnTypeManageAction {
 			columnNavigation.clear();
 			columnNavigation.put(" ","顶层栏目");
 		}
-
-		for(String key: columnNavigation.keySet()){
-			System.out.println(key+">>");
-		}
 		//保存到session中
 		session.setAttribute("columnNavigation", columnNavigation);
 	}
-	/**
-	 * 从当前传入的栏目开始，生成其父类导航。
-	 * @param id 栏目id
-	 * @return Map，里面存放了父类的id和内容，并且最大的父类在第一位
-	 */
-	private LinkedHashMap<String ,String> generatorNavigation(String id){
-		
-		LinkedHashMap<String ,String> orderurlParams=new LinkedHashMap<String ,String>();
-		//存放栏目id
-		List<String>  listIds = new ArrayList<String>();
-		//存放栏目名称
-		List<String> listNames= new ArrayList<String>();
-		if( BaseForm.validateStr(id)){
-			//遍历得到所有经过的栏目
-			ColumnType ct =columnTypeService.find(id);
-			while( ct!=null){
-				listNames.add(ct.getName());
-				listIds.add(id);
-				//得到父类
-				ct = ct.getParent();
-			}
-			//将存储顺序反过来，第一个存放最大的父类
-			for(int i = listIds.size()-1;i>=0;i--){
-				orderurlParams.put(listIds.get(i), listNames.get(i));
-			}
-		}
-		return orderurlParams;
-	}
+	
 }

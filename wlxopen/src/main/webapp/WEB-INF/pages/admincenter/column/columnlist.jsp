@@ -91,7 +91,6 @@ display: none;
 			var message = data.message;
 			if( status == 1){
 				/*修改成功，将显示内容改为已修改的*/
-				alert("ok");
 				conveterValue(id,true);
 			}else{
 				//修改失败，将编辑框的名称改回原样
@@ -196,6 +195,7 @@ display: none;
 	放弃编辑
 	*/
 	function dropEdit(id) {
+		conveterValue(id,false);
 		//隐藏编辑框
 		editState(false,id);
 	}
@@ -312,7 +312,7 @@ display: none;
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
-			<td  width="15%">ID号</td>
+			<td  width="10%">ID号</td>
 			<td  width="7%">栏目名称</td>
 			<td  width="7%">分类码</td>
 			<td  width="7%">分类说明</td>
@@ -326,7 +326,7 @@ display: none;
 		</thead>
 		<tbody>
 			 <c:forEach items="${pageView.records }" var="entity">
-			<tr style="border: 1px;border-style: solid;">
+			<tr>
 			 <td>
 			  <span>${entity.id }</span>
 			 <td> 
@@ -378,6 +378,13 @@ display: none;
 			 <td> 
 			  <a href="<c:url value='control/column/delete.html?column.id=${entity.id}'/>" onclick="return deleteColumn()" class="btn btn-primary btn-xs">删除</a>
 			 </td>
+			</tr>
+			<tr>
+			   <td colspan="10">
+				<c:forEach  items="${entity.childrens }" var="child" >
+					 <a  href="<c:url value='control/column/list.html?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>  
+				</c:forEach>
+			   </td>
 			</tr>
 		  </c:forEach>
 		</tbody>
