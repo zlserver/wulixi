@@ -23,6 +23,10 @@ public class ColumnTypeForm extends BaseForm {
 	 * 父类id
 	 */
 	private String parentId;
+	/**
+	 * 父类名称
+	 */
+	private String parentName;
 	
 	public int getTypeDes() {
 		return typeDes;
@@ -43,6 +47,12 @@ public class ColumnTypeForm extends BaseForm {
 		this.parentId = parentId;
 	}
 	
+	public String getParentName() {
+		return parentName;
+	}
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
 	/**
 	 * 对添加方法进行校验
 	 * @return

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
@@ -115,17 +117,16 @@ public class ColumnTypeManageAction {
 		return "redirect:/control/column/list.html?parentid="+formbean.getParentId();
 	}
 	@RequestMapping(value="list")
-	public String list(ColumnTypeForm formbean,Model model){
+	public String list(ColumnTypeForm formbean,Model model,HttpServletRequest request){
 		//页面类
 		PageView<ColumnType> pageView = new PageView<ColumnType>(formbean.getMaxresult(), formbean.getPage());
 		QueryResult<ColumnType> queryResult= columnTypeService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getParentId());
 		pageView.setQueryResult(queryResult);
 		//传输到页面
 		model.addAttribute("pageView", pageView);
+		
 		//构造导航栏
-		Map<String,String> urlParams =generatorNavigation(formbean.getParentId());
-		//2.传回页面端，导航连接
-		model.addAttribute("urlParams", urlParams);
+		generatorNavigation(request, formbean.getParentId(),formbean.getParentName());
 		
 		return SiteUtils.getPage("admin.column.list");
 	}
@@ -137,6 +138,47 @@ public class ColumnTypeManageAction {
 		this.columnTypeService = columnTypeService;
 	}
 	
+	/**
+	 *  动态改变session中的导航条
+	 * @param request
+	 * @param id
+	 * @param name
+	 */
+	private void generatorNavigation(HttpServletRequest request,String id,String name){
+		//从session中获取栏目导航信息
+		HttpSession session =request.getSession();
+		LinkedHashMap<String,String> columnNavigation= (LinkedHashMap<String, String>)session.getAttribute("columnNavigation");
+		//如果不存在，第一次访问栏目,则新建
+		if(columnNavigation==null)
+			columnNavigation=new LinkedHashMap<String, String>();
+		//构造导航栏：顶层栏目》新闻栏目》学工新闻》院系新闻
+		if( BaseForm.validateStr(id)){
+			//id不为null
+			//如果id不存在navigation则新添加
+			if( !columnNavigation.containsKey(id)){
+				columnNavigation.put(id, name);
+			}else{
+			  //如果id存在则从后往前删除子栏目，直到当前访问的栏目。
+				boolean flage = false;
+				for(String key: columnNavigation.keySet()){
+					if( flage )
+						columnNavigation.remove(key);
+					if( key.equals(id))
+						flage = true;
+				}
+			}
+		}else{
+			//访问顶层父类，则取消navigation中的其它栏目
+			columnNavigation.clear();
+			columnNavigation.put(" ","顶层栏目");
+		}
+
+		for(String key: columnNavigation.keySet()){
+			System.out.println(key+">>");
+		}
+		//保存到session中
+		session.setAttribute("columnNavigation", columnNavigation);
+	}
 	/**
 	 * 从当前传入的栏目开始，生成其父类导航。
 	 * @param id 栏目id

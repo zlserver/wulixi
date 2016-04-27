@@ -287,12 +287,21 @@ display: none;
 <body>
 <div class="panel panel-default">
 	<ol class="breadcrumb">
-	  <c:forEach items="${urlParams}" var="item"  varStatus="status">
-	    <li><a href="control/column/list.html?parentId=${item.key}">${item.value }</a></li>
-	    <!-- 设置父类id -->
-	    <c:set var="parentId" value="${item.key}"></c:set>
-	    <!-- 主题等级 ,如果是二级主题则不可以添加主题,如果当前页是一级主题下的子主题themeGrade=1，则不应该有添加主题按钮-->
-	    <c:set var="themeGrade" value="${status.count}"></c:set>
+	
+	   <!-- 当且列表的父类id -->
+	   <c:set var="parentId" value="" scope="page"></c:set>
+	
+	  <c:forEach items="${columnNavigation}" var="item"  varStatus="status">
+	    <li><a href="control/column/list.html?parentId=${item.key}&parentName=${item.value}">${item.value }</a></li>
+	    
+	     <!-- 当且列表父类的父类，也就是导航列表的倒数第二个，用于返回上一层使用。-->
+	    <c:set var="backParentId" value="${parentId }" scope="page"></c:set>
+	    
+	    <!-- 当且列表的父类id -->
+	    <c:set var="parentId" value="${item.key}" scope="page"></c:set>
+	    <!-- 当且列表的父类名称-->
+	    <c:set var="parentName" value="${item.value }" scope="page"></c:set>
+	   
 	  </c:forEach>
 	</ol>
 
@@ -321,7 +330,7 @@ display: none;
 			 <td>
 			  <span>${entity.id }</span>
 			 <td> 
-			     <span id="name${entity.id}">${entity.name}</span>
+			     <span id="name${entity.id}"><a href="<c:url value='control/column/list.html?parentId=${entity.id }&parentName=${entity.name}'/>">${entity.name}</a></span>
 				 <input type="hidden" id="iname${entity.id}"  name="name" value="${entity.name}"> 
 			</td>
 			  <td>
@@ -387,9 +396,12 @@ display: none;
 	 
 	  <tbody>
 	  	<tr>
-	  	 <td colspan="1">大类</td>
-	  	 <td>类名称</td> <td><input type="text" name="column.name" value="${entity.sequence}"> </td>
-	  	 <td>分类码</td><td><input type="text" name="column.classCode"  value="${entity.sequence}"> </td>
+	  	 <td colspan="1">
+	  	  父类:
+	  	 <font color="red">${parentName}</font>  <input type="hidden" name="parentId" value="${parentId}"> 
+	  	 </td>
+	  	 <td>类名称</td> <td><input type="text" name="column.name" > </td>
+	  	 <td>分类码</td><td><input type="text" name="column.classCode" > </td>
 	  	 <td>分类说明</td>
 	  	 <td>
 	  	    <select  name="typeDes" >
@@ -400,7 +412,7 @@ display: none;
 			 </select>
 	  	 </td>
 	  	 <td>管理程序</td>
-	  	 <td><input type="text" name="column.manageUrl"  value="${entity.sequence}"> </td>
+	  	 <td><input type="text" name="column.manageUrl" > </td>
 	  	</tr>
 	  	
 	  	<tr>
@@ -409,7 +421,7 @@ display: none;
 		 </td>
 	  	 <td colspan="8" align="center"> 
 	  	 	<input type="submit"  class="btn btn-info "  value="添加"> 
-		     <a href="<c:url value='admin/control/wordtheme/importUI.html'/>"  class="btn btn-info " >返回上一层</a>
+		     <a href="<c:url value='control/column/list.html?parentId=${backParentId}'/>"  class="btn btn-info " >返回上一层</a>
 		</td> 
 	  	</tr>
 	  </tbody>

@@ -29,8 +29,14 @@ public class EncodeFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-	HttpServletRequest req = (HttpServletRequest) request;
-		req.setCharacterEncoding("UTF-8");
+		HttpServletRequest req = (HttpServletRequest) request;
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			if(!(req instanceof CharSetRequest)) {
+				req = new CharSetRequest(req, charset);//处理get请求编码
+			}
+		} else {
+			req.setCharacterEncoding(charset);//处理post请求编码
+		}
 		chain.doFilter(req, response);
 	}
 
