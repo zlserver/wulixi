@@ -76,5 +76,18 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 			return columnTypeDao.find(id);
 		return null;
 	}
+
+	@Override
+	public void delete(String id) {
+		if( BaseForm.validateStr(id))
+		  columnTypeDao.delete(id);
+		
+	}
+
+	@Override
+	public void updateColumnType(ColumnType column) {
+		// TODO Auto-generated method stub
+		 columnTypeDao.update(column);
+	}
 	
 }

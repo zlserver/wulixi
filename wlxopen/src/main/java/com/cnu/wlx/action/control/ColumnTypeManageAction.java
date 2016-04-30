@@ -1,23 +1,32 @@
 package com.cnu.wlx.action.control;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cnu.wlx.bean.ColumnType;
+import com.cnu.wlx.bean.base.MyStatus;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.ColumnTypeForm;
+import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.utils.SiteUtils;
+
+import net.sf.json.JSONObject;
 
 /**
 * @author 周亮 
@@ -33,27 +42,93 @@ public class ColumnTypeManageAction {
 	 */
 	private ColumnTypeService columnTypeService;
 	
+	
+	@RequestMapping(value="ajaxEdit")
+	public String  ajaxEdit(ColumnTypeForm formbean,HttpServletRequest request){
+		boolean flage = false;
+		MyStatus status = new MyStatus();
+		if(formbean.validateAdd()){
+			//获取修改的栏目
+			ColumnType column=columnTypeService.find(formbean.getColumn().getId());
+			if( column!=null){
+				try {
+					BaseForm.copy(column, formbean.getColumn());
+					//2.设置分类说明
+					column.setTypeDes(ColumnTypeDesEnum.values()[formbean.getTypeDes()]);
+					//设置父类
+					ColumnType parent =columnTypeService.find(formbean.getParentId());
+					if( parent !=null)
+					  column.setParent(parent);
+					
+					columnTypeService.updateColumnType(column);
+					//成功
+					flage = true;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		//失败
+		if(!flage){
+			status.setStatus(0);
+			status.setMessage(formbean.getResult().get("error"));
+		}
+		JSONObject json = JSONObject.fromObject(status);
+		request.setAttribute("json", json.toString());
+		return  SiteUtils.getPage("json");
+	}
+	@RequestMapping(value="delete")
+	public String deleteColumn(ColumnTypeForm formbean){
+		
+		if( formbean.getColumn()!=null){
+			ColumnType column= columnTypeService.find(formbean.getColumn().getId());
+			if( column!=null)
+				columnTypeService.delete(column.getId());
+		}
+		return "redirect:/control/column/list.html?parentid="+formbean.getParentId();
+	}
+	/**
+	 * 添加栏目
+	 * @param formbean
+	 * @return
+	 */
+	@RequestMapping(value="add")
 	public String addColumn(ColumnTypeForm formbean){
 		
 		//1.校验
+		if(formbean.validateAdd()){
+			ColumnType column = new ColumnType();
+			//2.设置分类说明
+			column.setTypeDes(ColumnTypeDesEnum.values()[formbean.getTypeDes()]);
+			try {
+				formbean.copy(column, formbean.getColumn()); 
+				ColumnType parent =columnTypeService.find(formbean.getParentId());
+				//设置父类
+				if( parent !=null)
+				  column.setParent(parent);
+				
+				columnTypeService.addColumnType(column);
+			} catch (Exception e) { 
+				e.printStackTrace(); 
+				formbean.getResult().put("error","添加失败"); 
+			} 
+		} 
 		
-		return "";
+		return "redirect:/control/column/list.html?parentid="+formbean.getParentId();
 	}
 	@RequestMapping(value="list")
-	public String list(ColumnTypeForm formbean,Model model){
+	public String list(ColumnTypeForm formbean,Model model,HttpServletRequest request){
 		//页面类
 		PageView<ColumnType> pageView = new PageView<ColumnType>(formbean.getMaxresult(), formbean.getPage());
 		QueryResult<ColumnType> queryResult= columnTypeService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getParentId());
 		pageView.setQueryResult(queryResult);
 		//传输到页面
 		model.addAttribute("pageView", pageView);
-
-		//构造导航栏
-		Map<String,String> urlParams =generatorNavigation(formbean.getParentId());
-		//2.传回页面端，导航连接
-		model.addAttribute("urlParams", urlParams);
 		
-		return SiteUtils.getSite("admin.column.list");
+		//构造导航栏
+		generatorNavigation(request, formbean);
+		
+		return SiteUtils.getPage("admin.column.list");
 	}
 	public ColumnTypeService getColumnTypeService() {
 		return columnTypeService;
@@ -64,31 +139,53 @@ public class ColumnTypeManageAction {
 	}
 	
 	/**
-	 * 从当前传入的栏目开始，生成其父类导航。
-	 * @param id 栏目id
-	 * @return Map，里面存放了父类的id和内容，并且最大的父类在第一位
+	 * 动态改变session中的导航条
+	 * @param request  
+	 * @param formbean 
 	 */
-	private LinkedHashMap<String ,String> generatorNavigation(String id){
+	private void generatorNavigation(HttpServletRequest request,ColumnTypeForm formbean){
+		//从session中获取栏目导航信息
+		HttpSession session =request.getSession();
+		LinkedHashMap<String,String> columnNavigation= (LinkedHashMap<String, String>)session.getAttribute("columnNavigation");
+		//如果不存在，第一次访问栏目,则新建
+		if(columnNavigation==null)
+			columnNavigation=new LinkedHashMap<String, String>();
+		//父类id
+		String id= formbean.getParentId();
+		//父类name
+		String name = formbean.getParentName();
+		//父类的父类id
+		String doubleParentId= formbean.getDoubleParentId();
+		//父类的父类name
+		String doubleParentName = formbean.getDoubleParentName();
 		
-		LinkedHashMap<String ,String> orderurlParams=new LinkedHashMap<String ,String>();
-		//存放栏目id
-		List<String>  listIds = new ArrayList<String>();
-		//存放栏目名称
-		List<String> listNames= new ArrayList<String>();
+		
+		//构造导航栏：顶层栏目》新闻栏目》学工新闻》院系新闻
 		if( BaseForm.validateStr(id)){
-			//遍历得到所有经过的栏目
-			ColumnType ct =columnTypeService.find(id);
-			while( ct!=null){
-				listNames.add(ct.getName());
-				listIds.add(id);
-				//得到父类
-				ct = ct.getParent();
+			//id不为null
+			//如果id不存在navigation则新添加
+			if( !columnNavigation.containsKey(id)){
+				//如果父类的父类id不为空则先添加父类的父类
+				if(BaseForm.validateStr(doubleParentId))
+					columnNavigation.put(doubleParentId, doubleParentName);
+				columnNavigation.put(id, name);
+			}else{
+			  //如果id存在则从后往前删除子栏目，直到当前访问的栏目。
+				boolean flage = false;
+				for(String key: columnNavigation.keySet()){
+					if( flage )
+						columnNavigation.remove(key);
+					if( key.equals(id))
+						flage = true;
+				}
 			}
-			//将存储顺序反过来，第一个存放最大的父类
-			for(int i = listIds.size()-1;i>=0;i--){
-				orderurlParams.put(listIds.get(i), listNames.get(i));
-			}
+		}else{
+			//访问顶层父类，则取消navigation中的其它栏目
+			columnNavigation.clear();
+			columnNavigation.put(" ","顶层栏目");
 		}
-		return orderurlParams;
+		//保存到session中
+		session.setAttribute("columnNavigation", columnNavigation);
 	}
+	
 }

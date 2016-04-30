@@ -37,4 +37,14 @@ public interface ColumnTypeService {
 	 * @return
 	 */
 	public ColumnType find(String id);
+	/**
+	 * 删除栏目
+	 * @param id
+	 */
+	public void delete(String id);
+	/**
+	 * 更新栏目
+	 * @param column
+	 */
+	public void updateColumnType(ColumnType column);
 }

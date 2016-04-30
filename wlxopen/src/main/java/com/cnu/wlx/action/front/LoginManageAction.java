@@ -55,7 +55,7 @@ public class LoginManageAction {
 		}
 		// 登录出错返回
 		request.setAttribute("formbean", formbean);
-		return SiteUtils.getSite("admin.login");
+		return SiteUtils.getPage("admin.login");
 		
 	}
 	/**
@@ -66,7 +66,7 @@ public class LoginManageAction {
 	@RequestMapping(value="exit")
 	public String exit(HttpServletRequest request){
 		request.getSession().invalidate();
-		return SiteUtils.getSite("admin.login");
+		return SiteUtils.getPage("admin.login");
 	}
 
 	public AdminService getAdminService() {

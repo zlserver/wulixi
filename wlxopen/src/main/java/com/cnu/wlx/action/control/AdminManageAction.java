@@ -74,14 +74,14 @@ public class AdminManageAction {
 			if (ad != null) {
 				// 4.登录成功
 				request.getSession().setAttribute("admin", ad);
-				return SiteUtils.getSite("admin.controlcenter");
+				return SiteUtils.getPage("admin.controlcenter");
 			}
 			// 3.用户名或者密码有误
 			formbean.getResult().put("account", "用户名或者密码有误!");
 		}
 		// 登录出错返回
 		request.setAttribute("formbean", formbean);
-		return SiteUtils.getSite("admin.login");
+		return SiteUtils.getPage("admin.login");
 		
 	}
 	/**
@@ -90,7 +90,7 @@ public class AdminManageAction {
 	 */
 	@RequestMapping(value="loginUI")
 	public String loginUI(){
-		return SiteUtils.getSite("admin.login");
+		return SiteUtils.getPage("admin.login");
 	}
 	
 	public AdminService getAdminService() {

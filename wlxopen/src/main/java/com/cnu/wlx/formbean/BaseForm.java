@@ -1,7 +1,10 @@
 package com.cnu.wlx.formbean;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 public class BaseForm {
 	/*当前页*/
@@ -32,6 +35,17 @@ public class BaseForm {
 	}
 	public Map<String, String> getResult() {
 		return result;
+	}
+	
+	/**
+	 * 将orig中数据拷贝到dest中
+	 * @param dest
+	 * @param orig
+	 * @throws Exception
+	 */
+	public static void copy(Object dest,Object orig) throws Exception{
+		
+		BeanUtils.copyProperties(dest, orig);
 	}
 	/**
 	 * 判断是否是有效字符串。null、空字符串、空格字符串都是无效字符串；
