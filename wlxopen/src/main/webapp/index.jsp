@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <base href="<%=basePath%>">   
+ <base href="<%=basePath%>">     
 <title>添加</title>        
 </head>
 <body>

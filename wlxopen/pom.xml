@@ -194,7 +194,7 @@
         	<artifactId>commons-dbcp</artifactId>
         	<version>1.2.2</version>
         </dependency>
-	       <!-- 使用JSR-250生命周期注解@PostConstruct和@PreDestroy注解bean的初始化和析构回调方法 -->
+	       <!-- 使用JSR-250生命周期注解@Resouce @PostConstruct和@PreDestroy注解bean的初始化和析构回调方法 -->
 	       <!-- <dependency>
 	       	<groupId>javax.annotation</groupId>
 	       	<artifactId>jsr250-api</artifactId>
