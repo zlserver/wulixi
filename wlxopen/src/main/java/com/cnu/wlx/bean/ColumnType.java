@@ -111,7 +111,7 @@ public class ColumnType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	@Column(unique=true,length=6)
+	@Column(unique=true,length=15)
 	public String getClassCode() {
 		return classCode;
 	}

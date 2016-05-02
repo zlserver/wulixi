@@ -8,7 +8,7 @@
 			总页数:${pageView.totalpage}页
 		</p>
 		<ul class=" pagination " >
-			<c:if test="${1!= pageView.totalpage}">
+			<c:if test="${1!= pageView.totalpage && pageView.totalpage!=null}">
 				<c:if test="${1!= pageView.currentpage}">
 					<li><a href="javascript:topage('${pageView.currentpage-1 }')">&laquo;</a></li>
 				</c:if>

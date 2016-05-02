@@ -36,11 +36,21 @@ display: none;
 		form.submit();
 	}
 	/* 删除确认 */
-	function deleteColumn() {
-		if( confirm("确定要删除吗？")){
-			return true;
-		}else
-			return false;
+	function deleteColumn(id) {
+		
+		//检测是否有子类
+		var child = $("#child"+id+"1").attr("href");
+		
+		if( child ){
+			alert("请先删除子类!");
+		}else{
+			if( confirm("确定要删除吗？")){
+				var form = document.forms[0];
+				form.action="control/column/delete.html?column.id="+id;
+				form.submit();
+			}
+		}
+		
 	}
 	
 	
@@ -85,7 +95,8 @@ display: none;
 		var groupType=groupTypeinput.val();
 		var sequence=sequenceinput.val();
 		
-		$.post("control/column/ajaxEdit.html",{"column.id":id,"column.name":name,"column.classCode":classCode,"typeDes":typeDes,"column.readUrl":readUrl,"column.manageUrl":manageUrl,"column.groupType":groupType,"column.sequence":sequence},
+		var parentId = $("#parentId").val();
+		$.post("control/column/ajaxEdit.html",{"parentId":parentId,"column.id":id,"column.name":name,"column.classCode":classCode,"typeDes":typeDes,"column.readUrl":readUrl,"column.manageUrl":manageUrl,"column.groupType":groupType,"column.sequence":sequence},
 		  function(data){
 			var status = data.status;
 			var message = data.message;
@@ -292,15 +303,15 @@ display: none;
 			return false;
 		}
 		alert(classCode.trim().length);
-		if( classCode.trim().length>6){
-			alert("分类码长度不能大于6");
+		if( classCode.trim().length>15){
+			alert("分类码长度不能大于15");
 			return false;
 		}
 		return true;
 	}
 </script>
 </head>
-<body>
+<body style="position: relative;">
 <div class="panel panel-default">
 	<ol class="breadcrumb">
 	
@@ -324,34 +335,36 @@ display: none;
   <div class="panel-body">
 	<form  action="<c:url value='control/column/list.html'/>" method="post">
    <!-- 查询参数 -->
-    <input type="hidden" name="page">
+    <input type="hidden" id="parentId" name="parentId" value="${parentId}">
+    <input type="hidden" name="page" value="${page }">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
-			<td  width="10%">ID号</td>
-			<td  width="7%">栏目名称</td>
-			<td  width="7%">分类码</td>
-			<td  width="7%">分类说明</td>
-			<td  width="12%">浏览程序</td>
-			<td  width="12%">管理程序</td>
-			<td  width="7%">组别</td>
-			<td  width="5%">顺序</td>
-			<td  width="6%">编辑</td>
-			<td  width="6%">删除</td>
+			<!-- <td  width="10%">ID号</td> -->
+			<td  width="15%">栏目名称</td>
+			<td  width="13%">分类码</td>
+			<td  width="12%">分类说明</td>
+			<td  width="15%">浏览程序</td>
+			<td  width="15%">管理程序</td>
+			<td  width="8%">组别</td>
+			<td  width="7%">顺序</td>
+			<td  width="8%">编辑</td>
+			<td  width="10%">删除</td>
 			</tr>
 		</thead>
 		<tbody>
 			 <c:forEach items="${pageView.records }" var="entity">
 			<tr>
-			 <td>
+			 <%-- <td>
 			  <span>${entity.id }</span>
-			 <td> 
+			 </td>  --%> 
+			 <td>
 			     <span id="name${entity.id}"><a href="<c:url value='control/column/list.html?parentId=${entity.id }&parentName=${entity.name}'/>">${entity.name}</a></span>
-				 <input type="hidden" id="iname${entity.id}"  name="name" value="${entity.name}"> 
+				 <input class="form-control" type="hidden" id="iname${entity.id}"  name="name" value="${entity.name}"> 
 			</td>
 			  <td>
 			   <span id="classCode${entity.id}">${entity.classCode }</span>
-			   <input  type="hidden" id="iclassCode${entity.id}" name="classCode" value="${entity.classCode }"> 
+			   <input  class="form-control"  type="hidden" id="iclassCode${entity.id}" name="classCode" value="${entity.classCode }"> 
 			  </td>
 			 <td> 
 			   <span id="typeDes${entity.id}">
@@ -360,7 +373,7 @@ display: none;
 				   ${entity.typeDes.toString().equals("SYSTEM_TYPE")?"系统类":"" }
 				   ${entity.typeDes.toString().equals("OTHER_TYPE")?"其它类":"" }
 			   </span>
-			   <select style="display:none;" id="itypeDes${entity.id}" name="typeDes" >
+			   <select class="form-control"  style="display:none;" id="itypeDes${entity.id}" name="typeDes" >
 					  <option value="0" ${entity.typeDes.toString().equals("LIST_TYPE")?"selected":"" }>列表类</option>
 					  <option value="1" ${entity.typeDes.toString().equals("DES_TYPE")?"selected":"" }>介绍类</option>
 					  <option value="2" ${entity.typeDes.toString().equals("SYSTEM_TYPE")?"selected":"" }>系统类</option>
@@ -369,36 +382,36 @@ display: none;
 			 </td>
 			 <td> 
 			   <span id="readUrl${entity.id}">${entity.readUrl }</span>
-			   <input  type="hidden" id="ireadUrl${entity.id}" name="readUrl" value="${entity.readUrl }"> 
+			   <input  class="form-control"  type="hidden" id="ireadUrl${entity.id}" name="readUrl" value="${entity.readUrl }"> 
 			 </td>
 			 <td>
 			   <span id="manageUrl${entity.id}">${entity.manageUrl }</span>
-			   <input  type="hidden" id="imanageUrl${entity.id}" name="manageUrl" value="${entity.manageUrl }"> 
+			   <input  class="form-control"  type="hidden" id="imanageUrl${entity.id}" name="manageUrl" value="${entity.manageUrl }"> 
 			 </td>
 			 <td>
 			   <span id="groupType${entity.id}">${entity.groupType }</span>
-			   <input  type="hidden" id="igroupType${entity.id}" name="groupType" value="${entity.groupType }"> 
+			   <input  class="form-control"  type="hidden" id="igroupType${entity.id}" name="groupType" value="${entity.groupType }"> 
 			</td>
 			 <td> 
 			   <span id="sequence${entity.id}">${entity.sequence }</span>
-			   <input  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
+			   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
 			</td>
 			 <td>
 			  <a id="edit${entity.id}" href="javaScript:void(0)" onclick="displayEditButton('${entity.id}')" class="btn btn-info btn-xs" >编辑</a>
 			   <!--  glyphicon-ok  glyphicon-pencil-->
-				 <span class="glyphicon glyphicon-pencil xeditClass" id="ok${entity.id}" aria-hidden="true" onclick="edit('${entity.id}')" ></span>
+				 <span class="glyphicon glyphicon-ok xeditClass" id="ok${entity.id}" aria-hidden="true" onclick="edit('${entity.id}')" ></span>
 				 &nbsp;
 				 <span class="glyphicon glyphicon-remove xeditClass" id="cancel${entity.id}" aria-hidden="true" onclick="dropEdit('${entity.id}')" ></span>
 				  
 			 </td>
 			 <td> 
-			  <a href="<c:url value='control/column/delete.html?column.id=${entity.id}'/>" onclick="return deleteColumn()" class="btn btn-primary btn-xs">删除</a>
-			 </td>
+			   <input type="button"  value="删除" class="btn btn-info btn-xs" onclick="javascript:deleteColumn('${entity.id}')">&nbsp;&nbsp;
+			</td>
 			</tr>
 			<tr>
 			   <td colspan="10">
-				<c:forEach  items="${entity.childrens }" var="child" >
-					 <a  href="<c:url value='control/column/list.html?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>  
+				<c:forEach  items="${entity.childrens }" var="child" varStatus="status" >
+					 [<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.html?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>]  
 				</c:forEach>
 			   </td>
 			</tr>
@@ -412,7 +425,10 @@ display: none;
    </div>
   
   
-   <div style="position:absolute; bottom: 5px;right: 0px;left: 0px;">
+   
+</div>
+
+<div style="position:relative; bottom: 5px;right: 0px;left: 0px;">
 	
   <form  action="<c:url value='control/column/add.html'/>" method="post"  onsubmit="return checkAdd()">
 	<table class="table table-bordered table-striped" width="100%">
@@ -427,7 +443,7 @@ display: none;
 	  	 <td>分类码</td><td><input type="text" id="classCode" name="column.classCode"    required="required" class="form-control"> </td>
 	  	 <td>分类说明</td>
 	  	 <td>
-	  	    <select  name="typeDes" >
+	  	    <select class="form-control" name="typeDes" >
 					  <option value="0" }>列表类</option>
 					  <option value="1" }>介绍类</option>
 					  <option value="2" }>系统类</option>
@@ -451,8 +467,5 @@ display: none;
 	</table>
   </form>
 </div>
-</div>
-
-
 </body>
 </html>

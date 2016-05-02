@@ -52,14 +52,20 @@ public class ColumnTypeManageAction {
 			ColumnType column=columnTypeService.find(formbean.getColumn().getId());
 			if( column!=null){
 				try {
-					BaseForm.copy(column, formbean.getColumn());
+					
+					column.setClassCode(formbean.getColumn().getClassCode());
+					column.setName(formbean.getColumn().getName());
+					column.setGroupType(formbean.getColumn().getGroupType());
+					column.setManageUrl(formbean.getColumn().getManageUrl());
+					column.setReadUrl(formbean.getColumn().getReadUrl());
+					column.setSequence(formbean.getColumn().getSequence());
 					//2.设置分类说明
 					column.setTypeDes(ColumnTypeDesEnum.values()[formbean.getTypeDes()]);
-					//设置父类
+					/*//设置父类
 					ColumnType parent =columnTypeService.find(formbean.getParentId());
 					if( parent !=null)
 					  column.setParent(parent);
-					
+					*/
 					columnTypeService.updateColumnType(column);
 					//成功
 					flage = true;
@@ -85,7 +91,7 @@ public class ColumnTypeManageAction {
 			if( column!=null)
 				columnTypeService.delete(column.getId());
 		}
-		return "redirect:/control/column/list.html?parentid="+formbean.getParentId();
+		return "redirect:/control/column/list.html?parentid="+formbean.getParentId()+"&page="+formbean.getPage();
 	}
 	/**
 	 * 添加栏目
@@ -127,8 +133,8 @@ public class ColumnTypeManageAction {
 		
 		//构造导航栏
 		generatorNavigation(request, formbean);
-		
-		return SiteUtils.getPage("admin.column.list");
+		model.addAttribute("page",formbean.getPage());
+		return SiteUtils.getPage("control.column.list");
 	}
 	public ColumnTypeService getColumnTypeService() {
 		return columnTypeService;

@@ -34,7 +34,7 @@ public class ControlCenterAction {
 		List<ColumnType> topColumns= columnTypeService.getTopColumns();
 		//保存到
 		model.addAttribute("topColumns", topColumns);
-		return SiteUtils.getPage("admin.controlcenter");
+		return SiteUtils.getPage("control.controlcenter");
 	}
 	public ColumnTypeService getColumnTypeService() {
 		return columnTypeService;

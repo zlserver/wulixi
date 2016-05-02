@@ -12,7 +12,7 @@ public class BaseForm {
 	/**
 	 * 每页显示最大数，默认10
 	 */
-	private int maxresult=10;
+	private int maxresult=3;
 	/**
 	 * 存放表单校验后的结果
 	 */
