@@ -110,7 +110,7 @@ display: none;
 	function conveterValue(id, state){
 		//获取所有编辑框和显示span
 		//栏目名称
-		var namespan = $("#name"+id);
+		var namespan = $("#name"+id+" a:only-child");
 		var nameinput=$("#iname"+id);
 		//分类码
 		var classCodespan = $("#classCode"+id);
@@ -281,7 +281,23 @@ display: none;
 			sequenceinput.attr("type","hidden");
 		}
 	}
-
+	/**
+	添加子栏目进行校验
+	**/
+	function checkAdd(){
+		var name = $("#name").val();
+		var classCode = $("#classCode").val;
+		if( name.trim()==""||classCode.trim()==""){
+			alert("请填写栏目名称和分类码");
+			return false;
+		}
+		alert(classCode.trim().length);
+		if( classCode.trim().length>6){
+			alert("分类码长度不能大于6");
+			return false;
+		}
+		return true;
+	}
 </script>
 </head>
 <body>
@@ -398,7 +414,7 @@ display: none;
   
    <div style="position:absolute; bottom: 5px;right: 0px;left: 0px;">
 	
-  <form  action="<c:url value='control/column/add.html'/>" method="post">
+  <form  action="<c:url value='control/column/add.html'/>" method="post"  onsubmit="return checkAdd()">
 	<table class="table table-bordered table-striped" width="100%">
 	 
 	  <tbody>
@@ -407,8 +423,8 @@ display: none;
 	  	  父类:
 	  	 <font color="red">${parentName}</font>  <input type="hidden" name="parentId" value="${parentId}"> 
 	  	 </td>
-	  	 <td>类名称</td> <td><input type="text" name="column.name" > </td>
-	  	 <td>分类码</td><td><input type="text" name="column.classCode" > </td>
+	  	 <td>类名称</td> <td><input type="text" id="name" name="column.name"    required="required" class="form-control"> </td>
+	  	 <td>分类码</td><td><input type="text" id="classCode" name="column.classCode"    required="required" class="form-control"> </td>
 	  	 <td>分类说明</td>
 	  	 <td>
 	  	    <select  name="typeDes" >
@@ -419,7 +435,7 @@ display: none;
 			 </select>
 	  	 </td>
 	  	 <td>管理程序</td>
-	  	 <td><input type="text" name="column.manageUrl" > </td>
+	  	 <td><input type="text" name="column.manageUrl" class="form-control"> </td>
 	  	</tr>
 	  	
 	  	<tr>
