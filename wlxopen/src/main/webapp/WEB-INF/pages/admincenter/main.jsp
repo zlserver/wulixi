@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%
@@ -80,7 +81,7 @@ function exit() {
 			
 				<div id="logindes" >
 				 <p >登录用户:<font > ${admin.account } </font></p>
-				 <p >登录时间:<font > ${admin.loginTime} </font></p>
+				 <p >登录时间:<font ><fmt:formatDate value="${admin.loginTime}" pattern="yy-MM-dd HH:mm"/> </font></p>
 				 <p >登录次数:<font > ${admin.loginCount } </font></p>
 				 <p >发稿篇数:<font > ${admin.publishCount } </font></p>
 				  <span>
