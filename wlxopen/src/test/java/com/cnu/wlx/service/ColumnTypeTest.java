@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.cnu.wlx.bean.ColumnType;
+import com.cnu.wlx.myenum.ColorEnum;
 import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 
 /**
@@ -108,5 +109,10 @@ public class ColumnTypeTest {
 		}
 	}
 
-	
+	@Test
+	public void readColorEnum(){
+		//ColorEnum color =Enum.valueOf(ColorEnum.class,"RED");
+		ColorEnum color =ColorEnum.valueOf("RED");
+		System.out.println(color.toString());
+	}
 }

@@ -14,7 +14,22 @@ public class NewsForm extends BaseForm {
 	/**
 	 * 新闻所属栏目分类
 	 */
-	private String classCode;
+	private String columnId;
+	/**
+	 * 标题颜色
+	 */
+	private String titleColor;
+	
+	
+
+	public String getTitleColor() {
+		return titleColor;
+	}
+
+	public void setTitleColor(String titleColor) {
+		this.titleColor = titleColor;
+	}
+
 	public News getNews() {
 		return news;
 	}
@@ -29,12 +44,12 @@ public class NewsForm extends BaseForm {
 		return 10;
 	}
 
-	public String getClassCode() {
-		return classCode;
+	public String getColumnId() {
+		return columnId;
 	}
 
-	public void setClassCode(String classCode) {
-		this.classCode = classCode;
+	public void setColumnId(String columnId) {
+		this.columnId = columnId;
 	}
 
 	/**
@@ -42,7 +57,7 @@ public class NewsForm extends BaseForm {
 	 * @return
 	 */
 	public boolean validateList(){
-		if( validateLen(classCode, 1, 10)){
+		if( !validateLen(columnId, 1, 32)){
 			getResult().put("error", "查询栏目有误!");
 			return false;
 		}

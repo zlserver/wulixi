@@ -46,7 +46,7 @@ display: none;
 		}else{
 			if( confirm("确定要删除吗？")){
 				var form = document.forms[0];
-				form.action="control/column/delete.html?column.id="+id;
+				form.action="control/column/delete.action?column.id="+id;
 				form.submit();
 			}
 		}
@@ -96,7 +96,7 @@ display: none;
 		var sequence=sequenceinput.val();
 		
 		var parentId = $("#parentId").val();
-		$.post("control/column/ajaxEdit.html",{"parentId":parentId,"column.id":id,"column.name":name,"column.classCode":classCode,"typeDes":typeDes,"column.readUrl":readUrl,"column.manageUrl":manageUrl,"column.groupType":groupType,"column.sequence":sequence},
+		$.post("control/column/ajaxEdit.action",{"parentId":parentId,"column.id":id,"column.name":name,"column.classCode":classCode,"typeDes":typeDes,"column.readUrl":readUrl,"column.manageUrl":manageUrl,"column.groupType":groupType,"column.sequence":sequence},
 		  function(data){
 			var status = data.status;
 			var message = data.message;
@@ -319,7 +319,7 @@ display: none;
 	   <c:set var="parentId" value="" scope="page"></c:set>
 	
 	  <c:forEach items="${columnNavigation}" var="item"  varStatus="status">
-	    <li><a href="control/column/list.html?parentId=${item.key}&parentName=${item.value}">${item.value }</a></li>
+	    <li><a href="control/column/list.action?parentId=${item.key}&parentName=${item.value}">${item.value }</a></li>
 	    
 	     <!-- 当且列表父类的父类，也就是导航列表的倒数第二个，用于返回上一层使用。-->
 	    <c:set var="backParentId" value="${parentId }" scope="page"></c:set>
@@ -333,7 +333,7 @@ display: none;
 	</ol>
 
   <div class="panel-body">
-	<form  action="<c:url value='control/column/list.html'/>" method="post">
+	<form  action="<c:url value='control/column/list.action'/>" method="post">
    <!-- 查询参数 -->
     <input type="hidden" id="parentId" name="parentId" value="${parentId}">
     <input type="hidden" name="page" value="${page }">
@@ -359,7 +359,7 @@ display: none;
 			  <span>${entity.id }</span>
 			 </td>  --%> 
 			 <td>
-			     <span id="name${entity.id}"><a href="<c:url value='control/column/list.html?parentId=${entity.id }&parentName=${entity.name}'/>">${entity.name}</a></span>
+			     <span id="name${entity.id}"><a href="<c:url value='control/column/list.action?parentId=${entity.id }&parentName=${entity.name}'/>">${entity.name}</a></span>
 				 <input class="form-control" type="hidden" id="iname${entity.id}"  name="name" value="${entity.name}"> 
 			</td>
 			  <td>
@@ -411,7 +411,7 @@ display: none;
 			<tr>
 			   <td colspan="10">
 				<c:forEach  items="${entity.childrens }" var="child" varStatus="status" >
-					 [<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.html?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>]  
+					 [<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.action?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>]  
 				</c:forEach>
 			   </td>
 			</tr>
@@ -430,7 +430,7 @@ display: none;
 
 <div style="position:relative; bottom: 5px;right: 0px;left: 0px;">
 	
-  <form  action="<c:url value='control/column/add.html'/>" method="post"  onsubmit="return checkAdd()">
+  <form  action="<c:url value='control/column/add.action'/>" method="post"  onsubmit="return checkAdd()">
 	<table class="table table-bordered table-striped" width="100%">
 	 
 	  <tbody>
@@ -456,11 +456,11 @@ display: none;
 	  	
 	  	<tr>
 	  	 <td colspan="1">
-	  	    <a href="<c:url value='admin/control/wordtheme/importUI.html'/>" >栏目管理帮助</a>
+	  	    <a href="<c:url value='admin/control/wordtheme/importUI.action'/>" >栏目管理帮助</a>
 		 </td>
 	  	 <td colspan="8" align="center"> 
 	  	 	<input type="submit"  class="btn btn-info "  value="添加"> 
-		     <a href="<c:url value='control/column/list.html?parentId=${backParentId}'/>"  class="btn btn-info " >返回上一层</a>
+		     <a href="<c:url value='control/column/list.action?parentId=${backParentId}'/>"  class="btn btn-info " >返回上一层</a>
 		</td> 
 	  	</tr>
 	  </tbody>

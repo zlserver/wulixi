@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,6 +18,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.cnu.wlx.myenum.ColorEnum;
 
 @Entity
 @Table(name="t_news")
@@ -32,6 +36,10 @@ public class News implements Serializable{
 	 */
 	
 	private String title;
+	/**
+	 * 标题颜色
+	 */
+	private ColorEnum titleColor=ColorEnum.BLACK;
 	/**
 	 * 所属栏目分类,多对一，多个新闻对应一条栏目
 	 */
@@ -78,6 +86,15 @@ public class News implements Serializable{
 	}
 
 	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable=false,length=10)
+	public ColorEnum getTitleColor() {
+		return titleColor;
+	}
+
+	public void setTitleColor(ColorEnum titleColor) {
+		this.titleColor = titleColor;
+	}
 
 	public long getReadCount() {
 		return readCount;
@@ -87,7 +104,7 @@ public class News implements Serializable{
 	}
 	
 	@ManyToOne(optional=false)
-	@JoinColumn(name="classCode",referencedColumnName="classCode")
+	@JoinColumn(name="columnId")
 	public ColumnType getColumn() {
 		return column;
 	}

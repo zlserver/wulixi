@@ -64,26 +64,6 @@ public class AdminManageAction {
 		}
 	}
 	
-	public String login(AdminForm formbean, HttpServletRequest request) {
-		// 1.进行校验码验证、进行用户名密码校验
-		if (formbean.validateCheckCode(request)&&formbean.validateAccountAndPass()) {
-			// 2.根据用户名和密码登录
-			String ac = formbean.getAdmin().getAccount();
-			String pa = formbean.getAdmin().getPassword();
-			Admin ad = adminService.login(ac, pa);
-			if (ad != null) {
-				// 4.登录成功
-				request.getSession().setAttribute("admin", ad);
-				return SiteUtils.getPage("control.controlcenter");
-			}
-			// 3.用户名或者密码有误
-			formbean.getResult().put("account", "用户名或者密码有误!");
-		}
-		// 登录出错返回
-		request.setAttribute("formbean", formbean);
-		return SiteUtils.getPage("control.admin.login");
-		
-	}
 	/**
 	 * 登录界面
 	 * @return

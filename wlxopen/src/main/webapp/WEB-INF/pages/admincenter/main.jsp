@@ -73,7 +73,7 @@ function exit() {
 					<a class="one">${column.name }</a>
 					 <ul class="kid">
 						<c:forEach items="${column.childrens }" var="child">
-						 <li><b class="tip"></b><a target="Conframe" href="<c:url value='${child.readUrl }'/>" >${child.name}</a></li>
+						 <li><b class="tip"></b><a target="Conframe" href="<c:url value='${child.readUrl }?columnId=${child.id}'/>" >${child.name}</a></li>
 						</c:forEach>                                                     
 					</ul>
 				</div>

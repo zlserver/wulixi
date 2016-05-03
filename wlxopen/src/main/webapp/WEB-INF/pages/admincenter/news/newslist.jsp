@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="panel panel-default">
 
   <div class="panel-body">
-	<form  action="<c:url value='control/news/list.html'/>" method="post">
+	<form  action="<c:url value='control/news/list.action'/>" method="post">
    <!-- 查询参数 -->
     <input type="hidden" name="page" ">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
@@ -46,7 +46,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <c:forEach items="${pageView.records }" var="entity">
 			<tr>
 			 <td>
-			     <span ><a href="<c:url value='control/news/detail.html?news.id=${entity.id }'/>">${entity.title}</a></span>
+			     <span >
+			     <a href="<c:url value='control/news/detail.action?id=${entity.id }'/>">
+			       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
+			     </a>
+			     </span>
 			 </td>
 			  <td>
 			   <span > <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /> </span>
@@ -58,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </c:forEach>
 		 <tr>
 			 <td colspan="3" align="center">
-			 <a class="btn btn-primary" href="control/news/addUi?classCode=${formbean.classCode}">发布新闻</a>
+			 <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
 			 </td>
 		</tr>
 		</tbody>

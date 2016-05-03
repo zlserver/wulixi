@@ -91,7 +91,7 @@ public class ColumnTypeManageAction {
 			if( column!=null)
 				columnTypeService.delete(column.getId());
 		}
-		return "redirect:/control/column/list.html?parentid="+formbean.getParentId()+"&page="+formbean.getPage();
+		return "redirect:/control/column/list.action?parentid="+formbean.getParentId()+"&page="+formbean.getPage();
 	}
 	/**
 	 * 添加栏目
@@ -120,7 +120,7 @@ public class ColumnTypeManageAction {
 			} 
 		} 
 		
-		return "redirect:/control/column/list.html?parentid="+formbean.getParentId();
+		return "redirect:/control/column/list.action?parentid="+formbean.getParentId();
 	}
 	@RequestMapping(value="list")
 	public String list(ColumnTypeForm formbean,Model model,HttpServletRequest request){

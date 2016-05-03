@@ -34,6 +34,8 @@
   </properties>
   
   <dependencies>
+  
+  
   <!-- Spring的验证需要实现的接口，提供了JSR303接口的实现 -->
         <dependency>
             <groupId>javax.validation</groupId>

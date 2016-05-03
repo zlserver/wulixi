@@ -47,7 +47,7 @@ public class LoginManageAction {
 				adminService.update(ad);
 				//5.进入管理中心。
 				request.getSession().setAttribute("admin", ad);
-				return "redirect:/"+"control/controlCenter.html";
+				return "redirect:/"+"control/controlCenter.action";
 				//return SiteUtils.getSite("admin.controlcenter");
 			}
 			// 3.用户名或者密码有误
