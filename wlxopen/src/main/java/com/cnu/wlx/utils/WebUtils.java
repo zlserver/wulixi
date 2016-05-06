@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -40,7 +41,24 @@ public class WebUtils {
 		
 		return sdf.format(date);
 	}
-	
+	/**
+	 * 获取文件保存的名称:日期+4位随机数
+	 * @return
+	 */
+	public synchronized static String getFileSaveName(){
+		
+		StringBuilder  name= new StringBuilder();
+		String format = "yyyyMMddHHmmss";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
+		String dateStr= sdf.format(new Date());
+		name.append(dateStr);
+		Random r = new Random();
+		for( int i =0;i<4;i++)
+			name.append(r.nextInt(10));
+		
+		return name.toString();
+	}
 	/*
 	public static void closeInputOutStream(InputStream is ,OutputStream os)
 	{

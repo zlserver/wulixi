@@ -1,5 +1,6 @@
 package com.cnu.wlx.service.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -53,5 +54,14 @@ public class NewsServiceImpl implements NewsService {
 			return newsDao.find(id);
 		return null;
 	}
-
+	@Override
+	public void update(News news) {
+		// TODO Auto-generated method stub
+		newsDao.update(news);
+	}
+	@Override
+	public void delete(Serializable ...entityids){
+		if( entityids!=null)
+		newsDao.delete(entityids);
+	}
 }

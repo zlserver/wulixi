@@ -11,10 +11,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <base href="<%=basePath%>">   
 <title>新闻详细信息</title>       
+<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <style type="text/css">
-#container{
- margin: 10px 20px 10px 20px;
-}
+
 #title{
 text-align: center;
 border-bottom: 1px solid gray;
@@ -24,12 +23,16 @@ text-align: center;
 }
 #article{
 border-top: 1px solid gray;
+padding-top: 20px;
 }
 </style> 
 </head>
 <body>
-
-<div id="container">
+<div  class="panel panel-default">
+  <div class="panel-heading">
+    <a class="btn btn-info" href="javascript:history.go(-1);">返回</a>
+  </div>
+  <div class="panel-body">
 	<div id="title">
 		<h3><font color="${news.titleColor.toString()}">${news.title}</font> </h3>
 	</div>
@@ -39,6 +42,7 @@ border-top: 1px solid gray;
 	<div id="article">
 		${news.context }
 	</div>
+  </div>
 </div>
 </body>
 </html>

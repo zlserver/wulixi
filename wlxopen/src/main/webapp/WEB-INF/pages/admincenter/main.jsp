@@ -73,7 +73,12 @@ function exit() {
 					<a class="one">${column.name }</a>
 					 <ul class="kid">
 						<c:forEach items="${column.childrens }" var="child">
-						 <li><b class="tip"></b><a target="Conframe" href="<c:url value='${child.readUrl }?columnId=${child.id}'/>" >${child.name}</a></li>
+						 <li><b class="tip"></b>
+						  <a target="Conframe" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
+						  <c:if test="${!child.manageUrl.equals('')}">
+						    &nbsp;&nbsp;&nbsp;[<a target="Conframe" href="<c:url value='${child.manageUrl}?columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+						  </c:if>
+						  </li>
 						</c:forEach>                                                     
 					</ul>
 				</div>

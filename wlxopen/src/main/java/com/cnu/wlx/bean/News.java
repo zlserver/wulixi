@@ -20,6 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.cnu.wlx.myenum.ColorEnum;
+import com.cnu.wlx.myenum.NewsStateEnum;
 
 @Entity
 @Table(name="t_news")
@@ -61,7 +62,7 @@ public class News implements Serializable{
 	/**
 	 * 状态
 	 */
-	private int state;
+	private NewsStateEnum state;
 	/**
 	 * 顺序
 	 */
@@ -129,17 +130,19 @@ public class News implements Serializable{
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
+	public int getSequence() {
+		return sequence;
+	}
+
 	@Column(nullable=false)
-	public int getState() {
+	@Enumerated(EnumType.STRING)
+	public NewsStateEnum getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(NewsStateEnum state) {
 		this.state = state;
-	}
-
-	public int getSequence() {
-		return sequence;
 	}
 
 	public void setSequence(int sequence) {

@@ -411,7 +411,7 @@ display: none;
 			<tr>
 			   <td colspan="10">
 				<c:forEach  items="${entity.childrens }" var="child" varStatus="status" >
-					 [<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.action?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>">${child.name}</a>]  
+			      &nbsp; &nbsp;[<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.action?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>"><font color="#992222">${child.name}</font></a>]  
 				</c:forEach>
 			   </td>
 			</tr>

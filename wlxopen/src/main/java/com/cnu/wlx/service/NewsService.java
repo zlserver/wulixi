@@ -1,5 +1,7 @@
 package com.cnu.wlx.service;
 
+import java.io.Serializable;
+
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.base.QueryResult;
 
@@ -31,5 +33,15 @@ public interface NewsService {
 	 * @return
 	 */
 	News find(String id);
+	/**
+	 * 更新
+	 * @param news
+	 */
+	void update(News news);
+	/**
+	 * 删除新闻
+	 * @param entityids
+	 */
+	void delete(Serializable[] entityids);
 
 }

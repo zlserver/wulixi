@@ -189,6 +189,7 @@ public class ColumnTypeManageAction {
 			//访问顶层父类，则取消navigation中的其它栏目
 			columnNavigation.clear();
 			columnNavigation.put(" ","顶层栏目");
+			
 		}
 		//保存到session中
 		session.setAttribute("columnNavigation", columnNavigation);

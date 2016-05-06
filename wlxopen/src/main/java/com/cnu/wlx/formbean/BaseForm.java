@@ -1,7 +1,10 @@
 package com.cnu.wlx.formbean;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -13,6 +16,14 @@ public class BaseForm {
 	 * 每页显示最大数，默认10
 	 */
 	private int maxresult=3;
+	/**
+	 * 栏目id
+	 */
+	private String columnId;
+	/**
+	 * 栏目名称
+	 */
+	private String columnName;
 	/**
 	 * 存放表单校验后的结果
 	 */
@@ -37,6 +48,18 @@ public class BaseForm {
 		return result;
 	}
 	
+	public String getColumnId() {
+		return columnId;
+	}
+	public void setColumnId(String columnId) {
+		this.columnId = columnId;
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
 	/**
 	 * 将orig中数据拷贝到dest中
 	 * @param dest
@@ -58,6 +81,28 @@ public class BaseForm {
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * 验证上传文件类型是否属于图片格式
+	 * @param fileFileName  文件名
+	 * @param fileContentType 文件类型
+	 * @return true表示属于图片，false：有误
+	 */
+	public static boolean validateImageFileType(String fileFileName,String fileContentType){
+		
+			List<String> arrowType = Arrays.asList("image/bmp","image/png","image/gif","image/jpg","image/jpeg","image/pjpeg");
+			List<String> arrowExtension = Arrays.asList("gif","jpg","bmp","png","jpeg");
+			String ext = getExt(fileFileName);
+			return arrowType.contains(fileContentType.toLowerCase()) && arrowExtension.contains(ext);
+		
+	}
+	/**
+	 * 得到文件后缀名
+	 * @param fileFileName
+	 * @return
+	 */
+	public static String getExt(String fileFileName){
+		return fileFileName.substring(fileFileName.lastIndexOf('.')+1).toLowerCase();
 	}
 	/**
 	 * 校验字符串str的有效长度不小于min且不大于max。

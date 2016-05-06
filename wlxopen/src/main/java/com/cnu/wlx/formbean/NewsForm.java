@@ -1,5 +1,7 @@
 package com.cnu.wlx.formbean;
 
+import java.util.List;
+
 import com.cnu.wlx.bean.News;
 /**
  * 新闻表单类
@@ -12,15 +14,67 @@ public class NewsForm extends BaseForm {
 
 	private News news;
 	/**
-	 * 新闻所属栏目分类
-	 */
-	private String columnId;
-	/**
 	 * 标题颜色
 	 */
 	private String titleColor;
+	/**
+	 * 新闻状态
+	 */
+	private String state;
 	
+	/**
+	 * 批量更新
+	 */
+	private List<String> columnIds;
 	
+	private List<String> states;
+	
+	private List<Integer>  sequences;
+	
+	/**
+	 * 编辑状态，true：编辑状态，false：显示状态
+	 */
+	private boolean editState=false;
+
+	public boolean getEditState() {
+		return editState;
+	}
+
+	public void setEditState(boolean editState) {
+		this.editState = editState;
+	}
+
+	public List<String> getColumnIds() {
+		return columnIds;
+	}
+
+	public void setColumnIds(List<String> columnIds) {
+		this.columnIds = columnIds;
+	}
+
+	public List<String> getStates() {
+		return states;
+	}
+
+	public void setStates(List<String> states) {
+		this.states = states;
+	}
+
+	public List<Integer> getSequences() {
+		return sequences;
+	}
+
+	public void setSequences(List<Integer> sequences) {
+		this.sequences = sequences;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	public String getTitleColor() {
 		return titleColor;
@@ -44,23 +98,25 @@ public class NewsForm extends BaseForm {
 		return 10;
 	}
 
-	public String getColumnId() {
-		return columnId;
-	}
-
-	public void setColumnId(String columnId) {
-		this.columnId = columnId;
-	}
-
 	/**
 	 * 在list方法之前进行基础校验
 	 * @return
 	 */
 	public boolean validateList(){
-		if( !validateLen(columnId, 1, 32)){
+		if( !validateLen(this.getColumnId(), 1, 32)){
 			getResult().put("error", "查询栏目有误!");
 			return false;
 		}
+		return true;
+	}
+	/**
+	 * 校验添加方法,题目，标题颜色，内容不能为空
+	 * @return
+	 */
+	public boolean validateAdd() {
+		// TODO Auto-generated method stub
+		if( !validateStr(news.getTitle()) || !validateStr(news.getContext())|| !validateStr(titleColor))
+			return false;
 		return true;
 	}
 	
