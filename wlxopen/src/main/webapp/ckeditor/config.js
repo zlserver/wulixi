@@ -13,7 +13,8 @@ CKEDITOR.editorConfig = function( config ) {
 		         	   ["NumberedLisst","BulletedList","-","JustifyLeft","JustifyCenter","JustifyRight","JustfyBlock"],
 		         	   ["Image"],
 		         	   ["Styles","Format","Font","FontSize"],
-		         	   ["TextColor","BGColor"]
+		         	   ["TextColor","BGColor"],
+		         	   ["Maximize"]
 	];
 	
 	config.filebrowserUploadUrl="control/news/uploadImage.action";
