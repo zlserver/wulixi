@@ -12,7 +12,6 @@ CKEDITOR.editorConfig = function( config ) {
 		         	   ["Bold","Italic","Underline"],
 		         	   ["NumberedLisst","BulletedList","-","JustifyLeft","JustifyCenter","JustifyRight","JustfyBlock"],
 		         	   ["Image"],
-		         	   "/",
 		         	   ["Styles","Format","Font","FontSize"],
 		         	   ["TextColor","BGColor"]
 	];

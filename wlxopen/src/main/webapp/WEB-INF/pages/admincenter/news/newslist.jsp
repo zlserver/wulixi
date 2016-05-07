@@ -63,9 +63,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</c:if>
 			<td  width="50%">新闻名称</td>
 			<td  width="18%">发布时间</td>
-			<td  width="8%">状态</td>
+			<td  width="10%">状态</td>
 			<td  width="8%">顺序</td>
-			<td  width="8%">阅读量</td>
+			<td  width="6%">阅读量</td>
 			</tr>
 		</thead>
 		<tbody>
