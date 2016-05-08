@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +21,17 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsPicture;
+import com.cnu.wlx.bean.base.MyStatus;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.NewsPictureDao;
@@ -40,6 +45,8 @@ import com.cnu.wlx.service.NewsPictureService;
 import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.utils.SiteUtils;
 import com.cnu.wlx.utils.WebUtils;
+
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -65,92 +72,66 @@ public class NewsManageAction  implements ServletContextAware{
      //上传图片
 	@RequestMapping(value="uploadImage")
 	public String uploadImage(HttpServletRequest request,HttpServletResponse response, @RequestParam(value="upload")CommonsMultipartFile upload) throws IOException{
-		
-		response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();  
-        String uploadFileName= upload.getOriginalFilename();
+	   
+		String uploadFileName= upload.getOriginalFilename();
         String uploadContentType=upload.getContentType();
-        
+      
         //设置返回“图像”选项卡  
         String callback = request.getParameter("CKEditorFuncNum"); 
-        
+        String result = "";
       //对文件进行校验  
         if(upload==null || uploadContentType==null || uploadFileName==null){  
-
-            out.println("<script type=\"text/javascript\">");  
-            out.print("<font color=\"red\" size=\"2\">*请选择上传文件</font>");  
-            out.println("</script>");
+            result="<font color=\"red\" size=\"2\">*请选择上传文件</font>";
+            returnResult(response, result);
             return null;  
         }  
-          
-        System.out.println(uploadFileName+":"+uploadContentType+BaseForm.validateImageFileType(uploadFileName, uploadContentType));
         if(!BaseForm.validateImageFileType(uploadFileName, uploadContentType)){
-           /* out.print("<font color=\"red\" size=\"2\">*文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）</font>");  
-           */
-
-            out.println("<script type=\"text/javascript\">");  
-        	out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');"); 
-        	out.println("</script>");
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');";
+        	returnResult(response, result);
         	return null;  
         }  
-          
         if(upload.getSize()> 600*1024){  
-            /*out.print("<font color=\"red\" size=\"2\">*文件大小不得大于600k</font>");  */
-        	
-            out.println("<script type=\"text/javascript\">");  
-        	out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');"); 
-        	out.println("</script>");
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件大小不得大于600k','');";
+        	returnResult(response, result);
             return null;  
         }  
           
-        //将文件保存到项目目录下  
-        InputStream is = upload.getInputStream(); 
-        
-        String uploadPath = SiteUtils.getSavePath("news.image");   //设置保存绝对目录  
+        //文件保存相对路径
         String relativeSavePath= SiteUtils.getRelativeSavePath("news.image");//相对路径，在数据表中存储
-        File dir = new File(uploadPath);
-        if( !dir.exists())
-        	dir.mkdirs();
-        String fileName = WebUtils.getFileSaveName(); //采用当前日期+4位随机数的方式随机命名  
-        fileName += uploadFileName.substring(uploadFileName.length() - 4);  
+        //保存文件名称
+        String saveFileName = WebUtils.getFileSaveName(uploadFileName);
+        try {
+        	//保存文件
+			BaseForm.saveFile(relativeSavePath, saveFileName, upload);
+		} catch (Exception e) {
+			e.printStackTrace();
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "上传失败','');";
+        	returnResult(response, result);
+            return null;  
+		}
         
-        File toFile = new File(dir, fileName);  
-        OutputStream os = new FileOutputStream(toFile);     
-        byte[] buffer = new byte[1024];     
-        int length = 0;  
-        while ((length = is.read(buffer)) > 0) {     
-            os.write(buffer, 0, length);     
-        }     
-        is.close();  
-        os.close();  
-           
         String path = request.getContextPath();
-      	String basePath = request.getScheme() + "://"
-      			+ request.getServerName() + ":" + request.getServerPort()
-      			+ path + "/";
+      	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
       	
-      	//保存文件记录
-      	/*NewsPicture picture = new NewsPicture();
-      	picture.setContentType(uploadContentType);
-      	picture.setExt(BaseForm.getExt(uploadFileName));
-      	picture.setOriginName(uploadFileName);
-      	picture.setSaveName(fileName);
-      	picture.setSize(upload.getSize());
-      	picture.setRelativePath(relativeSavePath);
-      	
-      	newsPictureService.save(picture);*/
-      	
-        out.println("<script type=\"text/javascript\">");    
-        /*out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"images/group/" + fileName + "','')");    
-        */
-        System.out.println(basePath);
-        out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ fileName + "','')");    
-        
-        out.println("</script>");  
+        result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ saveFileName + "','')";
+        returnResult(response, result);
         return null;  
 	}
 	/**
-	 * 查看图片
+	 * 上传图片返回结果
+	 * @param response
+	 * @param result 返回结果
+	 * @throws IOException
+	 */
+	private void returnResult( HttpServletResponse response,String result) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter(); 
+		out.println("<script type=\"text/javascript\">");  
+    	out.println(result); 
+    	out.println("</script>");
+	}
+	/**
+	 * 根据文件保存的相对路径查看图片
 	 * @param savePath 文件保存的相对路径
 	 * @param request
 	 * @param response
@@ -166,38 +147,44 @@ public class NewsManageAction  implements ServletContextAware{
 			
 			//2.1获取文件资源
 			Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
-			
-			response.setCharacterEncoding("utf-8");
-	        response.setContentType("multipart/form-data");
-	       /* response.setHeader("Content-Disposition", "attachment;fileName="
-	                + fileResource.getFilename());*/
-			//3.建立文件
-			try {
-				//4.建立字节读取流
-				InputStream is = fileResource.getInputStream();
-				//5.建立缓冲流
-				BufferedInputStream bis = new BufferedInputStream(is);
-				//6.获取response的输出流
-				OutputStream os = response.getOutputStream();
-				//7.缓冲器2kb
-				byte[] buf= new byte[2048];
-				//8.进行传输
-				int len=0;
-				int count=0;
-				while( (len=bis.read(buf))!=-1)
-				{
-					count+=len;
-					os.write(buf, 0, len);
-				}
-				//9.刷新缓冲器
-				os.flush();
-				os.close();
-				bis.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			//查看图片
+			BaseForm.lookImage(response, fileResource);
 			return null;
+	}
+	/**
+	 * 上传新闻附件
+	 * @return
+	 */
+	@RequestMapping(value="upload", method=RequestMethod.POST)
+	public String handleFileUpload(MultipartHttpServletRequest request,Model model,String name,String testName){
+	   
+	   MyStatus status = new MyStatus();
+	   Iterator<String> iterator = request.getFileNames();
+		while (iterator.hasNext()) {
+				String fileName = iterator.next();
+				MultipartFile multipartFile = request.getFile(fileName);
+				String originName=multipartFile.getOriginalFilename();
+				
+				try {
+					//保存文件相对路径
+					String relativedir= SiteUtils.getRelativeSavePath("news.file");
+					//保存文件名
+					   //保存文件名称
+			        String saveFileName = WebUtils.getFileSaveName(originName);
+			        //保存文件
+			        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
+			        
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+		}
+		// do stuff...
+		JSONObject json= JSONObject.fromObject(status);
+		model.addAttribute("json", json.toString());
+	return SiteUtils.getPage("json");
 	}
 	
 	/**

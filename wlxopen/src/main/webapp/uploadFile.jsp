@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
  <div id="fileuploader">Upload</div>
  <input type="text" name="testName">
+ <div id="eventsmessage"></div>
 <script>
 $(document).ready(function() {
 	
@@ -35,14 +36,34 @@ $(document).ready(function() {
 		sizeErrorStr:"上传文件不能大于100kb", 
 		dragDropStr: "<span><b>文件拖放于此</b></span>",
 		formData: {"name":"周亮dd"}, //发送表单数据
-		dynamicFormData: function()  //动态表单的值
+		showFileCounter:false,
+		returnType:"json",  //返回数据格式为json
+		onSuccess:function(files,data,xhr,pd)  //上传成功事件，data为后台返回数据
 		{
-			var data ={ location:"INDIA",
-					
-					testName:"ddd"}
-			return data;
-		}
-		
+
+			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+data.status);
+			
+		},
+		showDelete: true,//删除按钮
+		showDownload:true,//下载按钮
+		statusBarWidth:600,
+		dragdropWidth:600,
+		deleteCallback: function (data, pd) {
+		    for (var i = 0; i < data.length; i++) {
+		        $.post("delete.php", {op: "delete",name: data[i]},
+		            function (resp,textStatus, jqXHR) {
+		                //Show Message	
+		                alert("File Deleted");
+		            });
+		    }
+		    pd.statusbar.hide(); //You choice.
+
+		},
+		downloadCallback:function(filename,pd)
+			{
+				location.href="download.php?filename="+filename;
+			}
 	});
 	
 });
