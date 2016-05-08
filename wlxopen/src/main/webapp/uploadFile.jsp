@@ -22,17 +22,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
-		url:"control/file/upload.action", //后台处理方法
+		url:"control/news/upload.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
 		dragDrop:true,  //可以取消
 		abortStr:"取消",
 		sequential:true,  //按顺序上传
 		sequentialCount:1,  //按顺序上传
 		autoSubmit :"false",  //取消自动上传
-		acceptFiles:"*" , //限制上传文件格式
+		acceptFiles:"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" , //限制上传文件格式
 		extErrorStr:"上传文件格式不对",
 		maxFileCount:10,       //上传文件数量
-		maxFileSize:100*1024, //大小限制100kb
+		maxFileSize:300*1024, //大小限制100kb
 		sizeErrorStr:"上传文件不能大于100kb", 
 		dragDropStr: "<span><b>文件拖放于此</b></span>",
 		formData: {"name":"周亮dd"}, //发送表单数据
@@ -50,20 +50,20 @@ $(document).ready(function() {
 		statusBarWidth:600,
 		dragdropWidth:600,
 		deleteCallback: function (data, pd) {
-		    for (var i = 0; i < data.length; i++) {
+		   /*  for (var i = 0; i < data.length; i++) {
 		        $.post("delete.php", {op: "delete",name: data[i]},
 		            function (resp,textStatus, jqXHR) {
 		                //Show Message	
 		                alert("File Deleted");
 		            });
-		    }
+		    } */
 		    pd.statusbar.hide(); //You choice.
 
 		},
 		downloadCallback:function(filename,pd)
-			{
-				location.href="download.php?filename="+filename;
-			}
+		{
+			location.href="download.php?filename="+filename;
+		}
 	});
 	
 });

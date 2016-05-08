@@ -13,7 +13,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
 <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="ckeditor/ckeditor.js">
+</script><link href="css/uploadfile.css" rel="stylesheet">
 <title>添加新闻</title>      
 
 <style type="text/css">
@@ -51,17 +52,30 @@ left: 265px;
 </script>
 </head>
 <body>
-	<form method="post" action="control/news/add.action" enctype="multipart/form-data" >	
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	${formbean.columnName}
+  
+  </div>
+  <div class="panel-body">
+	<form id="newsform" method="post" action="control/news/add.action" class="form-horizontal" enctype="multipart/form-data" >	
 		<input type="hidden" name="columnId" value="${columnId }">
 		<input type="hidden" name="state" id="state" >
 		<table class="table table-bordered">
 			<tr>
-				<td>题目<input type="text" class="form-control" name="news.title" value="${formbean.news.title }" required autofocus></td>
+				<td>
+				 <div class="form-group">
+				    <label for="title" class="col-md-1 control-label"> 题目</label>
+				    <div class="col-md-11">
+				      <input type="text" id="title" class="form-control col-md-6" name="news.title" value="${formbean.news.title }" required autofocus>
+				    </div>
+				  </div>
+				</td>
 			</tr>
 			<tr>
 				<td>
 					<span>
-					    标题颜色：<!-- checked="checked" -->
+					    标题颜色：
 					 <c:choose>
 					 	<c:when test="${formbean.titleColor!=null}">
 					 	 <input type="radio" name="titleColor" value="BLACK"  ${formbean.titleColor.equals("BLACK")?"checked":""}  >黑色
@@ -91,6 +105,11 @@ left: 265px;
 				</td>
 			</tr>
 			<tr>
+			   <td>
+			   <div id="fileuploader">添加附件</div>
+			   </td>
+			</tr>
+			<tr>
 				<td  align="center">
 					<input type="submit"  value="保存" class="btn btn-info" onclick="return _action('save')" >
 					<input type="submit"  value="发表" class="btn btn-info" onclick=" return _action('publish')" >
@@ -99,5 +118,61 @@ left: 265px;
 			</tr>
 		</table>
 	</form>
+  </div>
+</div>
+
+<script src="js/jquery1.9.1/jquery.min.js"></script>
+<script src="js/jquery.uploadfile.min.js"></script>
+<script>
+$(document).ready(function() {
+	
+	$("#fileuploader").uploadFile({
+		url:"control/news/upload.action", //后台处理方法
+		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
+		dragDrop:true,  //可以取消
+		abortStr:"取消",
+		sequential:true,  //按顺序上传
+		sequentialCount:1,  //按顺序上传
+		autoSubmit :"false",  //取消自动上传
+		acceptFiles:"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" , //限制上传文件格式
+		extErrorStr:"上传文件格式不对",
+		maxFileCount:10,       //上传文件数量
+		maxFileSize:1024*1024, //大小限制1M
+		sizeErrorStr:"上传文件不能大于1M", 
+		dragDropStr: "<span><b>附件拖放于此</b></span>",
+		showFileCounter:false,
+		returnType:"json",  //返回数据格式为json
+		onSuccess:function(files,data,xhr,pd)  //上传成功事件，data为后台返回数据
+		{
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			var newsform = $("#newsform");
+			if( data.status==1){
+				for( var i=0;i<data.data.length;i++){
+					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="fileIds" value="'+data.data[i].fileId+'" >';
+					newsform.append(inputNode);
+				}
+			}else{
+				alert("上传失败");
+			}
+			
+		},
+		showDelete: true,//删除按钮
+		showDownload:true,//下载按钮
+		statusBarWidth:600,
+		dragdropWidth:600,
+		deleteCallback: function (data, pd) {
+			String fileId=data.data[0].fileId;
+			$.post("control/news/deleteFile.action", {fileId:fileId},
+		            function (resp,textStatus, jqXHR) {
+		                alert("delete ok");
+		      });
+		    //删除input标签
+		    $("#"+fileId).remove();
+		    pd.statusbar.hide(); //You choice.
+
+		}
+	});
+});
+</script>
 </body>
 </html>

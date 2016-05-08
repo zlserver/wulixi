@@ -30,6 +30,10 @@ public class NewsForm extends BaseForm {
 	private List<String> states;
 	
 	private List<Integer>  sequences;
+	/**
+	 * 添加的附件文件的id
+	 */
+	private List<String> fileIds;
 	
 	/**
 	 * 编辑状态，true：编辑状态，false：显示状态
@@ -96,6 +100,14 @@ public class NewsForm extends BaseForm {
 	public int getMaxresult() {
 		// TODO Auto-generated method stub
 		return 10;
+	}
+
+	public List<String> getFileIds() {
+		return fileIds;
+	}
+
+	public void setFileIds(List<String> fileIds) {
+		this.fileIds = fileIds;
 	}
 
 	/**

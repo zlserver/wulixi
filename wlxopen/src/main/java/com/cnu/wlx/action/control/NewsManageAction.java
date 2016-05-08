@@ -1,14 +1,7 @@
 package com.cnu.wlx.action.control;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -30,22 +23,23 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.News;
-import com.cnu.wlx.bean.NewsPicture;
+import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.base.MyStatus;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
-import com.cnu.wlx.dao.NewsPictureDao;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.NewsForm;
 import com.cnu.wlx.myenum.ColorEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
+import com.cnu.wlx.service.NewsFileService;
 import com.cnu.wlx.service.NewsPictureService;
 import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.utils.SiteUtils;
 import com.cnu.wlx.utils.WebUtils;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -57,18 +51,20 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping(value="/control/news/*")
-public class NewsManageAction  implements ServletContextAware{
+public class NewsManageAction {
 
 	private NewsService newsService;
 	private ColumnTypeService columnTypeService;
-	 //应用对象
-	 private ServletContext servletContext;
 	 
 	 private NewsPictureService newsPictureService;
 	 /**
 	  * 文件服务
 	  */
 	 private FileService fileService;
+	 /**
+	  * 新闻附件服务类
+	  */
+	 private NewsFileService newsFileService;
      //上传图片
 	@RequestMapping(value="uploadImage")
 	public String uploadImage(HttpServletRequest request,HttpServletResponse response, @RequestParam(value="upload")CommonsMultipartFile upload) throws IOException{
@@ -154,37 +150,63 @@ public class NewsManageAction  implements ServletContextAware{
 	/**
 	 * 上传新闻附件
 	 * @return
+	 * {
+	 *   "status":1,
+	 *    "message":"ok",
+	 *    "data":[
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     ...
+	 *    ]
+	 * }
 	 */
 	@RequestMapping(value="upload", method=RequestMethod.POST)
-	public String handleFileUpload(MultipartHttpServletRequest request,Model model,String name,String testName){
+	public String uploadFile(MultipartHttpServletRequest request,Model model,String name,String testName){
 	   
 	   MyStatus status = new MyStatus();
+	   JSONObject json= new JSONObject();
+	   
 	   Iterator<String> iterator = request.getFileNames();
+	   //遍历所有上传文件
+	   JSONArray jsonArray = new JSONArray();
 		while (iterator.hasNext()) {
 				String fileName = iterator.next();
 				MultipartFile multipartFile = request.getFile(fileName);
 				String originName=multipartFile.getOriginalFilename();
 				
+				//保存文件相对路径:files/
+				String relativedir= SiteUtils.getRelativeSavePath("news.file");
+				//保存文件名称
+		        String saveFileName = WebUtils.getFileSaveName(originName);
 				try {
-					//保存文件相对路径
-					String relativedir= SiteUtils.getRelativeSavePath("news.file");
-					//保存文件名
-					   //保存文件名称
-			        String saveFileName = WebUtils.getFileSaveName(originName);
 			        //保存文件
 			        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
-			        
-				} catch (IOException e) {
-					e.printStackTrace();
+			        //构造文件实体
+			        NewsFile newsFile = new NewsFile();
+			        newsFile.setOriginName(originName);
+			        newsFile.setSaveName(saveFileName);
+			        newsFile.setSavePath(relativedir+saveFileName);
+			        newsFile.setExt(WebUtils.getExtFromFilename(saveFileName));
+			        newsFile.setSize(multipartFile.getSize());
+			        newsFileService.save(newsFile);
+			        //构造json
+			        JSONObject fileJson = new JSONObject();
+			        fileJson.put("fileId", newsFile.getId());
+			        jsonArray.add(fileJson);
 				} catch (Exception e) {
 					e.printStackTrace();
+					status.setStatus(0);
+					status.setMessage(e.getMessage());
+					break;
 				}
-				
 		}
-		// do stuff...
-		JSONObject json= JSONObject.fromObject(status);
+		//返回json数据
+		json.put("status", status.getStatus());
+		json.put("message", status.getMessage());
+		json.put("data", jsonArray);
 		model.addAttribute("json", json.toString());
-	return SiteUtils.getPage("json");
+		return SiteUtils.getPage("json");
 	}
 	
 	/**
@@ -256,6 +278,17 @@ public class NewsManageAction  implements ServletContextAware{
 					news.setState(state);
 					//throw new RuntimeException("测试");
 					newsService.save(news);
+					//保存附件
+					if( formbean.getFileIds()!=null){
+						for( int i =0;i <formbean.getFileIds().size();i++){
+							String fileid= formbean.getFileIds().get(i);
+							//保存附件
+							NewsFile newsFile=newsFileService.find(fileid);
+							newsFile.setNews(news);
+							//更新
+							newsFileService.update(newsFile);
+						}
+					}
 					flage = true;
 				}
 			}
@@ -271,7 +304,30 @@ public class NewsManageAction  implements ServletContextAware{
 			return SiteUtils.getPage("control.news.addUi");
 		}
 	}
-	
+
+	/**
+	 * 删除附件记录
+	 * @param fileId
+	 * @return
+	 */
+	@RequestMapping(value="deleteFile")
+	public String deleteNewsFile(String fileId,Model model){
+		
+		MyStatus status = new MyStatus();
+		try {
+			if( BaseForm.validateStr(fileId)){
+				newsFileService.delete(fileId);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			status.setStatus(0);
+			status.setMessage(e.getMessage());
+		}
+		JSONObject json = JSONObject.fromObject(status);
+		model.addAttribute("json", json.toString());
+		return SiteUtils.getPage("json");
+	}
 	/**
 	 * 批量更新
 	 * @return
@@ -334,13 +390,6 @@ public class NewsManageAction  implements ServletContextAware{
 		this.columnTypeService = columnTypeService;
 	}
 
-	@Override
-	public void setServletContext(ServletContext servletContext) {
-		// TODO Auto-generated method stub
-		this.servletContext = servletContext;
-	}
-
-
 	public NewsPictureService getNewsPictureService() {
 		return newsPictureService;
 	}
@@ -356,6 +405,13 @@ public class NewsManageAction  implements ServletContextAware{
 	@Autowired
 	public void setFileService(FileService fileService) {
 		this.fileService = fileService;
+	}
+	public NewsFileService getNewsFileService() {
+		return newsFileService;
+	}
+	@Autowired
+	public void setNewsFileService(NewsFileService newsFileService) {
+		this.newsFileService = newsFileService;
 	}
 
 

@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.cnu.wlx.bean.NewsFile;
+import com.cnu.wlx.dao.NewsDao;
 import com.cnu.wlx.dao.NewsFileDao;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.service.NewsFileService;
@@ -37,6 +38,21 @@ public class NewsFileServiceImpl implements NewsFileService {
 	@Resource
 	public void setNewsFileDao(NewsFileDao newsFileDao) {
 		this.newsFileDao = newsFileDao;
+	}
+
+	@Override
+	public void update(NewsFile newsFile) {
+		// TODO Auto-generated method stub
+		if( newsFile!=null)
+		  newsFileDao.update(newsFile);
+		 else
+			  throw new RuntimeException("更新文件不能为null");
+	}
+
+	@Override
+	public void delete(String fileId) {
+		if( BaseForm.validateStr(fileId))
+		 newsFileDao.delete(fileId);
 	}
 	
 	

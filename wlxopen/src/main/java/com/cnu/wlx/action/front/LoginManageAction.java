@@ -55,7 +55,7 @@ public class LoginManageAction {
 		}
 		// 登录出错返回
 		request.setAttribute("formbean", formbean);
-		return SiteUtils.getPage("admin.login");
+		return SiteUtils.getPage("control.admin.login");
 		
 	}
 	/**
