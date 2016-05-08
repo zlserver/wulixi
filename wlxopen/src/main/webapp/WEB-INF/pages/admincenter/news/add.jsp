@@ -106,7 +106,7 @@ left: 265px;
 			</tr>
 			<tr>
 			   <td>
-			   <div id="fileuploader">添加附件</div>
+			   <div id="fileuploader">上传附件</div>
 			   </td>
 			</tr>
 			<tr>
@@ -146,30 +146,28 @@ $(document).ready(function() {
 		{
 			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
 			var newsform = $("#newsform");
-			if( data.status==1){
+		   if( data.status==1){
 				for( var i=0;i<data.data.length;i++){
 					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="fileIds" value="'+data.data[i].fileId+'" >';
 					newsform.append(inputNode);
 				}
 			}else{
 				alert("上传失败");
-			}
-			
+			} 
 		},
 		showDelete: true,//删除按钮
-		showDownload:true,//下载按钮
 		statusBarWidth:600,
 		dragdropWidth:600,
 		deleteCallback: function (data, pd) {
-			String fileId=data.data[0].fileId;
-			$.post("control/news/deleteFile.action", {fileId:fileId},
+			 var fileId=data.data[0].fileId;
+			 $.post("control/news/deleteFile.action", {fileId:fileId},
 		            function (resp,textStatus, jqXHR) {
 		                alert("delete ok");
-		      });
+		                //alert(textSatus);
+		      }); 
 		    //删除input标签
 		    $("#"+fileId).remove();
 		    pd.statusbar.hide(); //You choice.
-
 		}
 	});
 });
