@@ -14,7 +14,7 @@ public class NewsForm extends BaseForm {
 
 	private News news;
 	/**
-	 * 标题颜色
+	 * 标题颜色,BLACK ,RED,BLUE
 	 */
 	private String titleColor;
 	/**
@@ -127,6 +127,8 @@ public class NewsForm extends BaseForm {
 	 */
 	public boolean validateAdd() {
 		// TODO Auto-generated method stub
+		if( news==null)
+			return false;
 		if( !validateStr(news.getTitle()) || !validateStr(news.getContext())|| !validateStr(titleColor))
 			return false;
 		return true;

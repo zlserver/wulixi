@@ -148,6 +148,26 @@ public class NewsManageAction {
 			return null;
 	}
 	/**
+	 * 下载新闻附件
+	 * @param savePath 文件保存路径
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="download")
+	public String download(String savePath,HttpServletRequest request,HttpServletResponse response){
+		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
+		String fileSystemRoot = SiteUtils.getFileSystemDir();
+		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
+		String fileSavePath = fileSystemRoot+savePath;
+		
+		//2.1获取文件资源
+		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
+		//查看图片
+		BaseForm.loadFile(response, fileResource);
+		return null;
+	}
+	/**
 	 * 上传新闻附件
 	 * @return
 	 * {
@@ -251,7 +271,72 @@ public class NewsManageAction {
 		return  SiteUtils.getPage("control.news.detail");
 	}
 	
-	
+	/**
+	 * 
+	 * 编辑界面
+	 * @param id 新闻id
+	 * @param columnId 所属栏目id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="editUi")
+	public String editUi(String id,String columnId,Model model){
+		News news=null;
+		if( BaseForm.validateStr(id)){
+			 news= newsService.find(id);
+		}
+		NewsForm formbean = new NewsForm();
+		formbean.setNews(news);
+		formbean.setColumnId(columnId);
+		formbean.setTitleColor(news.getTitleColor().toString());
+		model.addAttribute("formbean", formbean);
+		
+		return SiteUtils.getPage("control.news.edit");
+	}
+	/**
+	 * 编辑新闻包括新闻标题，题目颜色，内容，附件
+	 * @param formbean
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="edit")
+	public String edit(NewsForm formbean,Model model){
+		//校验
+		if(formbean.validateAdd()){
+			//查找要修改的新闻类
+			News news =newsService.find(formbean.getNews().getId());
+			if(news!=null){
+				//修改
+				news.setTitle(formbean.getNews().getTitle());
+				//设置颜色
+				ColorEnum color = ColorEnum.valueOf(formbean.getTitleColor());
+				news.setTitleColor(color);
+				news.setContext(formbean.getNews().getContext());
+				//添加新的附件
+				if( formbean.getFileIds()!=null){
+					for( int i =0;i <formbean.getFileIds().size();i++){
+						String fileid= formbean.getFileIds().get(i);
+						//保存附件
+						NewsFile newsFile=newsFileService.find(fileid);
+						newsFile.setNews(news);
+						//更新
+						newsFileService.update(newsFile);
+					}
+				}
+				newsService.update(news);
+				
+				
+			}
+		}
+		return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true"+"&page="+formbean.getPage();
+		 
+	}
+	/**
+	 * 添加新闻
+	 * @param formbean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="add")
 	public String add(NewsForm formbean,Model model){
 		
@@ -329,7 +414,7 @@ public class NewsManageAction {
 		return SiteUtils.getPage("json");
 	}
 	/**
-	 * 批量更新
+	 * 批量更新新闻的状态信息，不包含内容，题目，附件
 	 * @return
 	 */
 	@RequestMapping(value="update")

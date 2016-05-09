@@ -2,7 +2,10 @@ package com.cnu.wlx.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -67,6 +71,10 @@ public class News implements Serializable{
 	 * 顺序
 	 */
 	private int sequence=0;
+	/**
+	 * 新闻附件，多对一
+	 */
+	private Set<NewsFile> newsFiles = new HashSet<NewsFile>();
 	
 	@Id @GeneratedValue(generator="uuidGenderator")
 	@Column(length=32)
@@ -147,6 +155,14 @@ public class News implements Serializable{
 
 	public void setSequence(int sequence) {
 		this.sequence = sequence;
+	}
+	@OneToMany(mappedBy="news",cascade=CascadeType.REMOVE)
+	public Set<NewsFile> getNewsFiles() {
+		return newsFiles;
+	}
+
+	public void setNewsFiles(Set<NewsFile> newsFiles) {
+		this.newsFiles = newsFiles;
 	}
 	
 

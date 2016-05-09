@@ -79,9 +79,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 </c:if>
 			 <td>
 			     <span >
+			     <c:if test="${!formbean.editState }">
 				     <a href="<c:url value='control/news/detail.action?id=${entity.id }'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
 				     </a>
+				  </c:if>
+				   <c:if test="${formbean.editState }">
+				   	 <a href="<c:url value='control/news/editUi.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
+				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
+				     </a>
+				   </c:if>
 			     </span>
 			 </td>
 			  <td>
