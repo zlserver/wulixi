@@ -63,7 +63,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</c:if>
 			<td  width="50%">新闻名称</td>
 			<td  width="18%">发布时间</td>
-			<td  width="10%">状态</td>
+			<td  width="10%">
+				<select class="form-control">
+				  <option>状态</option>
+				  <option>已发表</option>
+				  <option>待发表</option>
+				  <option>已屏蔽</option>
+				</select>
+			</td>
 			<td  width="8%">顺序</td>
 			<td  width="6%">阅读量</td>
 			</tr>
@@ -97,11 +104,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td> 
 			   <c:if test="${!formbean.editState }">
 			   <span >
-			    <font color="green">${entity.state.toString().equals("PUBLISH")?"已发表":"" }</font>
+			    <font color="blue">${entity.state.toString().equals("PUBLISH")?"已发表":"" }</font>
 			    <font color="black">${entity.state.toString().equals("WAITING")?"待发表":"" }</font>
 			    <font color="red">${entity.state.toString().equals("CLOSE")?"已屏蔽":"" }</font>
 			   </span>
 			  </c:if>
+
+
 			   <c:if test="${formbean.editState }">
 			    <select  class="form-control input-sm"  name="states" >
 					  <option value="PUBLISH"  ${entity.state.toString().equals("PUBLISH")?"selected":"" } >已发表</option>

@@ -47,6 +47,7 @@ left: 265px;
   <div class="panel-body">
 	<form id="newsform" method="post" action="control/news/edit.action" class="form-horizontal" enctype="multipart/form-data" >	
 		<input type="hidden" name="columnId" value="${formbean.columnId }">
+		<input type="hidden" name="news.id" value="${formbean.news.id }">
 		<input type="hidden" name="state" id="state" >
 		<table class="table table-bordered">
 			<tr>

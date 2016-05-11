@@ -301,6 +301,7 @@ public class NewsManageAction {
 	 */
 	@RequestMapping(value="edit")
 	public String edit(NewsForm formbean,Model model){
+		boolean flage = false;
 		//校验
 		if(formbean.validateAdd()){
 			//查找要修改的新闻类
@@ -324,11 +325,16 @@ public class NewsManageAction {
 					}
 				}
 				newsService.update(news);
-				
-				
+				flage = true;
 			}
 		}
-		return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true"+"&page="+formbean.getPage();
+		if( flage )//添加成功
+		{
+			return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true"+"&page="+formbean.getPage();
+		}else{//添加失败
+			model.addAttribute("formbean", formbean);
+			return SiteUtils.getPage("control.news.edit");
+		}
 		 
 	}
 	/**

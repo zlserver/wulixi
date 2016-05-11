@@ -315,7 +315,7 @@ display: none;
 <div class="panel panel-default">
 	<ol class="breadcrumb">
 	
-	   <!-- 当且列表的父类id -->
+	   <!-- 当前列表的父类id -->
 	   <c:set var="parentId" value="" scope="page"></c:set>
 	
 	  <c:forEach items="${columnNavigation}" var="item"  varStatus="status">
@@ -431,6 +431,7 @@ display: none;
 <div style="position:relative; bottom: 5px;right: 0px;left: 0px;">
 	
   <form  action="<c:url value='control/column/add.action'/>" method="post"  onsubmit="return checkAdd()">
+     <input type="hidden" name="parentId" value="${parentId }">
 	<table class="table table-bordered table-striped" width="100%">
 	 
 	  <tbody>
