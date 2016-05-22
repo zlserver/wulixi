@@ -113,7 +113,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </td>
 			 <td> 
 			   <span >${entity.readCount }</span>
-			    
 			 </td>
 		  </c:forEach>
 		 <tr>
