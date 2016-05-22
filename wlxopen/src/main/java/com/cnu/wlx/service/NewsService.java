@@ -18,9 +18,10 @@ public interface NewsService {
 	 * @param firstindex 开始查询位置从0开始
 	 * @param maxresult 一页的最大记录数
 	 * @param columnId 栏目分类id
+	 * @param state 新闻状态
 	 * @return
 	 */
-	QueryResult<News> getScrollData(int firstResult, int maxresult, String columnId);
+	QueryResult<News> getScrollData(int firstResult, int maxresult, String columnId,String state);
 
 	/**
 	 * 保存新闻

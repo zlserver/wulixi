@@ -120,7 +120,7 @@ public class ColumnTypeManageAction {
 			} 
 		} 
 		
-		return "redirect:/control/column/list.action?parentid="+formbean.getParentId();
+		return "redirect:/control/column/list.action?parentId="+formbean.getParentId();
 	}
 	@RequestMapping(value="list")
 	public String list(ColumnTypeForm formbean,Model model,HttpServletRequest request){
