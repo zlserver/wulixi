@@ -1,15 +1,9 @@
 package com.cnu.wlx.action.control;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,26 +14,33 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.News;
-import com.cnu.wlx.bean.NewsPicture;
+import com.cnu.wlx.bean.NewsFile;
+import com.cnu.wlx.bean.base.MyStatus;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
-import com.cnu.wlx.dao.NewsPictureDao;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.NewsForm;
 import com.cnu.wlx.myenum.ColorEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
+import com.cnu.wlx.service.NewsFileService;
 import com.cnu.wlx.service.NewsPictureService;
 import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.utils.SiteUtils;
 import com.cnu.wlx.utils.WebUtils;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -50,107 +51,83 @@ import com.cnu.wlx.utils.WebUtils;
  */
 @Controller
 @RequestMapping(value="/control/news/*")
-public class NewsManageAction  implements ServletContextAware{
+public class NewsManageAction {
 
 	private NewsService newsService;
 	private ColumnTypeService columnTypeService;
-	 //应用对象
-	 private ServletContext servletContext;
 	 
 	 private NewsPictureService newsPictureService;
 	 /**
 	  * 文件服务
 	  */
 	 private FileService fileService;
+	 /**
+	  * 新闻附件服务类
+	  */
+	 private NewsFileService newsFileService;
      //上传图片
 	@RequestMapping(value="uploadImage")
 	public String uploadImage(HttpServletRequest request,HttpServletResponse response, @RequestParam(value="upload")CommonsMultipartFile upload) throws IOException{
-		
-		response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();  
-        String uploadFileName= upload.getOriginalFilename();
+	   
+		String uploadFileName= upload.getOriginalFilename();
         String uploadContentType=upload.getContentType();
-        
+      
         //设置返回“图像”选项卡  
         String callback = request.getParameter("CKEditorFuncNum"); 
-        
+        String result = "";
       //对文件进行校验  
         if(upload==null || uploadContentType==null || uploadFileName==null){  
-
-            out.println("<script type=\"text/javascript\">");  
-            out.print("<font color=\"red\" size=\"2\">*请选择上传文件</font>");  
-            out.println("</script>");
+            result="<font color=\"red\" size=\"2\">*请选择上传文件</font>";
+            returnResult(response, result);
             return null;  
         }  
-          
-        System.out.println(uploadFileName+":"+uploadContentType+BaseForm.validateImageFileType(uploadFileName, uploadContentType));
         if(!BaseForm.validateImageFileType(uploadFileName, uploadContentType)){
-           /* out.print("<font color=\"red\" size=\"2\">*文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）</font>");  
-           */
-
-            out.println("<script type=\"text/javascript\">");  
-        	out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');"); 
-        	out.println("</script>");
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');";
+        	returnResult(response, result);
         	return null;  
         }  
-          
         if(upload.getSize()> 600*1024){  
-            /*out.print("<font color=\"red\" size=\"2\">*文件大小不得大于600k</font>");  */
-        	
-            out.println("<script type=\"text/javascript\">");  
-        	out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）','');"); 
-        	out.println("</script>");
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件大小不得大于600k','');";
+        	returnResult(response, result);
             return null;  
         }  
           
-        //将文件保存到项目目录下  
-        InputStream is = upload.getInputStream(); 
-        
-        String uploadPath = SiteUtils.getSavePath("news.image");   //设置保存绝对目录  
+        //文件保存相对路径
         String relativeSavePath= SiteUtils.getRelativeSavePath("news.image");//相对路径，在数据表中存储
-        File dir = new File(uploadPath);
-        if( !dir.exists())
-        	dir.mkdirs();
-        String fileName = WebUtils.getFileSaveName(); //采用当前日期+4位随机数的方式随机命名  
-        fileName += uploadFileName.substring(uploadFileName.length() - 4);  
+        //保存文件名称
+        String saveFileName = WebUtils.getFileSaveName(uploadFileName);
+        try {
+        	//保存文件
+			BaseForm.saveFile(relativeSavePath, saveFileName, upload);
+		} catch (Exception e) {
+			e.printStackTrace();
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "上传失败','');";
+        	returnResult(response, result);
+            return null;  
+		}
         
-        File toFile = new File(dir, fileName);  
-        OutputStream os = new FileOutputStream(toFile);     
-        byte[] buffer = new byte[1024];     
-        int length = 0;  
-        while ((length = is.read(buffer)) > 0) {     
-            os.write(buffer, 0, length);     
-        }     
-        is.close();  
-        os.close();  
-           
         String path = request.getContextPath();
-      	String basePath = request.getScheme() + "://"
-      			+ request.getServerName() + ":" + request.getServerPort()
-      			+ path + "/";
+      	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
       	
-      	//保存文件记录
-      	/*NewsPicture picture = new NewsPicture();
-      	picture.setContentType(uploadContentType);
-      	picture.setExt(BaseForm.getExt(uploadFileName));
-      	picture.setOriginName(uploadFileName);
-      	picture.setSaveName(fileName);
-      	picture.setSize(upload.getSize());
-      	picture.setRelativePath(relativeSavePath);
-      	
-      	newsPictureService.save(picture);*/
-      	
-        out.println("<script type=\"text/javascript\">");    
-        /*out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"images/group/" + fileName + "','')");    
-        */
-        System.out.println(basePath);
-        out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ fileName + "','')");    
-        
-        out.println("</script>");  
+        result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ saveFileName + "','')";
+        returnResult(response, result);
         return null;  
 	}
 	/**
-	 * 查看图片
+	 * 上传图片返回结果
+	 * @param response
+	 * @param result 返回结果
+	 * @throws IOException
+	 */
+	private void returnResult( HttpServletResponse response,String result) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter(); 
+		out.println("<script type=\"text/javascript\">");  
+    	out.println(result); 
+    	out.println("</script>");
+	}
+	/**
+	 * 根据文件保存的相对路径查看图片
 	 * @param savePath 文件保存的相对路径
 	 * @param request
 	 * @param response
@@ -166,38 +143,90 @@ public class NewsManageAction  implements ServletContextAware{
 			
 			//2.1获取文件资源
 			Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
-			
-			response.setCharacterEncoding("utf-8");
-	        response.setContentType("multipart/form-data");
-	       /* response.setHeader("Content-Disposition", "attachment;fileName="
-	                + fileResource.getFilename());*/
-			//3.建立文件
-			try {
-				//4.建立字节读取流
-				InputStream is = fileResource.getInputStream();
-				//5.建立缓冲流
-				BufferedInputStream bis = new BufferedInputStream(is);
-				//6.获取response的输出流
-				OutputStream os = response.getOutputStream();
-				//7.缓冲器2kb
-				byte[] buf= new byte[2048];
-				//8.进行传输
-				int len=0;
-				int count=0;
-				while( (len=bis.read(buf))!=-1)
-				{
-					count+=len;
-					os.write(buf, 0, len);
-				}
-				//9.刷新缓冲器
-				os.flush();
-				os.close();
-				bis.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			//查看图片
+			BaseForm.lookImage(response, fileResource);
 			return null;
+	}
+	/**
+	 * 下载新闻附件
+	 * @param savePath 文件保存路径
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="download")
+	public String download(String savePath,HttpServletRequest request,HttpServletResponse response){
+		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
+		String fileSystemRoot = SiteUtils.getFileSystemDir();
+		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
+		String fileSavePath = fileSystemRoot+savePath;
+		
+		//2.1获取文件资源
+		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
+		//查看图片
+		BaseForm.loadFile(response, fileResource);
+		return null;
+	}
+	/**
+	 * 上传新闻附件
+	 * @return
+	 * {
+	 *   "status":1,
+	 *    "message":"ok",
+	 *    "data":[
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     ...
+	 *    ]
+	 * }
+	 */
+	@RequestMapping(value="upload", method=RequestMethod.POST)
+	public String uploadFile(MultipartHttpServletRequest request,Model model,String name,String testName){
+	   
+	   MyStatus status = new MyStatus();
+	   JSONObject json= new JSONObject();
+	   
+	   Iterator<String> iterator = request.getFileNames();
+	   //遍历所有上传文件
+	   JSONArray jsonArray = new JSONArray();
+		while (iterator.hasNext()) {
+				String fileName = iterator.next();
+				MultipartFile multipartFile = request.getFile(fileName);
+				String originName=multipartFile.getOriginalFilename();
+				
+				//保存文件相对路径:files/
+				String relativedir= SiteUtils.getRelativeSavePath("news.file");
+				//保存文件名称
+		        String saveFileName = WebUtils.getFileSaveName(originName);
+				try {
+			        //保存文件
+			        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
+			        //构造文件实体
+			        NewsFile newsFile = new NewsFile();
+			        newsFile.setOriginName(originName);
+			        newsFile.setSaveName(saveFileName);
+			        newsFile.setSavePath(relativedir+saveFileName);
+			        newsFile.setExt(WebUtils.getExtFromFilename(saveFileName));
+			        newsFile.setSize(multipartFile.getSize());
+			        newsFileService.save(newsFile);
+			        //构造json
+			        JSONObject fileJson = new JSONObject();
+			        fileJson.put("fileId", newsFile.getId());
+			        jsonArray.add(fileJson);
+				} catch (Exception e) {
+					e.printStackTrace();
+					status.setStatus(0);
+					status.setMessage(e.getMessage());
+					break;
+				}
+		}
+		//返回json数据
+		json.put("status", status.getStatus());
+		json.put("message", status.getMessage());
+		json.put("data", jsonArray);
+		model.addAttribute("json", json.toString());
+		return SiteUtils.getPage("json");
 	}
 	
 	/**
@@ -242,7 +271,78 @@ public class NewsManageAction  implements ServletContextAware{
 		return  SiteUtils.getPage("control.news.detail");
 	}
 	
-	
+	/**
+	 * 
+	 * 编辑界面
+	 * @param id 新闻id
+	 * @param columnId 所属栏目id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="editUi")
+	public String editUi(String id,String columnId,Model model){
+		News news=null;
+		if( BaseForm.validateStr(id)){
+			 news= newsService.find(id);
+		}
+		NewsForm formbean = new NewsForm();
+		formbean.setNews(news);
+		formbean.setColumnId(columnId);
+		formbean.setTitleColor(news.getTitleColor().toString());
+		model.addAttribute("formbean", formbean);
+		
+		return SiteUtils.getPage("control.news.edit");
+	}
+	/**
+	 * 编辑新闻包括新闻标题，题目颜色，内容，附件
+	 * @param formbean
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="edit")
+	public String edit(NewsForm formbean,Model model){
+		boolean flage = false;
+		//校验
+		if(formbean.validateAdd()){
+			//查找要修改的新闻类
+			News news =newsService.find(formbean.getNews().getId());
+			if(news!=null){
+				//修改
+				news.setTitle(formbean.getNews().getTitle());
+				//设置颜色
+				ColorEnum color = ColorEnum.valueOf(formbean.getTitleColor());
+				news.setTitleColor(color);
+				news.setContext(formbean.getNews().getContext());
+				//添加新的附件
+				if( formbean.getFileIds()!=null){
+					for( int i =0;i <formbean.getFileIds().size();i++){
+						String fileid= formbean.getFileIds().get(i);
+						//保存附件
+						NewsFile newsFile=newsFileService.find(fileid);
+						newsFile.setNews(news);
+						//更新
+						newsFileService.update(newsFile);
+					}
+				}
+				newsService.update(news);
+				flage = true;
+			}
+		}
+		if( flage )//添加成功
+		{
+			return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true"+"&page="+formbean.getPage();
+		}else{//添加失败
+			model.addAttribute("formbean", formbean);
+			return SiteUtils.getPage("control.news.edit");
+		}
+		 
+	}
+	/**
+	 * 添加新闻
+	 * @param formbean
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="add")
 	public String add(NewsForm formbean,Model model){
 		
@@ -269,6 +369,17 @@ public class NewsManageAction  implements ServletContextAware{
 					news.setState(state);
 					//throw new RuntimeException("测试");
 					newsService.save(news);
+					//保存附件
+					if( formbean.getFileIds()!=null){
+						for( int i =0;i <formbean.getFileIds().size();i++){
+							String fileid= formbean.getFileIds().get(i);
+							//保存附件
+							NewsFile newsFile=newsFileService.find(fileid);
+							newsFile.setNews(news);
+							//更新
+							newsFileService.update(newsFile);
+						}
+					}
 					flage = true;
 				}
 			}
@@ -284,9 +395,32 @@ public class NewsManageAction  implements ServletContextAware{
 			return SiteUtils.getPage("control.news.addUi");
 		}
 	}
-	
+
 	/**
-	 * 批量更新
+	 * 删除附件记录
+	 * @param fileId
+	 * @return
+	 */
+	@RequestMapping(value="deleteFile")
+	public String deleteNewsFile(String fileId,Model model){
+		
+		MyStatus status = new MyStatus();
+		try {
+			if( BaseForm.validateStr(fileId)){
+				newsFileService.delete(fileId);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			status.setStatus(0);
+			status.setMessage(e.getMessage());
+		}
+		JSONObject json = JSONObject.fromObject(status);
+		model.addAttribute("json", json.toString());
+		return SiteUtils.getPage("json");
+	}
+	/**
+	 * 批量更新新闻的状态信息，不包含内容，题目，附件
 	 * @return
 	 */
 	@RequestMapping(value="update")
@@ -347,13 +481,6 @@ public class NewsManageAction  implements ServletContextAware{
 		this.columnTypeService = columnTypeService;
 	}
 
-	@Override
-	public void setServletContext(ServletContext servletContext) {
-		// TODO Auto-generated method stub
-		this.servletContext = servletContext;
-	}
-
-
 	public NewsPictureService getNewsPictureService() {
 		return newsPictureService;
 	}
@@ -369,6 +496,13 @@ public class NewsManageAction  implements ServletContextAware{
 	@Autowired
 	public void setFileService(FileService fileService) {
 		this.fileService = fileService;
+	}
+	public NewsFileService getNewsFileService() {
+		return newsFileService;
+	}
+	@Autowired
+	public void setNewsFileService(NewsFileService newsFileService) {
+		this.newsFileService = newsFileService;
 	}
 
 

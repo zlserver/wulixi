@@ -42,10 +42,11 @@ public class WebUtils {
 		return sdf.format(date);
 	}
 	/**
-	 * 获取文件保存的名称:日期+4位随机数
+	 * 获取文件保存的名称:日期+4位随机数+后缀
+	 * @param originName 原文件名
 	 * @return
 	 */
-	public synchronized static String getFileSaveName(){
+	public synchronized static String getFileSaveName(String originName){
 		
 		StringBuilder  name= new StringBuilder();
 		String format = "yyyyMMddHHmmss";
@@ -57,7 +58,7 @@ public class WebUtils {
 		for( int i =0;i<4;i++)
 			name.append(r.nextInt(10));
 		
-		return name.toString();
+		return name.toString()+getExtFromFilename(originName);
 	}
 	/*
 	public static void closeInputOutStream(InputStream is ,OutputStream os)
@@ -167,45 +168,25 @@ public class WebUtils {
 		}
 		return resultString;
 	}
-	/*
-*//**
- * 获取后缀名，不包含小数点
- * @param filename
- * @return
- *//*
+	
+	/**
+	 * 获取后缀名，含小数点
+	 * @param filename
+	 * @return
+	 */
     public static String getExtFromFilename(String filename) {
         int dotPosition = filename.lastIndexOf('.');
         if (dotPosition != -1) {
-            return filename.substring(dotPosition + 1, filename.length());
+            return "."+filename.substring(dotPosition + 1, filename.length());
         }
-        return "";
+        return null;
     }
 
-    public static String getNameFromFilename(String filename) {
-        int dotPosition = filename.lastIndexOf('.');
-        if (dotPosition != -1) {
-            return filename.substring(0, dotPosition);
-        }
-        return "";
-    }
-
-    public static String getPathFromFilepath(String filepath) {
-        int pos = filepath.lastIndexOf('/');
-        if (pos != -1) {
-            return filepath.substring(0, pos);
-        }
-        return "";
-    }
-
-    public static String getNameFromFilepath(String filepath) {
-        int pos = filepath.lastIndexOf('/');
-        if (pos != -1) {
-            return filepath.substring(pos + 1);
-        }
-        return "";
-    }
- 
-    // storage, G M K B
+    /**
+     * 根据long类型转换成带单位的字符串
+     * @param size：取值1024
+     * @return   1KB
+     */
     public static String convertStorage(long size) {
         long kb = 1024;
         long mb = kb * 1024;
@@ -221,5 +202,5 @@ public class WebUtils {
             return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
         } else
             return String.format("%d B", size);
-    }*/
+    }
 }

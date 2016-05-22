@@ -14,7 +14,7 @@ public class NewsForm extends BaseForm {
 
 	private News news;
 	/**
-	 * 标题颜色
+	 * 标题颜色,BLACK ,RED,BLUE
 	 */
 	private String titleColor;
 	/**
@@ -30,6 +30,10 @@ public class NewsForm extends BaseForm {
 	private List<String> states;
 	
 	private List<Integer>  sequences;
+	/**
+	 * 添加的附件文件的id
+	 */
+	private List<String> fileIds;
 	
 	/**
 	 * 编辑状态，true：编辑状态，false：显示状态
@@ -95,7 +99,15 @@ public class NewsForm extends BaseForm {
 	@Override
 	public int getMaxresult() {
 		// TODO Auto-generated method stub
-		return 10;
+		return 15;
+	}
+
+	public List<String> getFileIds() {
+		return fileIds;
+	}
+
+	public void setFileIds(List<String> fileIds) {
+		this.fileIds = fileIds;
 	}
 
 	/**
@@ -115,6 +127,8 @@ public class NewsForm extends BaseForm {
 	 */
 	public boolean validateAdd() {
 		// TODO Auto-generated method stub
+		if( news==null)
+			return false;
 		if( !validateStr(news.getTitle()) || !validateStr(news.getContext())|| !validateStr(titleColor))
 			return false;
 		return true;

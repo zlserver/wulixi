@@ -1,13 +1,27 @@
 package com.cnu.wlx.formbean;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.cnu.wlx.utils.SiteUtils;
 
 public class BaseForm {
 	/*当前页*/
@@ -15,7 +29,7 @@ public class BaseForm {
 	/**
 	 * 每页显示最大数，默认10
 	 */
-	private int maxresult=3;
+	private int maxresult=8;
 	/**
 	 * 栏目id
 	 */
@@ -95,6 +109,147 @@ public class BaseForm {
 			String ext = getExt(fileFileName);
 			return arrowType.contains(fileContentType.toLowerCase()) && arrowExtension.contains(ext);
 		
+	}
+
+	/**
+	 *  保存文件
+	 * @param relativedir 文件的相对路径：即相对于文件系统根目录的路径
+	 * @param savefilename 文件保存名称
+	 * @param file  保存的文件
+	 * @return 文件相对路径+保存文件名
+	 * @throws Exception
+	 */
+	public static  void saveFile(String relativedir,String savefilename, CommonsMultipartFile file) throws Exception{
+
+	   //获取保存的绝对路径
+	   String absolutepath=null;
+	   if( relativedir != null && !relativedir.equals("")){
+		   //文件系统实际根目录
+		   String fileSystemDir=SiteUtils.getFileSystemDir();
+		   
+		   absolutepath=fileSystemDir+relativedir;
+		   //生成保存路径文件
+		   File filedir = new File(absolutepath);
+		   //不存在生成
+		   if(!filedir.exists()){
+			   filedir.mkdirs();
+		   }
+		   File savefile = new File(filedir,savefilename); //新建保存的文件 
+		   try {
+			   //将上传的文件写入  新建的文件中
+			    file.getFileItem().write(savefile); 
+		   }catch(FileNotFoundException fe){
+			   throw new RuntimeException("文件不存在！");
+		   }catch (Exception e) {
+			    e.printStackTrace();
+			    throw new RuntimeException("保存图片操作文件出错！");
+		   }
+	   }else{
+		  throw new RuntimeException("保存路径未设置！");
+	   }
+    }
+	/**
+	 *  保存文件
+	 * @param relativedir 文件的相对路径：即相对于文件系统根目录的路径
+	 * @param savefilename 文件保存名称
+	 * @param file  保存的文件
+	 * @return 文件相对路径+保存文件名
+	 * @throws Exception
+	 */
+	public static  void saveFile(String relativedir,String savefilename, MultipartFile file) throws Exception{
+
+	   //获取保存的绝对路径
+	   String absolutepath=null;
+	   if( relativedir != null && !relativedir.equals("")){
+		   //文件系统实际根目录
+		   String fileSystemDir=SiteUtils.getFileSystemDir();
+		   
+		   absolutepath=fileSystemDir+relativedir;
+		   //生成保存路径文件
+		   File filedir = new File(absolutepath);
+		   //不存在生成
+		   if(!filedir.exists()){
+			   filedir.mkdirs();
+		   }
+		   File savefile = new File(filedir,savefilename); //新建保存的文件 
+		   try {
+			   //将上传的文件写入  新建的文件中
+			   file.transferTo(savefile);
+			   
+		   }catch(FileNotFoundException fe){
+			   throw new RuntimeException("文件不存在！");
+		   }catch (Exception e) {
+			    e.printStackTrace();
+			    throw new RuntimeException("保存图片操作文件出错！");
+		   }
+	   }else{
+		  throw new RuntimeException("保存路径未设置！");
+	   }
+    }
+	/**
+	 * 下载文件/图片
+	 * @param response  响应请求
+	 * @param fileResource  文件资源
+	 * @param isLoad 下载还是查看模式 ,false:查看模式，true:下载模式
+	 */
+	private static void loadFile(HttpServletResponse response,Resource fileResource,boolean isLoad){
+		
+		response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        if( isLoad)
+        response.setHeader("Content-Disposition", "attachment;fileName="
+                + fileResource.getFilename());
+		//3.建立文件
+		try {
+			//4.建立字节读取流
+			InputStream is = fileResource.getInputStream();
+			//5.建立缓冲流
+			BufferedInputStream bis = new BufferedInputStream(is);
+			//6.获取response的输出流
+			OutputStream os = response.getOutputStream();
+			//7.缓冲器2kb
+			byte[] buf= new byte[2048];
+			//8.进行传输
+			int len=0;
+			int count=0;
+			while( (len=bis.read(buf))!=-1)
+			{
+				count+=len;
+				os.write(buf, 0, len);
+			}
+			//9.刷新缓冲器
+			os.flush();
+			os.close();
+			bis.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * 下载文件
+	 * @param response 响应请求
+	 * @param fileResource  文件资源
+	 */
+	public static void loadFile(HttpServletResponse response,Resource fileResource){
+		loadFile( response, fileResource,true);
+	}
+	/**
+	 * 查看图片
+	 * @param response 响应请求
+	 * @param fileResource  图片资源
+	 */
+	public static void lookImage(HttpServletResponse response,Resource fileResource){
+		loadFile( response, fileResource,false);
+	}
+	/**
+	 * 下载图片
+	 * @param response
+	 * @param fileResource
+	 */
+	public static void loadImage(HttpServletResponse response,Resource fileResource){
+		loadFile( response, fileResource,true);
 	}
 	/**
 	 * 得到文件后缀名

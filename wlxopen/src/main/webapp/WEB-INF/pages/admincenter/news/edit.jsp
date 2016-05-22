@@ -37,29 +37,17 @@ left: 265px;
         });
     });
     
-    /*  */
-	function _action(choice) {
-		
-    	var state = $("#state");
-    	
-		if(choice=="save")
-			state.val("WAITING");
-		if(choice=="publish")
-			state.val("PUBLISH");
-		
-		return true;
-	}
 </script>
 </head>
 <body>
 <div class="panel panel-default">
   <div class="panel-heading">
-  	${formbean.columnName}
-  
+       编辑新闻
   </div>
   <div class="panel-body">
-	<form id="newsform" method="post" action="control/news/add.action" class="form-horizontal" enctype="multipart/form-data" >	
-		<input type="hidden" name="columnId" value="${columnId }">
+	<form id="newsform" method="post" action="control/news/edit.action" class="form-horizontal" enctype="multipart/form-data" >	
+		<input type="hidden" name="columnId" value="${formbean.columnId }">
+		<input type="hidden" name="news.id" value="${formbean.news.id }">
 		<input type="hidden" name="state" id="state" >
 		<table class="table table-bordered">
 			<tr>
@@ -76,19 +64,10 @@ left: 265px;
 				<td>
 					<span>
 					    标题颜色：
-					 <c:choose>
-					 	<c:when test="${formbean.titleColor!=null}">
 					 	 <input type="radio" name="titleColor" value="BLACK"  ${formbean.titleColor.equals("BLACK")?"checked":""}  >黑色
 					     <input type="radio"  name="titleColor" value="RED"  ${formbean.titleColor.equals("RED")?"checked":""} >红色
 					     <input type="radio"  name="titleColor" value="BLUE"  ${formbean.titleColor.equals("BLUE")?"checked":""} >蓝色
-					    </c:when>
-					 	<c:otherwise>
-					 	  <input type="radio" name="titleColor" value="BLACK"  checked="checked" >黑色
-					      <input type="radio"  name="titleColor" value="RED"   >红色
-					      <input type="radio"  name="titleColor" value="BLUE"   >蓝色
-					   </c:otherwise>
-					 </c:choose>
-					</span>
+					 </span>
 					<!-- <span style="position: relative;margin-left: 50px;">
 					    日期：
 					  <input required id="publishTime" type="text" name="createTime"  >
@@ -108,17 +87,21 @@ left: 265px;
 			   <td>
 			   <div id="fileuploader">上传附件</div>
 			   </td>
-			</tr>
+			</tr> 
 			<tr>
 				<td  align="center">
-					<input type="submit"  value="保存" class="btn btn-info" onclick="return _action('save')" >
-					<input type="submit"  value="发表" class="btn btn-info" onclick=" return _action('publish')" >
+					<input type="submit"  value="确认修改" class="btn btn-info"  >
 					<a href="javascript:history.go(-1);" class="btn btn-warning">返回</a>
 				</td>
 			</tr>
 		</table>
 	</form>
   </div>
+  <div class="panel-footer">
+     <c:forEach items="${formbean.news.newsFiles}" var="newsFile">
+      <a href="control/news/download.action?savePath=${newsFile.savePath}">${newsFile.originName }</a><br>
+     </c:forEach>
+   </div>
 </div>
 
 <script src="js/jquery1.9.1/jquery.min.js"></script>

@@ -36,6 +36,12 @@ public class ColumnTypeForm extends BaseForm {
 	 */
 	private String doubleParentName;
 	
+	
+	@Override
+	public int getMaxresult() {
+		// TODO Auto-generated method stub
+		return 7;
+	}
 	public String getDoubleParentId() {
 		return doubleParentId;
 	}
