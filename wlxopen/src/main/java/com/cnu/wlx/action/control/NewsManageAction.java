@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.cnu.wlx.bean.Admin;
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsFile;
@@ -65,7 +66,15 @@ public class NewsManageAction {
 	  * 新闻附件服务类
 	  */
 	 private NewsFileService newsFileService;
-     //上传图片
+     
+	 /**
+	  * 上传图片
+	  * @param request
+	  * @param response
+	  * @param upload 上传文件
+	  * @return
+	  * @throws IOException
+	  */
 	@RequestMapping(value="uploadImage")
 	public String uploadImage(HttpServletRequest request,HttpServletResponse response, @RequestParam(value="upload")CommonsMultipartFile upload) throws IOException{
 	   
@@ -108,7 +117,7 @@ public class NewsManageAction {
         
         String path = request.getContextPath();
       	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
-      	
+      	//返回图片访问路径
         result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ saveFileName + "','')";
         returnResult(response, result);
         return null;  
@@ -238,9 +247,11 @@ public class NewsManageAction {
 	public String list(NewsForm formbean,Model model){
 		//校验栏目是否为null
 		if( formbean.validateList()){
+			
+			//状态PUBLISH("publish"),WAITING("waiting"),CLOSE("close");
 			//页面类
 			PageView<News> pageView = new PageView<News>(formbean.getMaxresult(), formbean.getPage());
-			QueryResult<News> queryResult= newsService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getColumnId());
+			QueryResult<News> queryResult= newsService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getColumnId(),formbean.getState());
 			pageView.setQueryResult(queryResult);
 			//传输到页面
 			model.addAttribute("pageView", pageView);
@@ -344,7 +355,7 @@ public class NewsManageAction {
 	 * @return
 	 */
 	@RequestMapping(value="add")
-	public String add(NewsForm formbean,Model model){
+	public String add(NewsForm formbean,Model model,HttpServletRequest request){
 		
 		boolean flage = false;
 		//校验
@@ -367,6 +378,9 @@ public class NewsManageAction {
 					//设置新闻状态
 					NewsStateEnum state = NewsStateEnum.valueOf(formbean.getState());
 					news.setState(state);
+					//设置作者
+					Admin ad =(Admin) request.getSession().getAttribute("admin");
+					news.setAuthor(ad.getAccount());
 					//throw new RuntimeException("测试");
 					newsService.save(news);
 					//保存附件
@@ -436,11 +450,13 @@ public class NewsManageAction {
 			String id= formbean.getColumnIds().get(i);
 			String state = formbean.getStates().get(i);
 			Integer sequence = formbean.getSequences().get(i);
-			
+			Integer suggest = formbean.getSuggests().get(i);
 			
 			News news = newsService.find(id);
 			news.setSequence(sequence);
 			news.setState(NewsStateEnum.valueOf(state));
+			news.setSuggest(suggest);
+			
 			newsService.update(news);
 			
 		}

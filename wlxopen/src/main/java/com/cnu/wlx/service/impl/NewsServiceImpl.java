@@ -13,6 +13,7 @@ import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.NewsDao;
 import com.cnu.wlx.formbean.BaseForm;
+import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.NewsService;
 
 @Service("newsService")
@@ -20,7 +21,7 @@ public class NewsServiceImpl implements NewsService {
 
 	private NewsDao newsDao;
 	@Override
-	public QueryResult<News> getScrollData(int firstResult, int maxresult, String getColumnId) {
+	public QueryResult<News> getScrollData(int firstResult, int maxresult, String getColumnId,String state) {
 		// TODO Auto-generated method stub
 		//结果集根据栏目的顺序升序,时间降序来排列
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
@@ -31,6 +32,11 @@ public class NewsServiceImpl implements NewsService {
 			String wherejpql="o.column.id = ? ";
 			List<Object> params = new ArrayList<Object>();
 			params.add(getColumnId);
+			if( BaseForm.validateStr(state)){
+				wherejpql+=" and o.state= ?";
+				NewsStateEnum st = NewsStateEnum.valueOf(state);
+				params.add(st);
+			}
 			return newsDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
 		}
 		return null;

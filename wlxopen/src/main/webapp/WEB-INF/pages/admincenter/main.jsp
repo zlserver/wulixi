@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -45,6 +47,7 @@ function exit() {
  }
 </style>
 <body>
+
 	<div class="wrap">
 		<!-- 头部开始 -->
 		<%-- <div class="top_c">
@@ -67,22 +70,40 @@ function exit() {
 					000面板管理<!-- <img alt="" src="images/admin.gif"> -->
 				</b>
 			</h1>
-			<div class="acc">
-			  <c:forEach items="${topColumns }" var="column">
+			<c:forEach items="${topColumns }" var="column">
 			  	<div>
 					<a class="one">${column.name }</a>
 					 <ul class="kid">
 						<c:forEach items="${column.childrens }" var="child">
-						 <li><b class="tip"></b>
-						  <a target="Conframe" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
-						  <c:if test="${!child.manageUrl.equals('')}">
-						    &nbsp;&nbsp;&nbsp;[<a target="Conframe" href="<c:url value='${child.manageUrl}?columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+						
+						  <c:if test="${fn:length(child.childrens)<=0}">
+						      <li><b class="tip"></b>
+						       	<a target="Conframe" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
+							   <c:if test="${!child.manageUrl.equals('')}">
+							    &nbsp;&nbsp;&nbsp;[<a target="Conframe" href="<c:url value='${child.manageUrl}?columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+							  </c:if>
+						   </li>
 						  </c:if>
-						  </li>
+						  <c:if test="${fn:length(child.childrens)>0}">
+						    <div>
+						       <a class="one">${child.name }</a>
+						       <ul class="kid">
+							     <c:forEach  items="${child.childrens }" var="cchild">
+									 <li><b class="tip"></b>
+										  <a target="Conframe" href="<c:url value='${cchild.readUrl }?columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
+										  <c:if test="${!cchild.manageUrl.equals('')}">
+										    &nbsp;&nbsp;&nbsp;[<a target="Conframe" href="<c:url value='${cchild.manageUrl}?columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
+										  </c:if>
+									  </li>    
+							       </c:forEach>
+							   </ul>
+						     </div>
+						  </c:if>
+						  
 						</c:forEach>                                                     
 					</ul>
 				</div>
-			  </c:forEach>
+			  </c:forEach>  
 			
 				<div id="logindes" >
 				 <p >登录用户:<font > ${admin.account } </font></p>

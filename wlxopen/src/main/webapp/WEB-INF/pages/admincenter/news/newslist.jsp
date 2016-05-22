@@ -41,6 +41,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			form.submit();
 	    }
 	}
+	
+	function query() {
+		var form = document.forms[0];
+		form.submit();
+	}
 </script>
 </head>
 <body style="position: relative;">
@@ -62,13 +67,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <td  width="3%">选项</td>
 			</c:if>
 			<td  width="50%">新闻名称</td>
-			<td  width="18%">发布时间</td>
+			<td  width="9%">作者</td>
+			<td  width="9%">是否推荐</td>
 			<td  width="10%">
-				<select class="form-control">
-				  <option>状态</option>
-				  <option>已发表</option>
-				  <option>待发表</option>
-				  <option>已屏蔽</option>
+				<select class="form-control" name="state" onchange="query()">
+				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
+				  <option value="PUBLISH" ${formbean.state.equals("PUBLISH")?'selected':'' }>已发表</option>
+				  <option value="WAITING"  ${formbean.state.equals("WAITING")?'selected':'' }>待发表</option>
+				  <option value="CLOSE" ${formbean.state.equals("CLOSE")?'selected':'' }>已屏蔽</option>
 				</select>
 			</td>
 			<td  width="8%">顺序</td>
@@ -89,7 +95,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			     <c:if test="${!formbean.editState }">
 				     <a href="<c:url value='control/news/detail.action?id=${entity.id }'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
-				     </a>
+				      </a>
+				      <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
 				  </c:if>
 				   <c:if test="${formbean.editState }">
 				   	 <a href="<c:url value='control/news/editUi.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
@@ -98,8 +105,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				   </c:if>
 			     </span>
 			 </td>
+			  <td> 
+				${entity.author }
+			   </td>
 			  <td>
-			   <span > <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /> </span>
+			  <c:if test="${!formbean.editState }">
+			   <span >
+			    <font color="blue">${entity.suggest==1?"推荐":"" }</font>
+			    <font color="black">${entity.suggest==2?"不推荐":"" }</font>
+			   </span>
+			  </c:if>
+
+			   <c:if test="${formbean.editState }">
+			    <select  class="form-control input-sm"  name="suggests" >
+					  <option value="1"  ${entity.suggest==1?"selected":"" } >推荐</option>
+					  <option value="2" ${entity.suggest==2?"selected":"" }>不推荐</option>
+				 </select> 
+			   </c:if>
 			 </td>
 			<td> 
 			   <c:if test="${!formbean.editState }">
@@ -113,9 +135,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			   <c:if test="${formbean.editState }">
 			    <select  class="form-control input-sm"  name="states" >
-					  <option value="PUBLISH"  ${entity.state.toString().equals("PUBLISH")?"selected":"" } >已发表</option>
-					  <option value="WAITING" ${entity.state.toString().equals("WAITING")?"selected":"" }>待发表</option>
-					  <option value="CLOSE" ${entity.state.toString().equals("CLOSE")?"selected":"" }>已屏蔽</option>
+					  <option  value="PUBLISH"  ${entity.state.toString().equals("PUBLISH")?"selected":"" } >已发表</option>
+					  <option  value="WAITING" ${entity.state.toString().equals("WAITING")?"selected":"" }>待发表</option>
+					  <option  value="CLOSE" ${entity.state.toString().equals("CLOSE")?"selected":"" }>已屏蔽</option>
 			     </select> 
 			   </c:if>
 			 </td>
@@ -133,7 +155,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </td>
 		  </c:forEach>
 		 <tr>
-			 <td colspan="5" align="center">
+			 <td colspan="6" align="center">
 			  <c:if test="${!formbean.editState }">
 			    <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
 			  </c:if>

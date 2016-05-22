@@ -30,6 +30,8 @@ public class NewsForm extends BaseForm {
 	private List<String> states;
 	
 	private List<Integer>  sequences;
+	
+	private List<Integer> suggests;
 	/**
 	 * 添加的附件文件的id
 	 */
@@ -108,6 +110,14 @@ public class NewsForm extends BaseForm {
 
 	public void setFileIds(List<String> fileIds) {
 		this.fileIds = fileIds;
+	}
+
+	public List<Integer> getSuggests() {
+		return suggests;
+	}
+
+	public void setSuggests(List<Integer> suggests) {
+		this.suggests = suggests;
 	}
 
 	/**

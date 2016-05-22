@@ -72,6 +72,14 @@ public class News implements Serializable{
 	 */
 	private int sequence=0;
 	/**
+	 * 发布者
+	 */
+	private String author;
+	/**
+	 * 推荐1：推荐，2：不推荐
+	 */
+	private int suggest=2;
+	/**
 	 * 新闻附件，多对一
 	 */
 	private Set<NewsFile> newsFiles = new HashSet<NewsFile>();
@@ -163,6 +171,22 @@ public class News implements Serializable{
 
 	public void setNewsFiles(Set<NewsFile> newsFiles) {
 		this.newsFiles = newsFiles;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public int getSuggest() {
+		return suggest;
+	}
+
+	public void setSuggest(int suggest) {
+		this.suggest = suggest;
 	}
 	
 

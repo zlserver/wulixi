@@ -11,6 +11,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:wlx-service.xml</param-value>
   </context-param>
+  
   <!-- 编码过滤器 -->
   <filter>
         <filter-name>encodeFilter</filter-name>

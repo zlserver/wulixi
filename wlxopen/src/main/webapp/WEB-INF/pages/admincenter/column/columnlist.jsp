@@ -438,7 +438,7 @@ display: none;
 	  	<tr>
 	  	 <td colspan="1">
 	  	  父类:
-	  	 <font color="red">${parentName}</font>  <input type="hidden" name="parentId" value="${parentId}"> 
+	  	 <font color="red">${parentName}</font>
 	  	 </td>
 	  	 <td>类名称</td> <td><input type="text" id="name" name="column.name"    required="required" class="form-control"> </td>
 	  	 <td>分类码</td><td><input type="text" id="classCode" name="column.classCode"    required="required" class="form-control"> </td>
