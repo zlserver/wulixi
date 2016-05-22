@@ -13,6 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-<h1>这是123页面</h1>
+
+中
 </body>
 </html>

@@ -1,92 +1,72 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
     <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
 
-	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>jQuery</title>
-	<link rel="stylesheet" href="../lib/jquery.treeview.css" />
-	<link rel="stylesheet" href="../red-treeview.css" />
-	<link rel="stylesheet" href="../demo/screen.css" />
-	<script src="../lib/jquery.js" type="text/javascript"></script>
-	<script src="../lib/jquery.cookie.js" type="text/javascript"></script>
-	<script src="../lib/jquery.treeview.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(function() {
-			$("#browser").treeview();
-		});
-	</script>
+<base href="<%=basePath%>" target="mainFrame">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>内容</title>
+<link rel="stylesheet" type="text/css" href="js/tree_themes/SimpleTree.css"/>
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="js/SimpleTree.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".st_tree").SimpleTree({
+		 click:function(a){
+			 if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref")); 
+				
+		} 
+	});
+});
+</script>
+</head>
 
-	</head>
-<body bgcolor="#CCCCCC">
-<div id="main">
-<ul id="browser" class="filetree">
-<li><img src="../images/folder.gif" /> hello word</span>
+<body>
+	<div class="st_tree">
 		<ul>
-		<li onClick='parent.window.set_content();'>this is first HTML！<img src="../images/file.gif" /></li>
-	</ul>
-	</li>
-<li><img src="../images/folder.gif" /> 123</span>
-		<ul>
-		<li>blabla </li>
-		<li>blabla </li>
-		<li><img src="../images/folder.gif" /> 123</span>
-				<ul>
-				<li>blabla </li>
-				<li>blabla </li>
-				<li>blabla </li>
-			</ul>
-			</li>
-	</ul>
-	</li>
-<li><img src="../images/folder.gif" />123</span>
-		<ul>
-		<li><img src="../images/folder.gif" />1234</span>
-				<ul id="folder21">
-				<li> more text</li>
-				<li>and here, too</li>
-				<li>123</span></li>
-			</ul>
-			</li>
-	</ul>
-	</li>
-<li><img src="../images/folder.gif" />123</span>
-		<ul>
-		<li><img src="../images/folder.gif" />1234</span>
-				<ul id="folder21">
-				<li> more text</li>
-				<li>and here, too</li>
-				<li>123</span></li>
-			</ul>
-			</li>
-	</ul>
-	</li>
-<li><img src="../images/folder.gif" />123</span>
-		<ul>
-		<li><img src="../images/folder.gif" />1234</span>
-				<ul id="folder21">
-				<li> more text</li>
-				<li>and here, too</li>
-				<li>123</span></li>
-			</ul>
-			</li>
-	</ul>
-	</li>
-<li><img src="../images/folder.gif" />123</span>
-		<ul>
-		<li><img src="../images/folder.gif" />1234</span>
-				<ul id="folder21">
-				<li> more text</li>
-				<li>and here, too</li>
-				<li>123</span></li>
-			</ul>
-			</li>
-	</ul>
-	</li>
-<li class="closed">this is closed! <img src="../images/folder.gif" /> </li>
+			<c:forEach items="${topColumns }" var="column">
+			  <li><a href="javascript:void(0)" >${column.name }</a></li>
+			  <ul show="true">
+				  <c:forEach items="${column.childrens }" var="child">
+				  	<!-- 无二级子类 -->
+				  	<c:if test="${fn:length(child.childrens)<=0}">
+				      <li>
+				       	<a target="mainFrame" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
+					    <c:if test="${!child.manageUrl.equals('')}">
+					    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}?columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+			 		   </c:if>
+			 		  </li>
+					</c:if>
+					<!-- 有二级子类 -->
+					 <c:if test="${fn:length(child.childrens)>0}">
+					   <li><a href="javascript:void(0)" >${child.name }</a></li>
+						<ul>
+							<c:forEach  items="${child.childrens }" var="cchild">
+							 <li>
+								  <a target="mainFrame" href="<c:url value='${cchild.readUrl }?columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
+								  <c:if test="${!cchild.manageUrl.equals('')}">
+								    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}?columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
+								  </c:if>
+							  </li>    
+							 </c:forEach>
+				        </ul> 
+					</c:if> 
+				  </c:forEach>
+			  </ul>
+			  
+			</c:forEach>
+			
+			
+		</ul>
+	</div>
 </body>
 </html>

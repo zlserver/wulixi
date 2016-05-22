@@ -1,48 +1,49 @@
 /*
-Author£ºÕÅºÆ»ª
-Date£º2011.11.25 0:12
-Version£ºSimpleTree 1.0
+Authorï¼šå¼ æµ©å
+Dateï¼š2011.11.27 0:33
+Versionï¼šSimpleTree 1.1
 */
 
 $(function(){
 	$.fn.extend({
 		SimpleTree:function(options){
 			
-			//³õÊ¼»¯²ÎÊı
+			//åˆå§‹åŒ–å‚æ•°
 			var option = $.extend({
 				click:function(a){ }
 			},options);
 			
-			option.tree=this;	/* ÔÚ²ÎÊı¶ÔÏóÖĞÌí¼Ó¶Ôµ±Ç°²Ëµ¥Ê÷µÄÒıÓÃ£¬ÒÔ±ãÔÚ¶ÔÏóÖĞÊ¹ÓÃ¸Ã²Ëµ¥Ê÷ */
+			option.tree=this;	/* åœ¨å‚æ•°å¯¹è±¡ä¸­æ·»åŠ å¯¹å½“å‰èœå•æ ‘çš„å¼•ç”¨ï¼Œä»¥ä¾¿åœ¨å¯¹è±¡ä¸­ä½¿ç”¨è¯¥èœå•æ ‘ */
 			
 			option._init=function(){
 				/*
-				 * ³õÊ¼»¯²Ëµ¥Õ¹¿ª×´Ì¬£¬ÒÔ¼°·Ö²æ½ÚµãµÄÑùÊ½
+				 * åˆå§‹åŒ–èœå•å±•å¼€çŠ¶æ€ï¼Œä»¥åŠåˆ†å‰èŠ‚ç‚¹çš„æ ·å¼
 				 */				
-				this.tree.find("ul ul").hide();	/* Òş²ØËùÓĞ×Ó¼¶²Ëµ¥ */
-				this.tree.find("ul ul").prev("li").removeClass("open");	/* ÒÆ³ıËùÓĞ×Ó¼¶²Ëµ¥¸¸½ÚµãµÄ open ÑùÊ½ */
+				this.tree.find("ul ul").hide();	/* éšè—æ‰€æœ‰å­çº§èœå• */
+				this.tree.find("ul ul").prev("li").removeClass("open");	/* ç§»é™¤æ‰€æœ‰å­çº§èœå•çˆ¶èŠ‚ç‚¹çš„ open æ ·å¼ */
 				
-				this.tree.find("ul ul[show='true']").show();	/* ÏÔÊ¾ show ÊôĞÔÎª true µÄ×Ó¼¶²Ëµ¥ */
-				this.tree.find("ul ul[show='true']").prev("li").addClass("open");	/* Ìí¼Ó show ÊôĞÔÎª true µÄ×Ó¼¶²Ëµ¥¸¸½ÚµãµÄ open ÑùÊ½ */
+				this.tree.find("ul ul[show='true']").show();	/* æ˜¾ç¤º show å±æ€§ä¸º true çš„å­çº§èœå• */
+				this.tree.find("ul ul[show='true']").prev("li").addClass("open");	/* æ·»åŠ  show å±æ€§ä¸º true çš„å­çº§èœå•çˆ¶èŠ‚ç‚¹çš„ open æ ·å¼ */
 			}/* option._init() End */
 			
-			/* ÉèÖÃËùÓĞ³¬Á´½Ó²»ÏìÓ¦µ¥»÷ÊÂ¼ş */
-			this.find("a").click(function(){ $(this).parent("li").click(); return false; });
-			
-			/* ²Ëµ¥Ïî <li> ½ÓÊÜµ¥»÷ */
+			/* è®¾ç½®æ‰€æœ‰è¶…é“¾æ¥ä¸å“åº”å•å‡»äº‹ä»¶ */
+			/*this.find("a").click(function(){ $(this).parents("li").click(); return false; });
+			*/
+			/* èœå•é¡¹ <li> æ¥å—å•å‡» */
 			this.find("li").click(function(){
 				/*
-				 * µ±µ¥»÷²Ëµ¥Ïî <li>
-				 * 1.´¥·¢ÓÃ»§×Ô¶¨ÒåµÄµ¥»÷ÊÂ¼ş£¬½«¸Ã <li> ±êÇ©ÖĞµÄµÚÒ»¸ö³¬Á´½Ó×öÎª²ÎÊı´«µİ¹ıÈ¥
-				 * 2.ĞŞ¸Äµ±Ç°²Ëµ¥ÏîËùÊôµÄ×Ó²Ëµ¥µÄÏÔÊ¾×´Ì¬£¨Èç¹ûµÈÓÚ true ½«ÆäÉèÖÃÎª false£¬·ñÔò½«ÆäÉèÖÃÎª true£©
-				 * 3.ÖØĞÂ³õÊ¼»¯²Ëµ¥
+				 * å½“å•å‡»èœå•é¡¹ <li>
+				 * 1.è§¦å‘ç”¨æˆ·è‡ªå®šä¹‰çš„å•å‡»äº‹ä»¶ï¼Œå°†è¯¥ <li> æ ‡ç­¾ä¸­çš„ç¬¬ä¸€ä¸ªè¶…é“¾æ¥åšä¸ºå‚æ•°ä¼ é€’è¿‡å»
+				 * 2.ä¿®æ”¹å½“å‰èœå•é¡¹æ‰€å±çš„å­èœå•çš„æ˜¾ç¤ºçŠ¶æ€ï¼ˆå¦‚æœç­‰äº true å°†å…¶è®¾ç½®ä¸º falseï¼Œå¦åˆ™å°†å…¶è®¾ç½®ä¸º trueï¼‰
+				 * 3.é‡æ–°åˆå§‹åŒ–èœå•
 				 */
-				
-				option.click($(this).find("a")[0]);	/* ´¥·¢µ¥»÷ */
+				var a=$(this).find("a")[0];
+				if(typeof(a)!="undefined")
+					option.click(a);	/* å¦‚æœè·å–çš„è¶…é“¾æ¥ä¸æ˜¯ undefinedï¼Œåˆ™è§¦å‘å•å‡» */
 				
 				/* 
-				 * Èç¹ûµ±Ç°½ÚµãÏÂÃæ°üº¬×Ó²Ëµ¥£¬²¢ÇÒÆä show ÊôĞÔµÄÖµÎª true£¬ÔòĞŞ¸ÄÆä show ÊôĞÔÎª false
-				 * ·ñÔòĞŞ¸ÄÆä show ÊôĞÔÎª true
+				 * å¦‚æœå½“å‰èŠ‚ç‚¹ä¸‹é¢åŒ…å«å­èœå•ï¼Œå¹¶ä¸”å…¶ show å±æ€§çš„å€¼ä¸º trueï¼Œåˆ™ä¿®æ”¹å…¶ show å±æ€§ä¸º false
+				 * å¦åˆ™ä¿®æ”¹å…¶ show å±æ€§ä¸º true
 				 */
 				if($(this).next("ul").attr("show")=="true"){
 					$(this).next("ul").attr("show","false");					
@@ -50,18 +51,27 @@ $(function(){
 					$(this).next("ul").attr("show","true");
 				}
 				
-				/* ³õÊ¼»¯²Ëµ¥ */
+				/* åˆå§‹åŒ–èœå• */
 				option._init();
 			});
 			
-			/* ÉèÖÃËùÓĞ¸¸½ÚµãÑùÊ½ */
+			this.find("li").hover(
+				function(){
+					$(this).addClass("hover");
+				},
+				function(){
+					$(this).removeClass("hover");
+				}
+			);
+			
+			/* è®¾ç½®æ‰€æœ‰çˆ¶èŠ‚ç‚¹æ ·å¼ */
 			this.find("ul").prev("li").addClass("folder");
 			
-			/* ÉèÖÃ½Úµã¡°ÊÇ·ñ°üº¬×Ó½Úµã¡±ÊôĞÔ */
+			/* è®¾ç½®èŠ‚ç‚¹â€œæ˜¯å¦åŒ…å«å­èŠ‚ç‚¹â€å±æ€§ */
 			this.find("li").find("a").attr("hasChild",false);
 			this.find("ul").prev("li").find("a").attr("hasChild",true);
 			
-			/* ³õÊ¼»¯²Ëµ¥ */
+			/* åˆå§‹åŒ–èœå• */
 			option._init();
 			
 		}/* SimpleTree Function End */

@@ -9,22 +9,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>无标题文档</title>
-<style type="text/css">
-body,td,th {
-	font-size: 36px;
-	color: #000;
-}
-body {
-	background-color: #0F0;
-	margin-left: 0%;
-	margin-top: 40px;
-}
-</style>
+
 </head>
 
 <body>
-<div align="center">
-<h2>
-单词棒棒糖后台管理界面</h2>
-</div></body>
+头部
+</body>
 </html>

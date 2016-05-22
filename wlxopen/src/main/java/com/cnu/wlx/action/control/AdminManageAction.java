@@ -64,14 +64,6 @@ public class AdminManageAction {
 		}
 	}
 	
-	/**
-	 * 登录界面
-	 * @return
-	 */
-	@RequestMapping(value="loginUI")
-	public String loginUI(){
-		return SiteUtils.getPage("control.admin.login");
-	}
 	
 	public AdminService getAdminService() {
 		return adminService;
