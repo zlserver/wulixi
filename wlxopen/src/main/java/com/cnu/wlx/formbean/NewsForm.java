@@ -18,7 +18,7 @@ public class NewsForm extends BaseForm {
 	 */
 	private String titleColor;
 	/**
-	 * 新闻状态
+	 * 新闻状态:待发布，已发布，屏蔽
 	 */
 	private String state;
 	
@@ -37,18 +37,7 @@ public class NewsForm extends BaseForm {
 	 */
 	private List<String> fileIds;
 	
-	/**
-	 * 编辑状态，true：编辑状态，false：显示状态
-	 */
-	private boolean editState=false;
-
-	public boolean getEditState() {
-		return editState;
-	}
-
-	public void setEditState(boolean editState) {
-		this.editState = editState;
-	}
+	
 
 	public List<String> getColumnIds() {
 		return columnIds;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
     <%
 String path = request.getContextPath();
@@ -15,22 +16,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>内容</title>
 <link rel="stylesheet" type="text/css" href="js/tree_themes/SimpleTree.css"/>
-<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="js/SimpleTree.js"></script>
-<script type="text/javascript">
-$(function(){
-	$(".st_tree").SimpleTree({
-		 click:function(a){
-			 if(!$(a).attr("hasChild"))
-				alert($(a).attr("ref")); 
-				
-		} 
-	});
-});
-</script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<style type="text/css">
+ #logindes{
+ margin-top: 15px;
+ padding-left: 10px;
+ }
+ #logindes p{
+ font-size: 14px;
+ }
+ #logindes p font{
+  color: red;
+ }
+ #main{
+ 
+ }
+</style>
 </head>
 
 <body>
+<div id="main">
 	<div class="st_tree">
 		<ul>
 			<c:forEach items="${topColumns }" var="column">
@@ -68,5 +73,37 @@ $(function(){
 			
 		</ul>
 	</div>
+	<div id="logindes" >
+		 <p >登录用户:<font > ${admin.account } </font></p>
+		 <p >登录时间:<font ><fmt:formatDate value="${admin.loginTime}" pattern="yy-MM-dd HH:mm"/> </font></p>
+		 <p >登录次数:<font > ${admin.loginCount } </font></p>
+		 <p >发稿篇数:<font > ${admin.publishCount } </font></p>
+		  <span>
+		   <a href='<c:url value="/common/exit.uhtml"/>' class="btn btn-success" onclick="return exit()" ><font color="black">安全退出</font></a>
+	      </span>
+	 </div>
+</div>
 </body>
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="js/SimpleTree.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".st_tree").SimpleTree({
+		 click:function(a){
+			 if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref")); 
+				
+		} 
+	});
+});
+function exit() {
+	if( !confirm("确定退出"))
+	{
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
 </html>

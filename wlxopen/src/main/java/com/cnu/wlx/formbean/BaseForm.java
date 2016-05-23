@@ -39,10 +39,21 @@ public class BaseForm {
 	 */
 	private String columnName;
 	/**
+	 * 状态，true：管理状态，false：显示状态
+	 */
+	private boolean editState=false;
+	/**
 	 * 存放表单校验后的结果
 	 */
 	private Map<String,String> result=new HashMap<String,String>();
 
+	public boolean getEditState() {
+		return editState;
+	}
+
+	public void setEditState(boolean editState) {
+		this.editState = editState;
+	}
 	public int getPage() {
 		return page;
 	}
