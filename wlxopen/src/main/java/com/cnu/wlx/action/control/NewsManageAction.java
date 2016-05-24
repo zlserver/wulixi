@@ -191,7 +191,7 @@ public class NewsManageAction {
 	 * }
 	 */
 	@RequestMapping(value="upload", method=RequestMethod.POST)
-	public String uploadFile(MultipartHttpServletRequest request,Model model,String name,String testName){
+	public String uploadFile(MultipartHttpServletRequest request,Model model){
 	   
 	   MyStatus status = new MyStatus();
 	   JSONObject json= new JSONObject();

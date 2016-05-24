@@ -20,4 +20,25 @@ public interface DownloadFileService {
 	 */
 	public QueryResult<DownloadFile> getScrollData(int firstResult, int maxresult, String columnId, FileStateEnum state);
 
+	/**
+	 * 保存
+	 * @param downloadFile
+	 */
+	public void save(DownloadFile downloadFile);
+	/**
+	 * 查询
+	 * @param fileid
+	 * @return
+	 */
+	public DownloadFile find(String fileid);
+	/**
+	 * 更新
+	 * @param downloadFile
+	 */
+	public void update(DownloadFile downloadFile);
+	/**
+	 * 删除
+	 * @param ids
+	 */
+	public void delete(String ...ids);
 }

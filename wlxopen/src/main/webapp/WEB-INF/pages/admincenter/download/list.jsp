@@ -19,25 +19,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </style>
 <script type="text/javascript">
 	//查询
-	function topage(page)
-	{
-		var form = document.forms[0];
+	function topage(page){
+   		var form = document.forms[0];
 		form.page.value= page;
 		form.submit();
 	}
 	
 	function _action(method) {
 		//如果未选中则不操作
-		var columnIds=document.getElementsByName("columnIds");
+		var checkeds=document.getElementsByName("checkeds");
 		var flage = false;
-		for( var i = 0;i <columnIds.length;i++)
-			if(columnIds[i].checked ){
+		for( var i = 0;i <checkeds.length;i++)
+			if(checkeds[i].checked ){
 				flage = true;
 				break;
 			}
 		if( flage){
 			var form = document.forms[0];
-			form.action="control/news/"+method+".action";
+			form.action="control/download/"+method+".action";
+			          
 			form.submit();
 	    }
 	}
@@ -69,6 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td  width="50%">名称</td>
 			<td  width="9%">发布者</td>
 			<td  width="9%">是否推荐</td>
+			<td  width="9%">顺序</td>
+			<td  width="6%">下载量</td>
 			<td  width="10%">
 				<select class="form-control" name="state" onchange="query()">
 				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
@@ -77,22 +79,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  <option value="DELETE" ${formbean.state.equals("DELETE")?'selected':'' }>已屏蔽</option>
 				</select>
 			</td>
-			<td  width="6%">下载量</td>
 			</tr>
 		</thead>
 		<tbody>
-			 <c:forEach items="${pageView.records }" var="entity">
+			 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
 				 
 			<tr>
 				<c:if test="${formbean.editState }">
 					 <td> 
-					 	<input type="checkbox" value="${entity.id }" name="columnIds">
+					 	<input type="hidden" value="${entity.id }" name="fileIds">
+					 	<input type="checkbox" value="${status.count-1}" name="checkeds">
 					 </td>
 				 </c:if>
 			 <td>
 			     <span >
 			     <c:if test="${!formbean.editState }">
-				     <a href="<c:url value='control/news/detail.action?id=${entity.id }'/>">
+				     <a href="<c:url value='control/download/down.action?savePath=${entity.savePath }&originName=${entity.originName}'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.originName}</font> 
 				      </a>
 				      <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
@@ -122,6 +124,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 </select> 
 			   </c:if>
 			 </td>
+			  <td> 
+			  <c:if test="${!formbean.editState }">
+			   <span >${entity.sequence }</span>
+			  </c:if>
+			   <c:if test="${formbean.editState }">
+			   	 <input  class="form-control  input-sm"  type="text" name="sequences" value="${entity.sequence }"> 
+			   </c:if>
+			 </td>
+			 <td> 
+			   <span >${entity.downloadCount }</span>
+			 </td>
 			<td> 
 			   <c:if test="${!formbean.editState }">
 			   <span >
@@ -140,23 +153,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			     </select> 
 			   </c:if>
 			 </td>
-			 <td> 
-			  <c:if test="${!formbean.editState }">
-			   <span >${entity.sequence }</span>
-			  </c:if>
-			   <c:if test="${formbean.editState }">
-			   	 <input  class="form-control  input-sm"  type="text" name="sequences" value="${entity.sequence }"> 
-			   </c:if>
-			 </td>
-			 <td> 
-			   <span >${entity.downloadCount }</span>
-			 </td>
+			
 		  </c:forEach>
 		 <tr>
 			 <td colspan="6" align="center">
 			   <c:if test="${formbean.editState }">
 			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
 			      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+			   	  <a href="<c:url value='control/download/addUi.action?columnId=${formbean.columnId}'></c:url>"  class="btn btn-warning" >添加</a>
 			   </c:if>
 			 </td>
 		</tr>

@@ -205,11 +205,25 @@ public class BaseForm {
 	 */
 	private static void loadFile(HttpServletResponse response,Resource fileResource,boolean isLoad){
 		
+		loadFile(response, fileResource, null, isLoad);
+	}
+	/**
+	 * 下载文件/图片
+	 * @param response  响应请求
+	 * @param fileResource  文件资源
+	 * @param isLoad 下载还是查看模式 ,false:查看模式，true:下载模式
+	 */
+	private static void loadFile(HttpServletResponse response,Resource fileResource,String originName,boolean isLoad){
+		
 		response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
-        if( isLoad)
-        response.setHeader("Content-Disposition", "attachment;fileName="
-                + fileResource.getFilename());
+        if( isLoad){
+        	if( BaseForm.validateStr(originName) ){
+        		response.setHeader("Content-Disposition", "attachment;fileName="+ originName);
+        	}else{
+        		response.setHeader("Content-Disposition", "attachment;fileName="+ fileResource.getFilename());
+        	}
+        }
 		//3.建立文件
 		try {
 			//4.建立字节读取流
@@ -237,7 +251,6 @@ public class BaseForm {
 			e1.printStackTrace();
 		}
 	}
-
 	/**
 	 * 下载文件
 	 * @param response 响应请求
@@ -245,6 +258,14 @@ public class BaseForm {
 	 */
 	public static void loadFile(HttpServletResponse response,Resource fileResource){
 		loadFile( response, fileResource,true);
+	}
+	/**
+	 * 下载文件
+	 * @param response 响应请求
+	 * @param fileResource  文件资源
+	 */
+	public static void loadFile(HttpServletResponse response,Resource fileResource,String originName){
+		loadFile( response, fileResource,originName,true);
 	}
 	/**
 	 * 查看图片

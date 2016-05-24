@@ -78,7 +78,47 @@ public class DownloadFile {
 	 * 下载量
 	 */
 	private int downloadCount=0;
+	/**
+	 * 顺序
+	 */
+	private int sequence=0;
 	
+	public DownloadFile() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public DownloadFile(String id, String originName, ColorEnum titleColor, String saveName, String author,
+			String savePath, long size, String ext, FileStateEnum state, Date createTime, ColumnType column,
+			int suggest, int downloadCount) {
+		super();
+		this.id = id;
+		this.originName = originName;
+		this.titleColor = titleColor;
+		this.saveName = saveName;
+		this.author = author;
+		this.savePath = savePath;
+		this.size = size;
+		this.ext = ext;
+		this.state = state;
+		this.createTime = createTime;
+		this.column = column;
+		this.suggest = suggest;
+		this.downloadCount = downloadCount;
+	}
+
+	public DownloadFile(String originName, ColorEnum titleColor, String saveName, String author, String savePath,
+			long size, String ext, ColumnType column) {
+		super();
+		this.originName = originName;
+		this.titleColor = titleColor;
+		this.saveName = saveName;
+		this.author = author;
+		this.savePath = savePath;
+		this.size = size;
+		this.ext = ext;
+		this.column = column;
+	}
 	@Id @GeneratedValue(generator="uuidGenderator")
 	@Column(length=32)
 	public String getId() {
@@ -94,6 +134,15 @@ public class DownloadFile {
 	public void setOriginName(String originName) {
 		this.originName = originName;
 	}
+	
+	public int getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+
 	@Column(nullable=false,length=100)
 	public String getSaveName() {
 		return saveName;
@@ -144,7 +193,7 @@ public class DownloadFile {
 		this.author = author;
 	}
 
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true)
 	@JoinColumn(name="columnId")
 	public ColumnType getColumn() {
 		return column;

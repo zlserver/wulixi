@@ -41,6 +41,7 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 		// TODO Auto-generated method stub
 				//结果集根据时间降序来排列
 				LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+				orderby.put("sequence", "desc");
 				orderby.put("createTime", "desc");
 				//父类不为null
 				if( BaseForm.validateStr(columnId)){
@@ -54,5 +55,25 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 					return downloadFileDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
 				}
 				return null;
+	}
+	@Override
+	public void save(DownloadFile downloadFile) {
+		// TODO Auto-generated method stub
+		downloadFileDao.save(downloadFile);
+	}
+	@Override
+	public DownloadFile find(String fileid) {
+		// TODO Auto-generated method stub
+		return downloadFileDao.find(fileid);
+	}
+	@Override
+	public void update(DownloadFile downloadFile) {
+		// TODO Auto-generated method stub
+		downloadFileDao.update(downloadFile);
+	}
+	@Override
+	public void delete(String... ids) {
+		// TODO Auto-generated method stub
+		downloadFileDao.delete(ids);
 	}
 }
