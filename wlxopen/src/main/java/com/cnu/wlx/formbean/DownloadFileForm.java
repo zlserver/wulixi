@@ -21,23 +21,19 @@ public class DownloadFileForm extends BaseForm {
 	 * 添加的文件的id
 	 */
 	private List<String> fileIds;
-    
+    /**
+     * 状态：FileStateEnum中的值
+     */
 	private List<String> states;
-	
+	/**
+	 * 序号
+	 */
 	private List<Integer>  sequences;
-	
+	/**
+	 * 是否推荐
+	 */
 	private List<Integer> suggests;
-	
-	private List<Integer> checkeds;
-	
 
-	public List<Integer> getCheckeds() {
-		return checkeds;
-	}
-
-	public void setCheckeds(List<Integer> checkeds) {
-		this.checkeds = checkeds;
-	}
 
 	public List<String> getStates() {
 		return states;

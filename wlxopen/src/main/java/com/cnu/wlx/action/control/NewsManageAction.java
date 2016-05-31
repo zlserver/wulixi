@@ -2,8 +2,11 @@ package com.cnu.wlx.action.control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -23,15 +26,21 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cnu.wlx.bean.Admin;
 import com.cnu.wlx.bean.ColumnType;
+import com.cnu.wlx.bean.DownloadFile;
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsFile;
+import com.cnu.wlx.bean.Question;
 import com.cnu.wlx.bean.base.MyStatus;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
+import com.cnu.wlx.formbean.NewsFileForm;
 import com.cnu.wlx.formbean.NewsForm;
 import com.cnu.wlx.myenum.ColorEnum;
+import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
+import com.cnu.wlx.myenum.StateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
 import com.cnu.wlx.service.NewsFileService;
@@ -56,8 +65,7 @@ public class NewsManageAction {
 
 	private NewsService newsService;
 	private ColumnTypeService columnTypeService;
-	 
-	 private NewsPictureService newsPictureService;
+	private NewsPictureService newsPictureService;
 	 /**
 	  * 文件服务
 	  */
@@ -67,6 +75,19 @@ public class NewsManageAction {
 	  */
 	 private NewsFileService newsFileService;
      
+	 @RequestMapping(value="menu")
+	 public String menu(String newsId,String columnId,Model model){
+		 model.addAttribute("newsId", newsId);
+		 model.addAttribute("columnId", columnId);
+		 return SiteUtils.getPage("control.news.menu");
+	 }
+	 
+	 @RequestMapping(value="detailmain")
+	 public String detailmain(String id,String columnId,Model model){
+		 model.addAttribute("id", id);
+		 model.addAttribute("columnId", columnId);
+		 return SiteUtils.getPage("control.news.detailmain");
+	 }
 	 /**
 	  * 上传图片
 	  * @param request
@@ -263,6 +284,40 @@ public class NewsManageAction {
 	}
 
 	/**
+	 * 查看新闻相关文件
+	 * @param newsId 新闻id
+	 * @param type 查看文件类型,IMAGE:图片类型 ;  NO_IMAGE:非图片类型
+	 * @return
+	 */
+	@RequestMapping(value="listfile")
+	public String listNewsFile(NewsFileForm formbean,Model model){
+		
+		PageView<NewsFile> pageView = new PageView<NewsFile>(formbean.getMaxresult(), formbean.getPage());
+		//排序：时间
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<>();
+		orderby.put("createTime", "desc");
+		//查询条件：所属新闻，文件类型
+		StringBuffer wherejpql=new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		if( BaseForm.validateStr(formbean.getNewsId())){
+			wherejpql.append(" o.news.id = ?");
+			params.add(formbean.getNewsId());
+		}
+		/*if( BaseForm.validateStr(formbean.getType())){
+			if( params.size()>0)
+				wherejpql.append(" and ");
+			wherejpql.append(" o.type = ?");
+			params.add(FileTypeEnum.valueOf(formbean.getType()));
+		}*/
+		
+		QueryResult<NewsFile> queryResult= newsFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
+		pageView.setQueryResult(queryResult);
+
+		model.addAttribute("pageView", pageView);
+		model.addAttribute("formbean", formbean);
+		return SiteUtils.getPage("control.news.newfile");
+	}
+	/**
 	 * 转发到添加新闻界面
 	 * @return
 	 */
@@ -292,6 +347,7 @@ public class NewsManageAction {
 	 */
 	@RequestMapping(value="editUi")
 	public String editUi(String id,String columnId,Model model){
+		System.out.println(id+" : "+columnId+"--");
 		News news=null;
 		if( BaseForm.validateStr(id)){
 			 news= newsService.find(id);
@@ -359,7 +415,6 @@ public class NewsManageAction {
 		
 		boolean flage = false;
 		//校验
-		
 		News news = new News();
 		try {
 			if(formbean.validateAdd()){
@@ -409,14 +464,13 @@ public class NewsManageAction {
 			return SiteUtils.getPage("control.news.addUi");
 		}
 	}
-
 	/**
-	 * 删除附件记录
+	 * 通过ajax删除暂时上传附件记录（）
 	 * @param fileId
 	 * @return
 	 */
-	@RequestMapping(value="deleteFile")
-	public String deleteNewsFile(String fileId,Model model){
+	@RequestMapping(value="ajaxdeleteFile")
+	public String ajaxdeleteNewsFile(String fileId,Model model){
 		
 		MyStatus status = new MyStatus();
 		try {
@@ -433,6 +487,49 @@ public class NewsManageAction {
 		model.addAttribute("json", json.toString());
 		return SiteUtils.getPage("json");
 	}
+	
+	/**
+	 * 批量更新新闻的附件
+	 * @return
+	 */
+	@RequestMapping(value="updateFile")
+	public String updateFile(NewsFileForm formbean){
+		
+		//获取批量id
+		//获取批量state
+		if( formbean.getCheckeds()!=null){
+			for(int j=0;j < formbean.getCheckeds().size();j++){
+				int i = formbean.getCheckeds().get(j);
+				String id= formbean.getFileIds().get(i);
+				NewsFile newsFile =newsFileService.find(id);
+				String state = formbean.getStates().get(i);
+				newsFile.setState(FileStateEnum.valueOf(state));
+				
+				newsFileService.update(newsFile);
+				
+			}
+		}
+		
+		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&page="+formbean.getPage();
+	} 
+	/**
+	 * 批量更新新闻的附件
+	 * @return
+	 */
+	@RequestMapping(value="deleteFile")
+	public String deleteFile(NewsFileForm formbean){
+		
+		//获取批量id
+		if( formbean.getCheckeds()!=null){
+			String[] ids = new String[formbean.getCheckeds().size()];
+			for(int j=0;j < formbean.getCheckeds().size();j++){
+				int i = formbean.getCheckeds().get(j);
+				ids[j]=formbean.getFileIds().get(i);
+			}
+			newsFileService.delete(ids);
+		}
+		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&page="+formbean.getPage();
+	} 
 	/**
 	 * 批量更新新闻的状态信息，不包含内容，题目，附件
 	 * @return
@@ -445,21 +542,25 @@ public class NewsManageAction {
 		//获取批量state
 		
 		//获取批量sequence
-		if( formbean.getColumnIds()!=null)
-		for(int i=0;i < formbean.getColumnIds().size();i++){
-			String id= formbean.getColumnIds().get(i);
-			String state = formbean.getStates().get(i);
-			Integer sequence = formbean.getSequences().get(i);
-			Integer suggest = formbean.getSuggests().get(i);
-			
-			News news = newsService.find(id);
-			news.setSequence(sequence);
-			news.setState(NewsStateEnum.valueOf(state));
-			news.setSuggest(suggest);
-			
-			newsService.update(news);
-			
+		if( formbean.getCheckeds()!=null)
+		if( formbean.getCheckeds()!=null){
+			for(int j=0;j < formbean.getCheckeds().size();j++){
+				int i = formbean.getCheckeds().get(j);
+				String id= formbean.getColumnIds().get(i);
+				String state = formbean.getStates().get(i);
+				Integer sequence = formbean.getSequences().get(i);
+				Integer suggest = formbean.getSuggests().get(i);
+				
+				News news = newsService.find(id);
+				news.setSequence(sequence);
+				news.setState(NewsStateEnum.valueOf(state));
+				news.setSuggest(suggest);
+				
+				newsService.update(news);
+				
+			}
 		}
+		
 		return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
 	}
 	/**
@@ -469,14 +570,15 @@ public class NewsManageAction {
 	 */
 	@RequestMapping(value="delete")
 	public String delete(NewsForm formbean){
-		if( formbean.getColumnIds()!=null){
-			String[] ids = new String[formbean.getColumnIds().size()];
-			for(int i = 0;i < formbean.getColumnIds().size();i++)
-				ids[i]=formbean.getColumnIds().get(i);
-			
+	
+		if( formbean.getCheckeds()!=null){
+			String[] ids = new String[formbean.getCheckeds().size()];
+			for(int j=0;j < formbean.getCheckeds().size();j++){
+				int i = formbean.getCheckeds().get(j);
+				ids[j]=formbean.getColumnIds().get(i);
+			}
 			newsService.delete(ids);
 		}
-		
 		return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
 	}
 

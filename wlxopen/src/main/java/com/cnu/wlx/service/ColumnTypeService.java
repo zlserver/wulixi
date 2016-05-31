@@ -36,7 +36,13 @@ public interface ColumnTypeService {
 	 * @param id
 	 * @return
 	 */
-	public ColumnType find(String id);
+	public ColumnType find(String id);	
+	/**
+	 * 根据classCode（分类码）查询栏目
+	 * @param id
+	 * @return
+	 */
+	public ColumnType findByClassCode(String classCode);
 	/**
 	 * 删除栏目
 	 * @param id

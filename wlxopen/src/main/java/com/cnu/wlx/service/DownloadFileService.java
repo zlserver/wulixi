@@ -1,6 +1,7 @@
 package com.cnu.wlx.service;
 
 import com.cnu.wlx.bean.DownloadFile;
+import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.myenum.FileStateEnum;
 
@@ -19,7 +20,14 @@ public interface DownloadFileService {
 	 * @return
 	 */
 	public QueryResult<DownloadFile> getScrollData(int firstResult, int maxresult, String columnId, FileStateEnum state);
-
+	/**
+	 * 获取首页下载文件
+	 * @param firstResult 开始查询位置从0开始
+	 * @param maxresult 一页的最大记录数
+	 * @param columnId  栏目分类id
+	 * @return
+	 */
+	public QueryResult<DownloadFile> getHomeScrollData(int firstResult, int maxresult,String columnId); 
 	/**
 	 * 保存
 	 * @param downloadFile

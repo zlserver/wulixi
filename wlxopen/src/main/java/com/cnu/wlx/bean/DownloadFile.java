@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.cnu.wlx.myenum.ColorEnum;
 import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 
 /**
 * @author 周亮 
@@ -58,6 +59,10 @@ public class DownloadFile {
 	 * 后缀
 	 */
 	private String ext;
+	/**
+	 * 文件类型
+	 */
+	private FileTypeEnum type;
 	/**
 	 * 状态
 	 */
@@ -134,7 +139,15 @@ public class DownloadFile {
 	public void setOriginName(String originName) {
 		this.originName = originName;
 	}
-	
+	@Enumerated(EnumType.STRING)
+	public FileTypeEnum getType() {
+		return type;
+	}
+	public void setType(FileTypeEnum type) {
+		this.type = type;
+	}
+
+
 	public int getSequence() {
 		return sequence;
 	}
@@ -198,7 +211,6 @@ public class DownloadFile {
 	public ColumnType getColumn() {
 		return column;
 	}
-
 	public void setColumn(ColumnType column) {
 		this.column = column;
 	}

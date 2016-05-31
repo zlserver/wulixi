@@ -28,10 +28,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function _action(method) {
 		//如果未选中则不操作
-		var columnIds=document.getElementsByName("columnIds");
+		var checkeds=document.getElementsByName("checkeds");
 		var flage = false;
-		for( var i = 0;i <columnIds.length;i++)
-			if(columnIds[i].checked ){
+		for( var i = 0;i <checkeds.length;i++)
+			if(checkeds[i].checked ){
 				flage = true;
 				break;
 			}
@@ -82,12 +82,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 		</thead>
 		<tbody>
-			 <c:forEach items="${pageView.records }" var="entity">
+			 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
 				 
 			<tr>
 				<c:if test="${formbean.editState }">
 					 <td> 
-					 	<input type="checkbox" value="${entity.id }" name="columnIds">
+					 	<input type="hidden" value="${entity.id }" name="columnIds">
+					 	<input type="checkbox" value="${status.count-1}" name="checkeds">
 					 </td>
 				 </c:if>
 			 <td>
@@ -99,9 +100,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
 				  </c:if>
 				   <c:if test="${formbean.editState }">
-				   	 <a href="<c:url value='control/news/editUi.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
+				   
+				    <a href="<c:url value='control/news/detailmain.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
 				     </a>
+				    <%-- <a href="<c:url value='control/news/listfile.action?newsId=${entity.id }'/>">
+				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
+				     </a> --%>
+				   	<%--  <a href="<c:url value='control/news/editUi.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
+				       <font color="${entity.titleColor.toString()}">${entity.title}</font>
+				     </a> --%>
 				   </c:if>
 			     </span>
 			 </td>

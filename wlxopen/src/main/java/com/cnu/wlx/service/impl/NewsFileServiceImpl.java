@@ -1,10 +1,13 @@
 package com.cnu.wlx.service.impl;
 
+import java.util.LinkedHashMap;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.cnu.wlx.bean.NewsFile;
+import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.NewsDao;
 import com.cnu.wlx.dao.NewsFileDao;
 import com.cnu.wlx.formbean.BaseForm;
@@ -50,10 +53,17 @@ public class NewsFileServiceImpl implements NewsFileService {
 	}
 
 	@Override
-	public void delete(String fileId) {
-		if( BaseForm.validateStr(fileId))
+	public void delete(String... fileId) {
 		 newsFileDao.delete(fileId);
 	}
+
+	@Override
+	public QueryResult<NewsFile> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,
+			LinkedHashMap<String, String> orderby) {
+		
+		return newsFileDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
+	}
+
 	
 	
 }

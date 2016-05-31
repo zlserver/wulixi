@@ -43,6 +43,13 @@ public class BaseForm {
 	 */
 	private boolean editState=false;
 	/**
+	 * 编辑框被选中的序号
+	 */
+	private List<Integer> checkeds;
+	
+	
+	
+	/**
 	 * 存放表单校验后的结果
 	 */
 	private Map<String,String> result=new HashMap<String,String>();
@@ -50,7 +57,13 @@ public class BaseForm {
 	public boolean getEditState() {
 		return editState;
 	}
+	public List<Integer> getCheckeds() {
+		return checkeds;
+	}
 
+	public void setCheckeds(List<Integer> checkeds) {
+		this.checkeds = checkeds;
+	}
 	public void setEditState(boolean editState) {
 		this.editState = editState;
 	}

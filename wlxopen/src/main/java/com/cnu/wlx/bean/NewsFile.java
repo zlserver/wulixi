@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 
 /**
 * @author 周亮 
@@ -62,6 +63,10 @@ public class NewsFile {
 	 * 所属新闻,多对一，
 	 */
 	private News news;
+	/**
+	 * 文件类型
+	 */
+	private FileTypeEnum type;
 
 	@Id @GeneratedValue(generator="uuidGenderator")
 	@Column(length=32)
@@ -129,6 +134,12 @@ public class NewsFile {
 	public void setNews(News news) {
 		this.news = news;
 	}
+	@Enumerated(EnumType.STRING)
+	public FileTypeEnum getType() {
+		return type;
+	}
+	public void setType(FileTypeEnum type) {
+		this.type = type;
+	}
 
-	
 }

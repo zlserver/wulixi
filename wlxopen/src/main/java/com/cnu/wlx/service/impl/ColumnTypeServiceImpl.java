@@ -89,5 +89,11 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 		// TODO Auto-generated method stub
 		 columnTypeDao.update(column);
 	}
+
+	@Override
+	public ColumnType findByClassCode(String classCode) {
+		// TODO Auto-generated method stub
+		return columnTypeDao.find("o.classCode=? ", classCode);
+	}
 	
 }

@@ -57,6 +57,23 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 				return null;
 	}
 	@Override
+	public QueryResult<DownloadFile> getHomeScrollData(int firstResult, int maxresult, String columnId) {
+		//结果集根据时间降序来排列
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("sequence", "desc");
+		orderby.put("createTime", "desc");
+		//父类不为null
+		if( BaseForm.validateStr(columnId)){
+			String wherejpql="o.column.id = ? ";
+			List<Object> params = new ArrayList<Object>();
+			params.add(columnId);
+			wherejpql+=" and o.state= ?";
+			params.add(FileStateEnum.VALIDATE);
+			return downloadFileDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
+		}
+		return null;
+	}
+	@Override
 	public void save(DownloadFile downloadFile) {
 		// TODO Auto-generated method stub
 		downloadFileDao.save(downloadFile);
@@ -76,4 +93,5 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 		// TODO Auto-generated method stub
 		downloadFileDao.delete(ids);
 	}
+	
 }

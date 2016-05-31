@@ -21,6 +21,10 @@ public class NewsForm extends BaseForm {
 	 * 新闻状态:待发布，已发布，屏蔽
 	 */
 	private String state;
+	/**
+	 * IMAGE,NO_IMAGE
+	 */
+	private String type;
 	
 	/**
 	 * 批量更新
@@ -38,6 +42,13 @@ public class NewsForm extends BaseForm {
 	private List<String> fileIds;
 	
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public List<String> getColumnIds() {
 		return columnIds;

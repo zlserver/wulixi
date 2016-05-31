@@ -160,7 +160,7 @@ $(document).ready(function() {
 		dragdropWidth:600,
 		deleteCallback: function (data, pd) {
 			 var fileId=data.data[0].fileId;
-			 $.post("control/news/deleteFile.action", {fileId:fileId},
+			 $.post("control/news/ajaxdeleteFile.action", {fileId:fileId},
 		            function (resp,textStatus, jqXHR) {
 		                alert("delete ok");
 		                //alert(textSatus);

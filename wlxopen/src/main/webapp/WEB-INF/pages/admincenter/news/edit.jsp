@@ -145,7 +145,7 @@ $(document).ready(function() {
 			 var fileId=data.data[0].fileId;
 			 $.post("control/news/deleteFile.action", {fileId:fileId},
 		            function (resp,textStatus, jqXHR) {
-		                alert("delete ok");
+		                //alert("delete ok");
 		                //alert(textSatus);
 		      }); 
 		    //删除input标签

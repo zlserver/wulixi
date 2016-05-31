@@ -41,6 +41,32 @@ public class NewsServiceImpl implements NewsService {
 		}
 		return null;
 	}
+	/**
+	 * 
+	 * @param firstResult
+	 * @param maxresult
+	 * @param getColumnId
+	 * @param state
+	 * @param suggest
+	 * @return
+	 */
+	public QueryResult<News> getHomeScrollData(int firstResult, int maxresult,String getColumnId) {
+		// TODO Auto-generated method stub
+		//结果集根据栏目的顺序升序,时间降序来排列
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("sequence", "asc");
+		orderby.put("createTime", "desc");
+		//父类不为null
+		if( BaseForm.validateStr(getColumnId)){
+			String wherejpql="o.column.id = ?  and o.state= ? and o.suggest= 1";
+			List<Object> params = new ArrayList<Object>();
+			params.add(getColumnId);
+			params.add(NewsStateEnum.PUBLISH);
+			
+			return newsDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
+		}
+		return null;
+	}
 	public NewsDao getNewsDao() {
 		return newsDao;
 	}
@@ -50,7 +76,6 @@ public class NewsServiceImpl implements NewsService {
 	}
 	@Override
 	public void save(News news) {
-		// TODO Auto-generated method stub
 		if( news!=null)
 		  newsDao.save(news);
 	}

@@ -49,6 +49,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 </head>
 <body style="position: relative;">
+
+
 <div class="panel panel-default">
   <div class="panel-heading">
   	${formbean.columnName}
@@ -67,9 +69,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <td  width="3%">选项</td>
 			</c:if>
 			<td  width="50%">名称</td>
-			<td  width="9%">发布者</td>
-			<td  width="9%">是否推荐</td>
-			<td  width="9%">顺序</td>
 			<td  width="6%">下载量</td>
 			<td  width="10%">
 				<select class="form-control" name="state" onchange="query()">
@@ -85,12 +84,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
 				 
 			<tr>
-				<c:if test="${formbean.editState }">
-					 <td> 
-					 	<input type="hidden" value="${entity.id }" name="fileIds">
-					 	<input type="checkbox" value="${status.count-1}" name="checkeds">
-					 </td>
-				 </c:if>
+			<c:if test="${formbean.editState }">
+				 <td> 
+				 	<input type="hidden" value="${entity.id }" name="fileIds">
+				 	<input type="checkbox" value="${status.count-1}" name="checkeds">
+				 </td>
+			 </c:if>
 			 <td>
 			     <span >
 			     <c:if test="${!formbean.editState }">

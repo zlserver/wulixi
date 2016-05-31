@@ -22,7 +22,14 @@ public interface NewsService {
 	 * @return
 	 */
 	QueryResult<News> getScrollData(int firstResult, int maxresult, String columnId,String state);
-
+	/**
+	 * 获取首页新闻
+	 * @param firstResult 开始查询位置从0开始
+	 * @param maxresult 一页的最大记录数
+	 * @param columnId  栏目分类id
+	 * @return
+	 */
+	public QueryResult<News> getHomeScrollData(int firstResult, int maxresult,String columnId); 
 	/**
 	 * 保存新闻
 	 * @param news
