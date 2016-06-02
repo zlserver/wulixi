@@ -1,0 +1,88 @@
+/* ------------------------------------------------------------------------------------------
+
+Basic style sheet( version:1.0 / author:Leo Chen / date:09_4_1 / e-mail:chenhy8208@sina.com ) 
+
+------------------------------------------------------------------------------------------- */
+
+html,body {margin:0; text-align:center; 
+		  background-color:#fff; font-family:arial;
+}
+		  
+#container {position:relative; margin:0px auto; padding:0; text-align:left;
+		   color:#666; width:1003px; font-size:12px; background:url(../images/bodyBg.jpg) repeat-y;} /*容器基础样式*/
+		   
+a:link,a:visited {color:#666; text-decoration:none;} a:hover { color:#9E713F; } /*链接基础样式*/
+
+img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; padding:0px; font-size:12px; font-weight:normal;} /*图片、标题、段落基础样式*/
+/*=============Basic style=============*/
+
+#header {position:relative; left:7px; top:0;
+		 width:989px;
+}
+
+#headBg {
+		 width:989px; height:236px;
+}
+
+/*=============head style=============*/
+
+#main {position:relative; left:7px; top:0;
+	   width:989px;
+}
+/*=============main style=============*/
+
+#footer {clear:both; position:relative; left:6px; top:0;
+		 width:991px;
+}
+
+#linkArea {text-align:center;
+		   width:991px; height:27px; background:url(../images/inline_bot.jpg) no-repeat;  
+}
+
+#linkArea p{position:relative;
+			color:#006600; font-weight:bold;		     
+}
+
+#linkArea h3 {margin:0; padding:0; padding-left:27px; position:absolute; left:782px; top:3px;
+			  color:#999; height:20px; background:url(../images/machJs.jpg) no-repeat 0 0;
+}
+
+#linkArea h3 span{position:relative; top:3px;
+				  
+}
+
+#linkArea a:link,#linkArea a:visited{
+									 color:#006600; font-weight:bold;
+}
+
+#linkArea a:hover {text-decoration:underline;
+		
+}
+
+#bottArea {text-align:center; position:relative;
+		   width:991px; height:88px; background:url(../images/inline_bot_y.jpg) repeat-x;
+}
+
+#bottArea h3 {position:relative; top:12px; margin:0; padding:0;
+			  color:#666;
+}
+
+#bottArea p {position:relative; top:14px; line-height:1.6em;
+
+} 
+
+#bottArea p span{background:url(../images/machJs.jpg) no-repeat 0px -3px; padding-left:26px;}
+
+.bottLink a:link,.bottLink a:visited{
+									 color:#666; font-weight:bold;
+}
+
+.bottLink a:link,.bottLink a:visited{
+									 color:#666; font-weight:bold;
+}
+
+.bottLink a:hover {text-decoration:underline;
+		
+}
+
+/*=============footer style=============*/

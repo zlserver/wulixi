@@ -1,0 +1,51 @@
+/* ------------------------------------------------------------------------------------------
+
+Basic style sheet( version:1.0 / author:Leo Chen / date:09_4_9 / e-mail:chenhy8208@sina.com ) 
+
+------------------------------------------------------------------------------------------- */
+
+#main{margin-left:6px; padding-bottom:6px; margin-bottom:8px;
+	  width:977px; background:url(../images/long_tail.jpg) no-repeat left bottom;
+}
+
+#main_head{text-indent:2em; line-height:2.0em;
+		   width:977px; height:25px; background:url(../images/Aritcle.jpg) no-repeat; color:#077818;		
+}
+
+#main_content{overflow:hidden; zoom:1;
+			  background:url(../images/long_Mid.jpg) repeat-y;
+}
+
+#guest_write {float:left;
+			  width:665px;
+}
+
+#guest_question {float:left;
+				 width:312px;
+}
+
+/*=============frame style=============*/
+
+#guest_container,#guest_container_show{
+				 width:647px;
+}
+
+#guest_container tr td,#guest_container_show tr td{line-height:1.5em;
+						
+}
+
+.pad60{padding-left:60px;
+
+}
+
+.lineHeight{ }
+
+.pad60 table{margin-top:10px; margin-bottom:10px;
+			 border-bottom:1px dotted #cdcdcd;
+}
+
+.pad60 table tr td{line-height:1.5em;
+
+}
+
+#hot_question{margin-top:12px; width:296px;}

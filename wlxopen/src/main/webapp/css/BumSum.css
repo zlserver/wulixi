@@ -1,0 +1,105 @@
+/* ------------------------------------------------------------------------------------------
+
+Basic style sheet( version:1.0 / author:Leo Chen / date:09_4_1 / e-mail:chenhy8208@sina.com ) 
+
+------------------------------------------------------------------------------------------- */
+
+#link{	float:left;
+		width:234px;
+}
+
+#content{	float:left; 
+	
+}
+/*=============frame style=============*/
+
+#StuNews{
+		
+}
+
+ul.A{ margin:0px; padding:0px; line-height:1.8em; *margin-top:-3px;
+				list-style:none; width:226px; background:url(../images/StuNews_bg.jpg) repeat-x; border-left:1px solid #92BB68; border-right:1px solid #92BB68;
+}
+
+ul.A li{padding-left:20px;
+		background:url(../images/titlK.gif) no-repeat 8px 8px;
+}
+
+#AritYXNews{ padding-bottom:4px; margin-bottom:6px;
+			 background:url(../images/AritYXNews_tail.jpg) no-repeat left bottom; zoom:1;
+}
+
+#AritYXNews ul{margin:0px; padding:0px; margin-top:-4px; padding-left:9px; line-height:1.8em;
+			   list-style:none; width:226px; background:url(../images/AritYXNews_Mid.jpg) repeat-y;
+}
+
+#AritYXNews ul li{padding-left:12px;
+				  background:url(../images/titlK.gif) no-repeat 0px 8px;	
+}
+
+/*=============link style=============*/
+
+#New_cont{padding-bottom:6px;
+		  background:url(../images/ArtiJJ_cont_tail.jpg) no-repeat left bottom;
+}
+
+.New_cont_name{line-height:2.0em; text-indent:1em;
+			   width:750px; height:25px; background:url(../images/ArtiJJ_cont.jpg) no-repeat; color:#077818;}
+
+.New_cont_name a:link,.New_cont_name a:visited{color:#077818;}
+
+#cnt_bg{padding-left:2px; padding-right:2px; width:750px;
+			background:url(../images/ArtiJJ_cont_Mid.jpg) repeat-y;
+}
+
+#GXImg{margin-left:74px; margin-top:45px;
+
+}
+
+#cnt {width:680px; margin-left:38px; padding-bottom:13px; text-indent:2.0em; line-height:1.8em;}
+
+#move_img{margin-top:6px; margin-bottom:10px; text-align:center;
+		  border:1px solid #8FBE66; width:748px; height:141px; }
+/*=============content style=============*/	
+
+#gz_cnt_head{ text-align:center; padding-top:25px;
+			  font-size:12px; color:#999;
+}
+
+#gz_cnt_head h3{ width:727px; margin:0px auto; margin-bottom:2px; padding-bottom:2px; font-size:15px; font-weight:bold; color:#666; text-align:center; border-bottom:1px solid #8FBE66;}
+
+.pad{margin-left:20px;}
+
+#cnt table{width:713px;}
+
+#cnt table tr td{border-bottom:1px dotted #999999; padding-top:10px;}
+
+#cnt table h3{color:#006600; font-weight:bold; background:url(../images/arcle.jpg) no-repeat 0px 3px; padding-left:22px;}
+
+#cnt table h5{ padding-left:22px; text-indent:2em;}
+
+table#zh_list {
+				width:666px;
+}
+
+table#zh_list tr td{ margin:0; padding:0; font-size:12px;
+				 height:22px; border:none;
+}
+
+table#zh_list tr td a{ height:20px; }
+
+#AritYXNews ul li.imglink{
+						  background:none;
+}
+
+#AritYXNews ul.special{ line-height:1.2em;
+					 
+}
+
+#AritYXNews ul li.imglink img{
+							  margin-bottom:3px;
+}
+
+.small_add{	margin-left:18px; margin-bottom:3px; color:#8EBD65; line-height:1.5em;
+			height:18px; width:162px; border:1px solid #8EBD65;
+}

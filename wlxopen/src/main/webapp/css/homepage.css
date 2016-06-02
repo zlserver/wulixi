@@ -1,0 +1,310 @@
+/* ------------------------------------------------------------------------------------------
+
+index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8208@sina.com ) 
+
+------------------------------------------------------------------------------------------- */
+
+#area1 {float:left;
+		width:233px;
+}
+
+#area2 {float:right; position:relative;
+		width:237px;  *margin-left:0px !important; *margin-left:-4px; /*同上*/
+}
+
+/*=============area1 style=============*/
+#Box1 {margin:0px; padding:0px;
+	width:714px;height:42px; zoom:1;
+}
+/*新闻*/
+#artiNews {margin:0px; padding:0px; padding-bottom:6px; margin-bottom:8px;
+		  width:734px; background:url(../images/AritNewsBot.jpg) no-repeat left bottom;
+}
+
+.NewsMain {margin:0px; padding:0; *margin-top:-3px; padding-left:9px; padding-top:8px; padding-bottom:6px; line-height:1.5em; 
+		width:734px; background:url(../images/AritNewsMid.jpg) repeat-y; list-style:none;
+}
+
+#fgImg {margin-bottom:6px; *margin-bottom:6px !important; *margin-bottom:4px;
+		width:247px; height:216px; *height:234px !important;
+}
+
+.NewsMain table tr td ul { margin:0px; padding:0px; margin-left:11px; line-height:1.8em;
+						  width:238px; list-style:none;
+}
+
+.NewsMain table tr td ul li {padding-left:11px;
+						  	 background:url(../images/titlK.gif) no-repeat 0px 8px;
+}
+/*通知公告*/
+#AritTG {float:left;margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
+	width:337px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
+}
+
+.TGCont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
+	background:url(../images/AritTGMid.jpg) repeat-y;
+}
+
+#AritTG ul {margin:0px; padding:0; padding-left:15px; padding-bottom:6px; list-style:none; line-height:1.8em; }
+
+#AritTG ul li {padding-left:16px;
+	background:url(../images/titlK.gif) no-repeat 0px 8px;
+}
+
+#TgImg { margin-left:7px; border:1px solid #ccc; }
+/*就业信息*/
+#AritYx {float:left; margin:0px; margin-left:10px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
+	width:355px;  background:url(../images/JYBot.jpg) no-repeat left bottom;
+}
+
+#AritYx ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:9px; line-height:1.8em;
+	background:url(../images/JYMid.jpg) repeat-y; list-style:none;
+}
+
+#AritYx ul li {padding-left:15px;
+	background:url(../images/titlJT.gif) no-repeat 0px 4px;
+}
+
+#banMid { clear:both; margin-top:0px; padding:0px; position:relative; top:-4px; *top:4px !important; *top:-4px;}
+
+#Box2 {margin:0px; padding:0px; margin-bottom:8px; *margin-bottom:16px !important; *margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
+	width:714px; height: 225px;
+}
+/*专题*/
+#artiZhuanti {margin:4px 2px 4px 2px; padding:0; padding-bottom:4px;
+	width:188px; background:url(../images/zhuanTiBot.jpg) no-repeat left bottom;
+}
+
+#artiZhuanti table {*margin-top:-3px; padding-left:6px; padding-right:2px;
+	width:182px; background:url(../images/zhuanTiMid.jpg) repeat-y;
+}
+
+#artiZhuanti table tr td {text-align:center;
+
+}
+
+.titl {
+	height:10px;
+}
+
+.titl p {margin-top:3px; *margin-top:0;
+	border-bottom:1px dotted #92BB68; width:182px; font-size:0;
+}
+
+.zhuanTi {margin:0 auto; padding:0; padding-left:0px; *padding-left:1px; padding-top:4px; text-align:center;
+	height:39px; *height:94px; border:1px solid #ccc; width: 178px;border-right-width: 2px;margin-left: 2px;margin-top: 2px;margin-right: 2px;
+}
+
+/*校园文化*/
+#XYWH{float: right;height: 225px}
+#artiXYWH { margin:0px; padding:0px; position:relative; top:-6px; *top:2px !important; *top:-6px; clear:both;
+	width:514px;height: 225px;
+}
+
+#XYWH_box{*margin-top:-4px; padding-bottom:10px; border-left:1px solid #D3BF88; border-right:1px solid #D3BF88; border-bottom:1px solid #D3BF88; text-align:center;}
+
+#XYWH_tab{margin:0px auto;
+	width:503px;
+}
+
+#XYWH_tab tr td{border:1px solid #E3D3BF; height:101px; *height:99px; vertical-align:top; text-align:left;}
+
+#XYWH_tab table{border:none; position:relative; top:12px; left:4px;}
+
+#XYWH_tab table tr td{border:none;}
+
+#XYWH_tab table tr td img{padding-bottom:4px; *padding-bottom:6px;}
+
+#XYWH_tab table tr td.XYWH_img{text-align:center;}
+
+.img_Padd{margin-left:0px; *margin-left:-3px;}
+
+#XYWH_nav1{position:absolute; top:40px; left:20px;}
+
+#XYWH_nav2{position:absolute; top:40px; right:20px;}
+
+#XYWH_nav1 a:link,#XYWH_nav1 a:visited,#XYWH_nav2 a:link,#XYWH_nav2 a:visited{color:#9D632F;}
+
+/*=============area2 style=============*/
+/*下载专区*/
+#AritLoad {float:left; margin:0px; margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
+	width:255px;  background:url(../images/YXBot.jpg) no-repeat left bottom;
+}
+
+#AritLoad ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:9px; line-height:1.8em;
+	background:url(../images/YXMid.jpg) repeat-y; list-style:none;
+}
+
+#AritLoad ul li {padding-left:15px;
+	background:url(../images/titlJT.gif) no-repeat 0px 4px;
+}
+
+/*回音壁*/
+#artiHYB {margin:0; padding:0; padding-bottom:6px; margin-top:4px;
+	width:228px; background:url(../images/AritJDBot.jpg) no-repeat left bottom;
+}
+
+#artiHYB ul{margin:0; padding:0; *margin-top:-3px; padding-left:9px; padding-top:5px; padding-bottom:7px; line-height:1.8em;
+	background:url(../images/AritJDMid.jpg) repeat-y; list-style:none;
+}
+
+#artiHYB ul li { position:relative;}
+/*师生楷模*/
+#AritSS {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
+		 width:237px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
+}
+
+#SSKM { position:relative; left:9px; top:2px;}
+
+#SSKM tr td p{line-height:1.5em;}
+
+/*荣誉表彰*/
+#AritBM {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:0px;
+	width:237px;  background:url(../images/AritJLGBot.jpg) no-repeat left bottom;
+}
+
+.AritBM {*margin-top:-3px; padding-bottom:4px; *padding-bottom:0px;
+	background:url(../images/AritJLGMid.jpg) repeat-y; }
+
+.AritBMCont1 {padding-left:28px; padding-top:6px; padding-bottom:10px; background:url(../images/bmry_border_out.jpg) no-repeat 0px 23px; height:205px;
+}
+
+
+
+
+
+
+
+
+
+/*=============area2 style=============*/
+
+#artiDuo {margin:0px; padding:0px; padding-bottom:6px; margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
+	width:514px; background:url(../images/ArtiCabBot.jpg) no-repeat left bottom;
+}
+
+.DuoMain {margin:0px; padding:0; *margin-top:-4px; padding-top:8px; padding-bottom:6px; line-height:1.5em;
+	width:514px; background:url(../images/ArtiCabMid.jpg) repeat-y; list-style:none;
+}
+
+.DuoMain table tr td img { margin-bottom:4px; *margin:0px;}
+
+.DuoMain ul {margin:0px; padding:0; padding-left:15px; padding-top:0px; line-height:2.0em;
+	list-style:none;
+}
+
+.DuoMain ul li {padding-left:11px; position:relative;
+	background:url(../images/titlK.gif) no-repeat 0px 9px;
+}
+
+#AritJDD {margin:0px; padding:0px; margin-bottom:8px; *margin-bottom:16px !important; *margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
+	width:514px; border-bottom:1px solid #B68E55;
+}
+
+.JDDMain {margin:0px; padding:0; padding-top:2px; padding-bottom:3px; *padding-top:3px; *padding-bottom:4px; *margin-top:-4px; line-height:1.5em;
+	background:url(../images/AritJDDMid.jpg) repeat-y; list-style:none;
+}
+
+
+
+#AritBBS {float:left; margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
+	width:255px;  background:url(../images/ArtiBBsBot.jpg) no-repeat left bottom;
+}
+
+#AritBBS ul {margin:0px; padding:0; *margin-top:-3px; padding-left:15px; padding-top:8px; padding-bottom:2px; line-height:1.8em;
+	background:url(../images/ArtiBBsMid.jpg) repeat-y; list-style:none;
+}
+
+#AritBBS ul li {padding-left:16px;
+	background:url(../images/titlBlue10.jpg) no-repeat 0px 6px;
+}
+
+#AritBBS ul li:hover { background:url(../images/titlRed10.jpg) no-repeat 0px 6px; }
+
+#AritGus {float:left; margin:0px; padding:0px; margin-left:4px; padding-bottom:6px; margin-bottom:0px;
+	width:255px;  background:url(../images/ArtiBBsBot.jpg) no-repeat left bottom;
+}
+
+#AritGus ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:2px; line-height:1.8em;
+	background:url(../images/ArtiBBsMid.jpg) repeat-y; list-style:none;
+}
+
+#AritGus ul li {padding-left:16px;
+	background:url(../images/titlBlue10.jpg) no-repeat 0px 6px;
+}
+
+#AritGus ul li:hover { background:url(../images/titlRed10.jpg) no-repeat 0px 6px; }
+
+#artiJD {margin:0; padding:0; padding-bottom:6px; margin-top:4px;
+	width:228px; background:url(../images/AritJDBot.jpg) no-repeat left bottom;
+}
+
+#artiJD table {*margin-top:-3px; padding-left:4px; padding-right:4px;
+	width:228px; background:url(../images/AritJDMid.jpg) repeat-y;
+}
+
+.AritJD1 {margin:0 auto; margin-top:6px; padding:0; padding-left:4px; padding-top:4px; text-align:center;
+	width:212px; height:106px; border:1px solid #B68E56;
+}
+
+.img1 { float:left; }
+
+.img2 { float:left; margin-left:6px;}
+
+
+.pRight { position:absolute; right:20px; *top:-4px;}
+
+#artisur {margin:0; padding:0; padding-bottom:6px; margin-top:4px;
+	width:188px; background:url(../images/AritJDBot.jpg) no-repeat left bottom;
+}
+
+.surMain {margin:0; padding:0; *margin-top:-3px; padding-left:9px; padding-top:12px; padding-bottom:12px; *padding-top:5px; *padding-bottom:4px; line-height:1.5em;
+	width:188px; background:url(../images/AritJDMid.jpg) repeat-y; list-style:none;
+}
+
+.surMain form{margin:0px; padding:0px;}
+
+.special1 {position:relative; top:9px; left:38px;
+
+}
+
+#artiser {margin:0; padding:0; padding-bottom:6px; margin-top:4px; margin-bottom:8px;
+	width:228px; background: url(../images/serBot.jpg) no-repeat left bottom;
+}
+
+.serMain {margin:0; padding:0; *margin-top:-3px; padding-left:9px; padding-top:7px; *padding-top:12px; padding-bottom:9px; *padding-bottom:12px; line-height:1.5em;
+	background:url(../images/serMid.jpg) repeat-y; list-style:none;
+	width: 186px;
+	padding-left: 2px;
+	border-right-width: 0px;
+	padding-right: 0px;
+	height: 120px;
+}
+
+#AritJLG {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; position:relative; 	
+		  width:237px;  background:url(../images/AritJLGBot.jpg) no-repeat left bottom;
+}
+
+.AritJLG {*margin-top:-3px; padding-bottom:4px; *padding-bottom:0px;
+		  background:url(../images/AritJLGMid.jpg) repeat-y;
+}
+
+#book {margin-top:-33px; position:relative; left:162px; top:15px;}
+
+#JLG { position:relative; left:9px; top:6px; width:219px;}
+#JLG tr td {line-height:2.0em;}
+
+
+#AritNsear {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:6px; position:relative; 	
+		    width:237px;  background:url(../images/AritNSearBot.jpg) no-repeat left bottom;
+}
+
+#AritNsear form{margin:0px;}
+
+.AritNsear {margin:0px; padding:0px; *margin-top:-3px;  padding-top:16px; padding-bottom:4px; *padding-bottom:0px; list-style:none;
+		    background:url(../images/AritNSearMid.jpg) repeat-y;
+}
+
+.AritNsear li {padding-right:22px; text-align:right;
+			   height:31px;
+}
