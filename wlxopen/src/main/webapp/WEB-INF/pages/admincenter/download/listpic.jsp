@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 String path = request.getContextPath();
@@ -40,6 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			form.submit();
 	    }
 	}
+
 	/**
 	 将上传的附件保存
 	*/
@@ -79,8 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</c:if>
 			<td  width="50%">名称</td>
 			<td  width="10%">作者</td>
-			<td width="10%">大小</td>
-			<td>下载量</td>
+			<td>大小</td>
 			<td  width="20%">
 				<select class="form-control" name="state" onchange="query()">
 				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
@@ -103,20 +104,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </c:if>
 			 <td>
 			     <span >
-				     <a href="<c:url value='control/download/down.action?savePath=${entity.savePath }&originName=${entity.originName}'/>">
-				       <font color="${entity.titleColor.toString()}">${entity.originName}</font> 
-				      </a>
-				   &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
+			       <img style="width:100px;height: 80px;" class="img-rounded" alt="" src="<c:url value='control/download/lookImage.action?savePath=${entity.savePath}'/>">
+				 
+				  &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
 				</span>
 			 </td>
 			  <td> 
 				${entity.author }
 			   </td>
-			 <td>
-			 <myc:convert size="${entity.size}"/> 
-			 </td>
+			 
 			 <td> 
-			   <span >${entity.downloadCount }</span>
+			   <span ><myc:convert size="${entity.size}"/> </span>
 			 </td>
 			<td> 
 			   <c:if test="${!formbean.editState }">
@@ -126,7 +124,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    <font color="red">${entity.state.toString().equals("DELETE")?"已屏蔽":"" }</font>
 			   </span>
 			  </c:if>
-
 
 			   <c:if test="${formbean.editState }">
 			    <select  class="form-control input-sm"  name="states" >
@@ -145,7 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   <div id="fileuploader">上传附件</div>
 			   </td>
 			</tr> 
-		  </c:if>
+			</c:if>
 		 <tr>
 			 <td colspan="6" align="center">
 			   <c:if test="${formbean.editState }">
@@ -178,7 +175,7 @@ $(document).ready(function() {
 		sequential:true,  //按顺序上传
 		sequentialCount:1,  //按顺序上传
 		autoSubmit :"false",  //取消自动上传
-		acceptFiles:"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" , //限制上传文件格式
+		acceptFiles:"image/jpeg,image/png,application/msword" , //限制上传文件格式
 		extErrorStr:"上传文件格式不对",
 		maxFileCount:10,       //上传文件数量
 		maxFileSize:1024*1024, //大小限制1M

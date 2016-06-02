@@ -84,7 +84,7 @@ left: 265px;
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
-		url:"control/download/upload.action", //后台处理方法
+		url:"control/download/ajaxuploadFile.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
 		dragDrop:true,  //可以取消
 		abortStr:"取消",

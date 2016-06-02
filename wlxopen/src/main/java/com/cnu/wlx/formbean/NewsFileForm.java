@@ -13,11 +13,15 @@ public class NewsFileForm extends BaseForm {
 	 */
 	private List<String> fileIds;
 	/**
+	 *在新闻附件页面，新添加的附件id
+	 */
+	private List<String> nfileIds;	
+	/**
 	 * 所属新闻
 	 */
 	private String newsId;
 	/**
-	 * 附件类型
+	 * 附件类型,值去FileTypeEnum
 	 */
 	private String type;
 	
@@ -34,6 +38,12 @@ public class NewsFileForm extends BaseForm {
 		this.states = states;
 	}
 	
+	public List<String> getNfileIds() {
+		return nfileIds;
+	}
+	public void setNfileIds(List<String> nfileIds) {
+		this.nfileIds = nfileIds;
+	}
 	public List<String> getFileIds() {
 		return fileIds;
 	}

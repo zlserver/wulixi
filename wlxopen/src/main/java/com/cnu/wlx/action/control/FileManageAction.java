@@ -2,8 +2,11 @@ package com.cnu.wlx.action.control;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +34,7 @@ import com.cnu.wlx.formbean.DownloadFileForm;
 import com.cnu.wlx.formbean.NewsForm;
 import com.cnu.wlx.myenum.ColorEnum;
 import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.DownloadFileService;
@@ -59,21 +63,47 @@ public class FileManageAction {
 	 private FileService fileService;
 	@RequestMapping(value="list")
 	public String list(DownloadFileForm formbean,Model model){
-		
+		String page ="control.download.list";
 		//页面类
 		PageView<DownloadFile> pageView = new PageView<DownloadFile>(formbean.getMaxresult(), formbean.getPage());
+		
+		//结果集根据时间降序来排列
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("sequence", "desc");
+		orderby.put("createTime", "desc");
+		
+		String columnId = formbean.getColumnId();
 		FileStateEnum state= null;
 		if( BaseForm.validateStr(formbean.getState()) )
 		    state = FileStateEnum.valueOf(formbean.getState());
-		QueryResult<DownloadFile> queryResult= downloadFileService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getColumnId(),state);
+
+		StringBuffer wherejpql=new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		//父类不为null
+		if( BaseForm.validateStr(columnId)){
+			wherejpql.append("o.column.id = ?");
+			params.add(columnId);
+			if(state!=null){
+				wherejpql.append(" and o.state= ?");
+				params.add(state);
+			}
+			if( BaseForm.validateStr(formbean.getType())){
+				if( params.size()>0)
+					wherejpql.append(" and ");
+				wherejpql.append(" o.type = ?");
+				params.add(FileTypeEnum.valueOf(formbean.getType()));
+				if( formbean.getType().equals(FileTypeEnum.IMAGE.toString()))
+					page="control.download.listpic";
+			}
+		}
+		QueryResult<DownloadFile> queryResult= downloadFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
 		pageView.setQueryResult(queryResult);
 		//传输到页面
 		model.addAttribute("pageView", pageView);
 		
 		model.addAttribute("formbean",formbean);
 		
-		
-		return SiteUtils.getPage("control.download.list");
+		return SiteUtils.getPage(page);
 	}
 	
 	/**
@@ -98,6 +128,19 @@ public class FileManageAction {
 		return null;
 	}
 	
+	
+	@RequestMapping(value="lookImage")
+	public String lookImage(String savePath,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
+		String fileSystemRoot = SiteUtils.getFileSystemDir();
+		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
+		String fileSavePath = fileSystemRoot+savePath;
+		//2.1获取文件资源
+		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
+		//查看图片
+		BaseForm.lookImage(response, fileResource);
+		return null;
+	}
 	@RequestMapping(value="addUi")
 	public String addUi(String columnId,Model model){
 		model.addAttribute("columnId", columnId);
@@ -114,20 +157,16 @@ public class FileManageAction {
 				int i = formbean.getCheckeds().get(j);
 				String id= formbean.getFileIds().get(i);
 				String state = formbean.getStates().get(i);
-				Integer sequence = formbean.getSequences().get(i);
-				Integer suggest = formbean.getSuggests().get(i);
 				DownloadFile downloadFile = downloadFileService.find(id);
 				
-				downloadFile.setSequence(sequence);
 				downloadFile.setState(FileStateEnum.valueOf(state));
-				downloadFile.setSuggest(suggest);
 				
 				downloadFileService.update(downloadFile);
 				
 			}
 		}
 		
-		return "redirect:/control/download/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
+		return "redirect:/control/download/list.action?columnId="+formbean.getColumnId()+"&type="+formbean.getType()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
 	}
 	/**
 	 * 删除文件
@@ -151,7 +190,7 @@ public class FileManageAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:/control/download/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
+		return "redirect:/control/download/list.action?columnId="+formbean.getColumnId()+"&type="+formbean.getType()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
 		
 	}
 	/**
@@ -159,8 +198,8 @@ public class FileManageAction {
 	 * @param fileId
 	 * @return
 	 */
-	@RequestMapping(value="deleteFile")
-	public String deleteNewsFile(String fileId,Model model){
+	@RequestMapping(value="ajaxdeleteFile")
+	public String ajaxdeleteNewsFile(String fileId,Model model){
 		
 		MyStatus status = new MyStatus();
 		try {
@@ -180,38 +219,36 @@ public class FileManageAction {
 	@RequestMapping(value="add")
 	public String add(DownloadFileForm formbean,Model model,HttpServletRequest request){
 		
-		boolean flage = false;
 		try {
 				//设置栏目
 				ColumnType column =columnTypeService.find(formbean.getColumnId());
 				if( column!=null ){
+					FileTypeEnum type = FileTypeEnum.NO_IMAGE;
+					if(BaseForm.validateStr(formbean.getType())){
+						 type = FileTypeEnum.valueOf(formbean.getType());
+					}
 					//保存附件
-					if( formbean.getFileIds()!=null){
-						for( int i =0;i <formbean.getFileIds().size();i++){
-							String fileid= formbean.getFileIds().get(i);
+					if( formbean.getNfileIds()!=null){
+						for( int i =0;i <formbean.getNfileIds().size();i++){
+							String fileid= formbean.getNfileIds().get(i);
 							//保存附件
 							DownloadFile downloadFile=downloadFileService.find(fileid);
 							downloadFile.setColumn(column);
+							downloadFile.setType(type);
 							//更新
 							downloadFileService.update(downloadFile);
 						}
 					}
-					flage = true;
 				}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if( flage )//添加成功
-		{
-			return  "redirect:/control/download/list.action?columnId="+formbean.getColumnId();
-		}else{//添加失败
-			model.addAttribute("formbean", formbean);
-			return SiteUtils.getPage("control.download.addUi");
-		}
+		return  "redirect:/control/download/list.action?columnId="+formbean.getColumnId()+"&type="+formbean.getType()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
+	
 	}
-	@RequestMapping(value="upload", method=RequestMethod.POST)
-	public String uploadFile(MultipartHttpServletRequest request,Model model,DownloadFileForm formbean){
+	@RequestMapping(value="ajaxuploadFile", method=RequestMethod.POST)
+	public String ajaxuploadFile(MultipartHttpServletRequest request,Model model,DownloadFileForm formbean){
 	   
 	   MyStatus status = new MyStatus();
 	   JSONObject json= new JSONObject();

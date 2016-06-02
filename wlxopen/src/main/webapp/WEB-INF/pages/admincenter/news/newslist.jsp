@@ -44,6 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	function query() {
 		var form = document.forms[0];
+		form.page.value=1;
 		form.submit();
 	}
 </script>

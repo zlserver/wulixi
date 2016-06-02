@@ -46,7 +46,9 @@ padding-top: 20px;
   </div>
    <div class="panel-footer">
      <c:forEach items="${news.newsFiles}" var="newsFile">
-      <a href="control/news/download.action?savePath=${newsFile.savePath}">${newsFile.originName }</a><br>
+      <c:if test="${newsFile.type.toString().equals('NO_IMAGE') }">
+       <a href="control/news/download.action?savePath=${newsFile.savePath}">${newsFile.originName }</a><br>
+      </c:if>
      </c:forEach>
    </div>
 </div>

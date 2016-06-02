@@ -197,8 +197,31 @@ public class NewsManageAction {
 		BaseForm.loadFile(response, fileResource);
 		return null;
 	}
+	
+	@RequestMapping(value="saveNewsFile")
+	public String saveNewsFile(NewsFileForm formbean){
+		
+		News news = newsService.find(formbean.getNewsId());
+		//附件类型
+		FileTypeEnum type=FileTypeEnum.valueOf(formbean.getType());
+		//保存附件
+		if( formbean.getNfileIds()!=null){
+			for( int i =0;i <formbean.getNfileIds().size();i++){
+				String fileid= formbean.getNfileIds().get(i);
+				//保存附件
+				NewsFile newsFile=newsFileService.find(fileid);
+				newsFile.setType(type);
+				newsFile.setNews(news);
+				//更新
+				newsFileService.update(newsFile);
+			}
+		}
+		
+		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&type="+formbean.getType()+"&page="+formbean.getPage();
+	}
+	
 	/**
-	 * 上传新闻附件
+	 * 上传附件
 	 * @return
 	 * {
 	 *   "status":1,
@@ -211,8 +234,8 @@ public class NewsManageAction {
 	 *    ]
 	 * }
 	 */
-	@RequestMapping(value="upload", method=RequestMethod.POST)
-	public String uploadFile(MultipartHttpServletRequest request,Model model){
+	@RequestMapping(value="ajaxuploadFile", method=RequestMethod.POST)
+	public String ajaxuploadFile(MultipartHttpServletRequest request,Model model){
 	   
 	   MyStatus status = new MyStatus();
 	   JSONObject json= new JSONObject();
@@ -268,7 +291,6 @@ public class NewsManageAction {
 	public String list(NewsForm formbean,Model model){
 		//校验栏目是否为null
 		if( formbean.validateList()){
-			
 			//状态PUBLISH("publish"),WAITING("waiting"),CLOSE("close");
 			//页面类
 			PageView<News> pageView = new PageView<News>(formbean.getMaxresult(), formbean.getPage());
@@ -282,7 +304,7 @@ public class NewsManageAction {
 		
 		return SiteUtils.getPage("control.news.list");
 	}
-
+     
 	/**
 	 * 查看新闻相关文件
 	 * @param newsId 新闻id
@@ -291,6 +313,8 @@ public class NewsManageAction {
 	 */
 	@RequestMapping(value="listfile")
 	public String listNewsFile(NewsFileForm formbean,Model model){
+		//返回界面
+		String page= "control.news.newfile";
 		
 		PageView<NewsFile> pageView = new PageView<NewsFile>(formbean.getMaxresult(), formbean.getPage());
 		//排序：时间
@@ -303,19 +327,22 @@ public class NewsManageAction {
 			wherejpql.append(" o.news.id = ?");
 			params.add(formbean.getNewsId());
 		}
-		/*if( BaseForm.validateStr(formbean.getType())){
+		if( BaseForm.validateStr(formbean.getType())){
 			if( params.size()>0)
 				wherejpql.append(" and ");
 			wherejpql.append(" o.type = ?");
 			params.add(FileTypeEnum.valueOf(formbean.getType()));
-		}*/
+			if( formbean.getType().equals(FileTypeEnum.IMAGE.toString()))
+				page="control.news.newpicture";
+		}
 		
 		QueryResult<NewsFile> queryResult= newsFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
 		pageView.setQueryResult(queryResult);
 
 		model.addAttribute("pageView", pageView);
 		model.addAttribute("formbean", formbean);
-		return SiteUtils.getPage("control.news.newfile");
+		
+		return SiteUtils.getPage(page);
 	}
 	/**
 	 * 转发到添加新闻界面
@@ -510,8 +537,9 @@ public class NewsManageAction {
 			}
 		}
 		
-		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&page="+formbean.getPage();
+		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&type="+formbean.getType()+"&page="+formbean.getPage();
 	} 
+	
 	/**
 	 * 批量更新新闻的附件
 	 * @return
@@ -528,7 +556,7 @@ public class NewsManageAction {
 			}
 			newsFileService.delete(ids);
 		}
-		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&page="+formbean.getPage();
+		return "redirect:/control/news/listfile.action?newsId="+formbean.getNewsId()+"&type="+formbean.getType()+"&page="+formbean.getPage();
 	} 
 	/**
 	 * 批量更新新闻的状态信息，不包含内容，题目，附件

@@ -15,6 +15,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+
+<link href="css/uploadfile.css" rel="stylesheet">
 <style type="text/css">
 
 </style>
@@ -42,9 +44,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			form.submit();
 	    }
 	}
-	
+	/**
+	 将上传的附件保存到新闻下
+	*/
+	function saveFile(method){
+		var form = document.forms[0];
+		form.action="control/news/"+method+".action";
+		          
+		form.submit();
+	}
 	function query() {
 		var form = document.forms[0];
+		form.page.value=1;
 		form.submit();
 	}
 </script>
@@ -57,10 +68,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	${formbean.columnName}
   </div>
   <div class="panel-body">
-	<form  action="<c:url value='control/news/listfile.action'/>" method="post">
+	<form id="newsform" action="<c:url value='control/news/listfile.action'/>" method="post">
    <!-- 查询参数 -->
     <input type="hidden" name="page" value="${formbean.page}" >
     <input type="hidden" name="newsId" value="${formbean.newsId}" >
+    <input type="hidden" name="type" value="${formbean.type}" >
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
@@ -80,9 +92,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 </td>
 			 <td>
 			     <span >
-				   	 <a href="control/news/download.action?savePath=${entity.savePath}">
+			      <img style="width:100px;height: 80px;" class="img-rounded" alt="。。。" src="control/news/lookImage.action?savePath=${entity.savePath}">
+				   	<%--  <a href="control/news/download.action?savePath=${entity.savePath}">
 				       ${entity.originName}
-				     </a>
+				     </a> --%>
 			     </span>
 			 
 			 </td>
@@ -97,12 +110,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </td>
 			
 		  </c:forEach>
+		  <tr>
+			   <td colspan="4">
+			   <div id="fileuploader">上传附件</div>
+			   </td>
+			</tr> 
 		 <tr>
 			 <td colspan="6" align="center">
-			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('updateFile')"	value="确认修改">
-			      <input type="button" class="btn btn-warning" onclick="javascript:_action('deleteFile')"	value="删除">
-			   	  <a href="<c:url value='control/download/addUi.action?columnId=${formbean.columnId}'></c:url>"  class="btn btn-warning" >添加</a>
-			</td>
+			   	 <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('saveNewsFile')"  disabled="disabled"	value="添加">
+			     <input type="button" class="btn btn-info" onclick="javascript:_action('updateFile')"	value="确认修改">
+			     <input type="button" class="btn btn-warning" onclick="javascript:_action('deleteFile')"	value="删除">
+			   	</td>
 		</tr>
 		</tbody>
 	</table>
@@ -114,5 +132,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 </div>
 
+<script src="js/jquery1.9.1/jquery.min.js"></script>
+<script src="js/jquery.uploadfile.min.js"></script>
+<script>
+$(document).ready(function() {
+	
+	$("#fileuploader").uploadFile({
+		url:"control/news/ajaxuploadFile.action", //后台处理方法
+		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
+		dragDrop:true,  //可以取消
+		abortStr:"取消",
+		sequential:true,  //按顺序上传
+		sequentialCount:1,  //按顺序上传
+		autoSubmit :"false",  //取消自动上传
+		acceptFiles:"image/jpeg,image/png,application/msword" ,//限制上传文件格式
+		extErrorStr:"上传文件格式不对",
+		maxFileCount:10,       //上传文件数量
+		maxFileSize:1024*1024, //大小限制1M
+		sizeErrorStr:"上传文件不能大于1M", 
+		dragDropStr: "<span><b>附件拖放于此</b></span>",
+		showFileCounter:false,
+		returnType:"json",  //返回数据格式为json
+		onSuccess:function(files,data,xhr,pd)  //上传成功事件，data为后台返回数据
+		{
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
+			var newsform = $("#newsform");
+		   if( data.status==1){
+				for( var i=0;i<data.data.length;i++){
+					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="nfileIds" value="'+data.data[i].fileId+'" >';
+					newsform.append(inputNode);
+					$("#addBtn").removeAttr("disabled");
+				}
+			}else{
+				alert("上传失败");
+			} 
+		},
+		showDelete: true,//删除按钮
+		statusBarWidth:600,
+		dragdropWidth:600,
+		deleteCallback: function (data, pd) {
+			 var fileId=data.data[0].fileId;
+			 $.post("control/news/deleteFile.action", {fileId:fileId},
+		            function (resp,textStatus, jqXHR) {
+		                //alert("delete ok");
+		                //alert(textSatus);
+		      }); 
+		    //删除input标签
+		    $("#"+fileId).remove();
+		    pd.statusbar.hide(); //You choice.
+		}
+	});
+});
+</script>
 </body>
 </html>

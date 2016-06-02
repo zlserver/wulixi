@@ -99,7 +99,9 @@ left: 265px;
   </div>
   <div class="panel-footer">
      <c:forEach items="${formbean.news.newsFiles}" var="newsFile">
+     <c:if test="${newsFile.type.toString().equals('NO_IMAGE')}">
       <a href="control/news/download.action?savePath=${newsFile.savePath}">${newsFile.originName }</a><br>
+      </c:if>
      </c:forEach>
    </div>
 </div>
@@ -110,7 +112,7 @@ left: 265px;
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
-		url:"control/news/upload.action", //后台处理方法
+		url:"control/news/ajaxuploadFile.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
 		dragDrop:true,  //可以取消
 		abortStr:"取消",

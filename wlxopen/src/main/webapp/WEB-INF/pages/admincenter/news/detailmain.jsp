@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
  <frameset rows="35,*" cols="*" frameborder="yes" border="1" framespacing="2">
 	<frame frameborder="1" bordercolor="red"  src='<c:url value='control/news/menu.action?newsId=${id }&columnId=${columnId}'/>' name="menuFrame" scrolling="no"  id="menuFrame" title="menuFrame" />
-	<frame src="<c:url value='control/news/editUi.action?id=${id}&columnId=${columnId}'/>" name="infoFrame" scrolling="no" id="infoFrame" title="infoFrame" />
+	<frame src="<c:url value='control/news/editUi.action?id=${id}&columnId=${columnId}'/>" name="infoFrame" scrolling="yes" id="infoFrame" title="infoFrame" />
 	
 </frameset> 
 </html> 

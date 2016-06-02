@@ -13,14 +13,27 @@ import com.cnu.wlx.bean.DownloadFile;
 public class DownloadFileForm extends BaseForm {
 
 	private DownloadFile downloadFile;
-	
+	/**
+	 * 状态，FileStateEnum
+	 */
 	private String  state;
+	/**
+	 * 文件类型FileTypeEnum
+	 */
+	private String type;
 	
+	/**
+	 * 下载文件题目颜色
+	 */
 	private String titleColor;
 	/**
-	 * 添加的文件的id
+	 * 文件的id
 	 */
 	private List<String> fileIds;
+	/**
+	 * 新添加文件的id
+	 */
+	private List<String> nfileIds;
     /**
      * 状态：FileStateEnum中的值
      */
@@ -41,6 +54,14 @@ public class DownloadFileForm extends BaseForm {
 
 	public void setStates(List<String> states) {
 		this.states = states;
+	}
+
+	public List<String> getNfileIds() {
+		return nfileIds;
+	}
+
+	public void setNfileIds(List<String> nfileIds) {
+		this.nfileIds = nfileIds;
 	}
 
 	public List<Integer> getSequences() {
@@ -89,6 +110,14 @@ public class DownloadFileForm extends BaseForm {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	

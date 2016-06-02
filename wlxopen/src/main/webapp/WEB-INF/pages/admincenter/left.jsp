@@ -33,6 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  #main{
  
  }
+ 
 </style>
 </head>
 
@@ -50,22 +51,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				      <li>
 				      <myc:choose>
 						  	<myc:when test="${child.readUrl}">
-						  	<a target="mainFrame" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
+						  	<a target="mainFrame" href="<c:url value='${child.readUrl }columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
 				       		</myc:when>
 						  	<myc:otherwise>
 						  	<a target="mainFrame" href="javascript:void()" >${child.name}</a>
 				     		</myc:otherwise>
 					  </myc:choose>
-				     <%--  <c:choose>
-				       <c:when test="${!child.readUrl.equals('') }">
-				          <a target="mainFrame" href="<c:url value='${child.readUrl }?columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
-					     </c:when>
-					     <c:otherwise>
-				          <a target="mainFrame" href="javascript:void()" >${child.name}</a>
-					     </c:otherwise>
-				        </c:choose> --%>
 					    <c:if test="${!child.manageUrl.equals('')}">
-					    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}?columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+					    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
 			 		   </c:if>
 			 		  </li>
 					</c:if>
@@ -78,22 +71,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							 
 							  <myc:choose>
 							  	<myc:when test="${cchild.readUrl}">
-							  	 <a target="mainFrame" href="<c:url value='${cchild.readUrl }?columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
+							  	 <a target="mainFrame" href="<c:url value='${cchild.readUrl }columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
 								</myc:when>
 							  	<myc:otherwise>
 							  	 <a target="mainFrame" href="javascript:void()" >${cchild.name}</a>
 								</myc:otherwise>
 							  </myc:choose>
-				     		 <%--  <c:choose>
-							    <c:when test="${!cchild.readUrl}">
-						         <a target="mainFrame" href="<c:url value='${cchild.readUrl }?columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
-								</c:when>
-						         <c:otherwise>
-						         <a target="mainFrame" href="javascript:void()" >${cchild.name}</a>
-								  </c:otherwise>
-				               </c:choose> --%>
 								  <c:if test="${!cchild.manageUrl.equals('')}">
-								    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}?columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
+								    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
 								  </c:if>
 							  </li>    
 							 </c:forEach>

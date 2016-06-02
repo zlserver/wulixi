@@ -93,5 +93,11 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 		// TODO Auto-generated method stub
 		downloadFileDao.delete(ids);
 	}
+	@Override
+	public QueryResult<DownloadFile> getScrollData(int firstindex, int maxresult, String wherejpql,
+			Object[] queryParams, LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return downloadFileDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
+	}
 	
 }

@@ -44,9 +44,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			form.submit();
 	    }
 	}
-	
+	/**
+	 将上传的附件保存到新闻下
+	*/
+	function saveFile(method){
+		var form = document.forms[0];
+		form.action="control/news/"+method+".action";
+		          
+		form.submit();
+	}
 	function query() {
 		var form = document.forms[0];
+		form.page.value=1;
 		form.submit();
 	}
 </script>
@@ -63,6 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <!-- 查询参数 -->
     <input type="hidden" name="page" value="${formbean.page}" >
     <input type="hidden" name="newsId" value="${formbean.newsId}" >
+    <input type="hidden" name="type" value="${formbean.type}" >
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
@@ -106,10 +116,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr> 
 		 <tr>
 			 <td colspan="6" align="center">
-			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('updateFile')"	value="确认修改">
-			      <input type="button" class="btn btn-warning" onclick="javascript:_action('deleteFile')"	value="删除">
-			   	  <a href="<c:url value='control/download/addUi.action?columnId=${formbean.columnId}'></c:url>"  class="btn btn-warning" >添加</a>
-			</td>
+			   	 <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('saveNewsFile')"  disabled="disabled"	value="添加">
+			     <input type="button" class="btn btn-info" onclick="javascript:_action('updateFile')"	value="确认修改">
+			     <input type="button" class="btn btn-warning" onclick="javascript:_action('deleteFile')"	value="删除">
+			   	</td>
 		</tr>
 		</tbody>
 	</table>
@@ -127,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
-		url:"control/news/upload.action", //后台处理方法
+		url:"control/news/ajaxuploadFile.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
 		dragDrop:true,  //可以取消
 		abortStr:"取消",
@@ -148,8 +158,9 @@ $(document).ready(function() {
 			var newsform = $("#newsform");
 		   if( data.status==1){
 				for( var i=0;i<data.data.length;i++){
-					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="fileIds" value="'+data.data[i].fileId+'" >';
+					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="nfileIds" value="'+data.data[i].fileId+'" >';
 					newsform.append(inputNode);
+					$("#addBtn").removeAttr("disabled");
 				}
 			}else{
 				alert("上传失败");
