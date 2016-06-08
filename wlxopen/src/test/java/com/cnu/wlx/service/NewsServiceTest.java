@@ -27,7 +27,8 @@ public class NewsServiceTest {
 	public void test(){
 		ColumnTypeService columnTypeService=ac.getBean(ColumnTypeService.class);
 		NewsService newsService=ac.getBean(NewsService.class);
-		HomeForm formbean=new HomeForm("xue", "xia", "tong", "job", "huo", "feng", "biao");
+		HomeForm formbean=new HomeForm("xue", "xia", "tong", "job", "huo", "feng", "biao","biaozhang");
+		
 		//学工新闻
 		ColumnType xueCt = columnTypeService.findByClassCode(formbean.getXueClassCode());
 		if( xueCt!=null){
