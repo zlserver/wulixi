@@ -1,16 +1,21 @@
 package com.cnu.wlx.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.NewsDao;
 import com.cnu.wlx.dao.NewsFileDao;
 import com.cnu.wlx.formbean.BaseForm;
+import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.service.NewsFileService;
 
 /**
@@ -62,6 +67,32 @@ public class NewsFileServiceImpl implements NewsFileService {
 			LinkedHashMap<String, String> orderby) {
 		
 		return newsFileDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
+	}
+
+	@Override
+	public NewsFile find(String wheresql, Object[] queryParams) {
+		// TODO Auto-generated method stub
+		List<NewsFile> list =newsFileDao.find(wheresql, queryParams);
+		if( list!=null &&list.size()>0)
+		   return list.get(0);
+		return null;
+	}
+
+	@Override
+	public NewsFile getHomeData(String newsId, FileTypeEnum type) {
+			
+			//查询条件：所属新闻，文件类型
+			StringBuffer wherejpql=new StringBuffer("");
+			List<Object> params = new ArrayList<Object>();
+			wherejpql.append(" o.news.id = ? and o.type = ? and  o.state = ? ");
+			params.add(newsId);
+			params.add(type);
+			params.add(FileStateEnum.VALIDATE);
+			List<NewsFile> list =newsFileDao.find(wherejpql.toString(), params.toArray());
+			if( list!=null &&list.size()>0)
+			   return list.get(0);
+			return null;
+		
 	}
 
 	

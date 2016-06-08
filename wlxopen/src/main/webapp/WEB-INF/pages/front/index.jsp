@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -30,7 +32,7 @@
         #header{padding:0px 0 10px 0;}
         #menu { font:12px verdana, arial, sans-serif; }
         #menu, #menu li {list-style:none;padding:0;margin:0;}
-        #menu li { float:left; }
+        #menu li { float:left; display: block;width: 107px;}
         #menu li a {display:block; padding:8px 29px;background:#DFF8DF;color:#31802F;text-decoration:none;border-right:1px solid #000;}
         #menu li a:hover {background:#FEFEFE;color:#31802F;text-decoration:none;border-right:1px solid #000;}
         #menu li a.last {border-right:0; }
@@ -38,15 +40,15 @@
             position:relative;
             margin:0 auto 0;
             display:block;
-            width:960px;
+            width:963px;
         }
     </style>
 </head>
 <body>
 <div id="header">
     <div id="headBg" style="margin-bottom:0px; margin-bottom:0px; *margin-bottom:0px; _margin-bottom:-3px; position:relative; ">
-        <img src="images/top.jpg" width="989" height="210" border="0" id="banar1"  />
-        <div>
+        <img src="images/top.jpg" width="963" height="210" border="0" id="banar1"  />
+        <div style="width: 963px;height: 33px;">
             <ul id="menu">
                 <li><a href="index.html"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
                 <li><a href="#"><b>学生组织</b></a></li>
@@ -74,26 +76,38 @@
             <div id="artiNews">
                     <img id="artiNews1" src="images/ArtiNews.jpg" alt="学工新闻" usemap="#artiNewsMap" />
                     <map id="artiNewsMap" name="artiNewsMap">
-                        <area shape="rect" coords="446,2,511,23" href="#" alt="更多" title="更多">
+                        <area shape="rect" coords="616,2,695,23" href="#" alt="更多" title="更多">
                     </map>
 
                     <div class="NewsMain">
-                        <table cellpadding="0" cellspacing="0" border="0" width="496">
+                        <table cellpadding="0" cellspacing="0" border="0" width="695">
                             <tr>
                                 <td width="247" align="center">
                                     <div id="fgImg">
-                                        <!--新闻内容-->
-                                    </div>
+                                       <img src="front/news/lookImage.uhtml?savePath=${xuePic.savePath}" alt="" width="240" height="210" />
+                                   </div>
                                     <!--新闻链接-->
                                     <a href="#"></a>
                                 </td>
                                 <td valign="top">
                                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    
+                                     <c:forEach items="${xueNews}" var="xueNew">
                                         <tr height="22">
                                             <td width="21" align="center"><img src="images/titlK.gif" /></td>
-                                            <td><a title=""></a></td>
-                                            <td width="50"></td>
+                                            <td>
+                                            <a  title="${xueNew.title}">
+                                            <font color="${xueNew.titleColor.toString()}">
+                                             <myc:strout value="${xueNew.title}" length="30" suffix="..." /> 
+                                             </font>
+                                            </a>
+                                            </td>
+                                            <td width="30">
+                                            <fmt:formatDate value="${xueNew.createTime }" pattern="yy-MM-dd" />
+                                            </td>
                                         </tr>
+                                       </c:forEach>
+                                        
                                     </table>
                                 </td>
                             </tr>
@@ -105,11 +119,20 @@
                 <div id="AritTG">
                     <img id="AritTG1" src="images/AritTG.jpg" alt="通知公告" usemap="#AritTGMap" />
                     <map id="AritTGMap" name="AritTGMap">
-                        <area shape="rect" coords="176,2,233,23" href="#" alt="更多" title="更多">
+                        <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
                     </map>
                     <div class="TGCont">
                         <ul>
-                            <li style="color:#FF6600;"><a href="" style=""></a></li>
+                        <c:forEach items="${tongNews }" var="tongNew">
+                            <li style="color:#FF6600;">
+                             <a  title="${tongNew.title}" href="" style="">
+                                  <font color="${tongNew.titleColor.toString()}">
+                                   <myc:strout value="${tongNew.title}" length="20" suffix="..." /> 
+                                   </font>
+                              </a>
+                              <img alt="" src="images/new.gif">
+                            </li>
+                        </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -117,10 +140,19 @@
                 <div id="AritYx">
                     <img id="AritYx1" src="images/ArtiYX.jpg" alt="就业信息" usemap="#AritYXMap" />
                     <map id="AritYXMap" name="AritYXMap">
-                        <area shape="rect" coords="186,2,252,23" href="#" alt="更多" title="更多">
+                        <area shape="rect" coords="260,2,325,23" href="#" alt="更多" title="更多">
                     </map>
+                    
                     <ul>
-                        <li><a title=""></a></li>
+                       <c:forEach items="${jobNews }" var="jobNew">
+                            <li style="color:#FF6600;">
+                             <a  title="${jobNew.title}" href="" style="">
+                                  <font color="${jobNew.titleColor.toString()}">
+                                   <myc:strout value="${jobNew.title}" length="25" suffix="..." /> 
+                                   </font>
+                              </a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
             </div>
@@ -130,7 +162,7 @@
                 <div id="artiZhuanti" style="float: left">
                     <img id="ArtiZT" src="images/ArtiZhuanti.jpg" alt="专题橱窗" usemap="#ArtiZTMap" />
                     <map id="ArtiZTMap" name="ArtiZTMap">
-                        <area shape="rect" coords="170,2,225,23" href="" alt="更多" title="更多">
+                        <area shape="rect" coords="140,2,225,23" href="" alt="更多" title="更多">
                     </map>
 
                     <table cellpadding="0" cellspacing="0" border="0" style="padding-left: 2px">
@@ -178,7 +210,9 @@
                                         <td class="XYWH_img"><img src="images/test11.jpg" alt="活动掠影" /><br />
                                             <a href="#">活动掠影</a></td>
                                         <td style="padding-left:4px; padding-top:4px;">
-                                            <a ></a>
+                                         <c:forEach items="${huoFiles }" var="huoFile">
+                                           &nbsp; &nbsp; <a ><img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" /></a>
+                                         </c:forEach>
                                         </td>
                                     </tr>
                                 </table></td>
@@ -187,7 +221,9 @@
                                         <tr>
                                             <td class="XYWH_img"><img src="images/test12.jpg" alt="校园风光" /><br><a href="#">校园风光</a></td>
                                             <td  style="padding-left:4px; padding-top:4px;">
-                                                <a></a>
+                                                <c:forEach items="${fengFiles }" var="fengFile">
+		                                            &nbsp; &nbsp; <a ><img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" /></a>
+		                                         </c:forEach>
                                             </td>
                                         </tr>
                                     </table>
@@ -206,12 +242,12 @@
     height: 130px;">
                         <table cellpadding="0" cellspacing="0" border="0" width="188" style="margin-top: 10px;margin-left: 5px">
                             <tr height="50">
-                                <td width="107" style="width: 90px"><a href="http://map.baidu.com/?newmap=1&ie=utf-8&daddr=%20&fr=alab0&s=s%26c%3D131%0D%0A%26wd%3D%E5%8C%97%E4%BA%AC" target="_blank"><img src="images/gjcx.jpg" alt="公交查询" /></a></td>
-                                <td><a href="http://qq.ip138.com/train/" target="_blank"><img src="images/lcsk.jpg" alt="列车时刻" /></a></td>
+                                <td width="107" style="width: 90px"><a href="http://map.baidu.com/?newmap=1&ie=utf-8&daddr=%20&fr=alab0&s=s%26c%3D131%0D%0A%26wd%3D%E5%8C%97%E4%BA%AC" target="_blank"><img src="images/gjcx.jpg" alt="公交查询"  width="90"/></a></td>
+                                <td><a href="http://qq.ip138.com/train/" target="_blank"><img src="images/lcsk.jpg" alt="列车时刻" width="90" /></a></td>
                             </tr>
                             <tr>
-                                <td><a href="http://qq.ip138.com/day/" target="_blank"><img src="images/wnl.jpg" alt="万年历" /></a></td>
-                                <td><a href="http://www.cnu.edu.cn/pages/info_details.jsp?seq=2425&boardid=71103&classcode=71103" target="_blank"><img src="images/xl.jpg" alt="校历" /></a></td>
+                                <td><a href="http://qq.ip138.com/day/" target="_blank"><img src="images/wnl.jpg" alt="万年历"  width="90"/></a></td>
+                                <td><a href="http://www.cnu.edu.cn/pages/info_details.jsp?seq=2425&boardid=71103&classcode=71103" target="_blank"><img src="images/xl.jpg" alt="校历"  width="90"/></a></td>
                             </tr>
                         </table>
                     </div>
@@ -244,11 +280,19 @@
             <div id="AritLoad">
                 <img id="AritLoad1" src="images/ArtiLoad.jpg" alt="下载专区" usemap="#AritLoad1Map" />
                 <map id="AritLoad1Map" name="AritLoad1Map">
-                    <area shape="rect" coords="186,2,252,23" href="#" alt="更多" title="更多">
+                    <area shape="rect" coords="175,2,252,23" href="#" alt="更多" title="更多">
                 </map>
 
                 <ul>
-                    <li><a title=""></a></li>
+                 <c:forEach items="${xiaFiles }" var="xiaFile">
+                         <li style="color:#FF6600;">
+                          <a  title="${xiaFile.originName}" href="" style="">
+                               <font color="${xiaFile.titleColor.toString()}">
+                                <myc:strout value="${xiaFile.originName}" length="15" suffix="..." /> 
+                                </font>
+                           </a>
+                         </li>
+                    </c:forEach>
                 </ul>
             </div>
             <!--回音壁-->
@@ -259,7 +303,16 @@
                 </map>
 
                 <ul>
-                    <li><a href="#"></a><span class="pRight"></span></li>
+                <c:forEach items="${questions }" var="question">
+                        <li>
+                          <a  title="${question.title}" href="" style="">
+                                <myc:strout value="${question.title}" length="13" suffix="..." /> 
+                           </a>
+                           <span class="pRight">
+                             <fmt:formatDate value="${question.createTime }" pattern="MM-dd" />
+                           </span>
+                         </li>
+                  </c:forEach>
                 </ul>
             </div>
 
@@ -274,11 +327,15 @@
 
                         <tr height="79">
                             <td valign="top" width="89">
-                                <div><a href=""><img src="" alt="" width="80" /></a></div>
+                                <div><a href=""><img src="front/news/lookImage.uhtml?savePath=${biaoPic.savePath}" alt="" width="80" height="110" /></a></div>
                             </td>
                             <td valign="top" width="132">
                                 <h3>>>&nbsp;&nbsp;</h3>
-                                <p><a href=""></a></p>
+                                <p>
+                                <font color="${biaoNew.titleColor.toString()}">
+                                <myc:strout value="${biaoNew.title}" length="35" suffix="..." /> 
+                                </font>
+                                </p>
                             </td>
                         </tr>
                         <tr><td style="height:10px;"></td></tr>
@@ -288,10 +345,10 @@
 
             <!--荣誉表彰-->
             <div id="AritBM">
-                <img id="AritBM1" src="images/AritBM.jpg" alt="部门荣誉" />
+                <img id="AritBM1" src="images/AritBM.jpg" alt="部门荣誉" width="237" height="40" />
                 <div class="AritBM">
                     <div class="AritBMCont1">
-                        <a href="" target="_parent" ><img src="" width="191" height="127" style="border:none; position:relative; left:-4px; top:41px;" /></a>
+                        <a href="" target="_parent" ><img src="front/news/lookImage.uhtml?savePath=${biaozhangPic.savePath}" width="190" height="125" style="border:none; position:relative; left:-4px; top:48px;" /></a>
                     </div>
                 </div>
             </div>

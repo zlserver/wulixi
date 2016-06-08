@@ -5,24 +5,30 @@ package com.cnu.wlx.formbean;
 * 类说明
 */
 public class HomeForm extends BaseForm {
-	//学工新闻id、
+	//学工新闻
 	private String xueClassCode;
-	//下载专区id、
+	//下载专区
 	private String xiaClassCode;
-	//通知公告id、
+	//通知公告
 	private String tongClassCode;
-	//就业实习信息id、
+	//就业实习信息
 	private String jobClassCode;
-	//活动剪影id、
+	//活动剪影
 	private String huoClassCode;
-	//校园风光id、
+	//校园风光
 	private String fengClassCode;
-	//学习标兵id
+	//学习标兵
 	private String biaoClassCode;
+	//荣誉表彰
+	private String biaozhangClassCode;
 	
+	public HomeForm() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public HomeForm(String xueClassCode, String xiaClassCode, String tongClassCode, String jobClassCode,
-			String huoClassCode, String fengClassCode, String biaoClassCode) {
+			String huoClassCode, String fengClassCode, String biaoClassCode, String biaozhangClassCode) {
 		super();
 		this.xueClassCode = xueClassCode;
 		this.xiaClassCode = xiaClassCode;
@@ -31,6 +37,14 @@ public class HomeForm extends BaseForm {
 		this.huoClassCode = huoClassCode;
 		this.fengClassCode = fengClassCode;
 		this.biaoClassCode = biaoClassCode;
+		this.biaozhangClassCode = biaozhangClassCode;
+	}
+
+	public String getBiaozhangClassCode() {
+		return biaozhangClassCode;
+	}
+	public void setBiaozhangClassCode(String biaozhangClassCode) {
+		this.biaozhangClassCode = biaozhangClassCode;
 	}
 	public String getXueClassCode() {
 		return xueClassCode;

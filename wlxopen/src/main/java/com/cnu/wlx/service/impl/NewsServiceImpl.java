@@ -58,7 +58,7 @@ public class NewsServiceImpl implements NewsService {
 		orderby.put("createTime", "desc");
 		//父类不为null
 		if( BaseForm.validateStr(getColumnId)){
-			String wherejpql="o.column.id = ?  and o.state= ? and o.suggest= 1";
+			String wherejpql=" o.column.id = ?  and o.state= ? and o.suggest= 1 ";
 			List<Object> params = new ArrayList<Object>();
 			params.add(getColumnId);
 			params.add(NewsStateEnum.PUBLISH);

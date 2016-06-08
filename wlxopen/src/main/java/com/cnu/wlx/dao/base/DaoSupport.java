@@ -79,7 +79,13 @@ public abstract class DaoSupport<T>   implements Dao<T>{
 			return list.get(0);
 		return null;
 	}
-	
+	public List<T> find(final String wherejpql,final Object... value) {
+		// TODO Auto-generated method stub
+		String entityname = getEntityName(DaoSupport.this.entityClass);
+		List<T> list =ht.find("select o from "+ entityname+ " o  where "+ wherejpql, value);
+		
+		return list;
+	}
 	public void save(T entity) {
 			try {
 				ht.persist(entity);

@@ -98,8 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				     <a href="<c:url value='control/news/detail.action?id=${entity.id }'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.title}</font> 
 				      </a>
-				      <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
-				  </c:if>
+				      </c:if>
 				   <c:if test="${formbean.editState }">
 				   
 				    <a href="<c:url value='control/news/detailmain.action?id=${entity.id }&columnId=${formbean.columnId}'/>">
@@ -112,6 +111,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				       <font color="${entity.titleColor.toString()}">${entity.title}</font>
 				     </a> --%>
 				   </c:if>
+				   <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
+				  
 			     </span>
 			 </td>
 			  <td> 

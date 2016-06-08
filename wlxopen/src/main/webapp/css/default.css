@@ -21,13 +21,13 @@ img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; pad
 }
 
 #headBg {
-		 width:989px; height:236px;
+		 width:963px; height:236px;
 }
 
 /*=============head style=============*/
 
 #main {position:relative; left:7px; top:0;
-	   width:989px;
+	   width:963px;
 }
 /*=============main style=============*/
 
@@ -36,7 +36,7 @@ img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; pad
 }
 
 #linkArea {text-align:center;
-		   width:991px; height:27px; background:url(../images/linkBg.jpg) no-repeat;
+		   width:968px; height:27px; background:url(../images/linkBg.jpg) no-repeat;
 }
 
 #linkArea p{position:relative; top:2px; *top:3px;
@@ -60,7 +60,7 @@ img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; pad
 }
 
 #bottArea {text-align:center; position:relative;
-		   width:991px; height:88px; background:url(../images/bottomBg.jpg) repeat-x;
+		   width:968px; height:88px; background:url(../images/bottomBg.jpg) repeat-x;
 }
 
 #bottArea h3 {position:relative; top:8px; margin:0; padding:0;

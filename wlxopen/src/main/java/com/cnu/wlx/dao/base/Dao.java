@@ -61,7 +61,14 @@ public interface Dao<T> {
 	 * @return
 	 */
 	public T find(String wherejpql, Object attribute);
-	
+	/**
+	 * 根据属性来获取实体
+	 * @param <T>
+	 * @param wherejpql 查询条件  "o.email=? and o.name=? "
+	 * @param attribute 实体的属性值
+	 * @return
+	 */
+	public List<T> find(final String wherejpql,final Object... attribute);
 	/**
 	 * 根据条件分页查询，结果根据条件排序
 	 * @param firstindex 开始查询位置从0开始

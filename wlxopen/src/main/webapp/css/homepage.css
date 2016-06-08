@@ -5,7 +5,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 ------------------------------------------------------------------------------------------- */
 
 #area1 {float:left;
-		width:233px;
+		width: 714px;
 }
 
 #area2 {float:right; position:relative;
@@ -13,16 +13,16 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 /*=============area1 style=============*/
-#Box1 {margin:0px; padding:0px;
-	width:714px;height:42px; zoom:1;
+#Box1 {margin:0px; padding:0px;height: 156px;
+	width:714px; zoom:1;
 }
 /*新闻*/
 #artiNews {margin:0px; padding:0px; padding-bottom:6px; margin-bottom:8px;
-		  width:734px; background:url(../images/AritNewsBot.jpg) no-repeat left bottom;
+		 width: 714px; background:url(../images/AritNewsBot.jpg) no-repeat left bottom;
 }
 
 .NewsMain {margin:0px; padding:0; *margin-top:-3px; padding-left:9px; padding-top:8px; padding-bottom:6px; line-height:1.5em; 
-		width:734px; background:url(../images/AritNewsMid.jpg) repeat-y; list-style:none;
+		width:704px; background:url(../images/AritNewsMid.jpg) repeat-y; list-style:none;
 }
 
 #fgImg {margin-bottom:6px; *margin-bottom:6px !important; *margin-bottom:4px;
@@ -38,11 +38,11 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 /*通知公告*/
 #AritTG {float:left;margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
-	width:337px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
+	width:342px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
 
 .TGCont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
-	background:url(../images/AritTGMid.jpg) repeat-y;
+	background:url(../images/AritTGMid.jpg) repeat-y;height: 120px;
 }
 
 #AritTG ul {margin:0px; padding:0; padding-left:15px; padding-bottom:6px; list-style:none; line-height:1.8em; }
@@ -53,12 +53,12 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #TgImg { margin-left:7px; border:1px solid #ccc; }
 /*就业信息*/
-#AritYx {float:left; margin:0px; margin-left:10px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
-	width:355px;  background:url(../images/JYBot.jpg) no-repeat left bottom;
+#AritYx {float:left; margin:0px; margin-left:17px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
+	background:url(../images/JYBot.jpg) no-repeat left bottom;width: 355px;
 }
 
-#AritYx ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:9px; line-height:1.8em;
-	background:url(../images/JYMid.jpg) repeat-y; list-style:none;
+#AritYx ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:2px; line-height:1.8em;
+	background:url(../images/JYMid.jpg) repeat-y; list-style:none;height: 120px;
 }
 
 #AritYx ul li {padding-left:15px;
@@ -71,7 +71,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 	width:714px; height: 225px;
 }
 /*专题*/
-#artiZhuanti {margin:4px 2px 4px 2px; padding:0; padding-bottom:4px;
+#artiZhuanti {margin:0px 2px 4px 2px; padding:0; padding-bottom:4px;
 	width:188px; background:url(../images/zhuanTiBot.jpg) no-repeat left bottom;
 }
 
@@ -128,10 +128,10 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 /*=============area2 style=============*/
 /*下载专区*/
 #AritLoad {float:left; margin:0px; margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
-	width:255px;  background:url(../images/YXBot.jpg) no-repeat left bottom;
+	width:237px; height: 260px; background:url(../images/YXBot.jpg) no-repeat left bottom;
 }
 
-#AritLoad ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:9px; line-height:1.8em;
+#AritLoad ul {margin:0px; padding:0; height: 223px;*margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:9px; line-height:1.8em;
 	background:url(../images/YXMid.jpg) repeat-y; list-style:none;
 }
 
@@ -140,17 +140,17 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 /*回音壁*/
-#artiHYB {margin:0; padding:0; padding-bottom:6px; margin-top:4px;
+#artiHYB {margin:0; padding:0;margin-left:4px; padding-bottom:6px; margin-top:4px;
 	width:228px; background:url(../images/AritJDBot.jpg) no-repeat left bottom;
 }
 
-#artiHYB ul{margin:0; padding:0; *margin-top:-3px; padding-left:9px; padding-top:5px; padding-bottom:7px; line-height:1.8em;
-	background:url(../images/AritJDMid.jpg) repeat-y; list-style:none;
+#artiHYB ul{margin:0; padding:0; *margin-top:-3px; padding-left:9px; padding-top:5px; padding-bottom:1px; line-height:1.8em;
+	background:url(../images/AritJDMid.jpg) repeat-y; list-style:none;height: 120px;
 }
 
 #artiHYB ul li { position:relative;}
 /*师生楷模*/
-#AritSS {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
+#AritSS {margin:0px; margin-top:4px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
 		 width:237px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
 
@@ -159,14 +159,14 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 #SSKM tr td p{line-height:1.5em;}
 
 /*荣誉表彰*/
-#AritBM {margin:0px; margin-top:4px; padding:0px; padding-bottom:6px; margin-bottom:0px;
+#AritBM {margin:0px; margin-top:4px; margin-left:4px;padding:0px; padding-bottom:6px; margin-bottom:0px;
 	width:237px;  background:url(../images/AritJLGBot.jpg) no-repeat left bottom;
 }
 
 .AritBM {*margin-top:-3px; padding-bottom:4px; *padding-bottom:0px;
 	background:url(../images/AritJLGMid.jpg) repeat-y; }
 
-.AritBMCont1 {padding-left:28px; padding-top:6px; padding-bottom:10px; background:url(../images/bmry_border_out.jpg) no-repeat 0px 23px; height:205px;
+.AritBMCont1 {padding-left:28px; padding-top:0px; padding-bottom:0px; background:url(../images/bmry_border_out.jpg) no-repeat 0px 23px; height:190px;
 }
 
 

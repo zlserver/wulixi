@@ -1,6 +1,7 @@
 package com.cnu.wlx.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.cnu.wlx.bean.Question;
 import com.cnu.wlx.bean.base.QueryResult;
@@ -19,6 +20,7 @@ public interface QuestionService {
 	public void save(Question question);
 	public void update(Question question);
 	
+	public List<Question> getHomeData(int firstindex, int maxresult);
 	/**
 	 * 根据条件分页查询，结果根据条件排序
 	 * @param firstindex 开始查询位置从0开始

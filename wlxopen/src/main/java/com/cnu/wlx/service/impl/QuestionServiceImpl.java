@@ -1,6 +1,8 @@
 package com.cnu.wlx.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cnu.wlx.bean.Question;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.QuestionDao;
+import com.cnu.wlx.myenum.StateEnum;
 import com.cnu.wlx.service.QuestionService;
 
 /**
@@ -64,6 +67,23 @@ public class QuestionServiceImpl implements QuestionService {
 	public void save(Question question) {
 		// TODO Auto-generated method stub
 		questionDao.save(question);
+	}
+
+	@Override
+	public List<Question> getHomeData(int firstindex, int maxresult) {
+		// TODO Auto-generated method stub
+		//结果集根据栏目的顺序升序,时间降序来排列
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("createTime", "desc");
+		//可见
+		String wherejpql=" o.visible= ? ";
+		List<Object> params = new ArrayList<Object>();
+		params.add(StateEnum.YES);
+		
+		QueryResult<Question>  qr = questionDao.getScrollData(firstindex, maxresult,wherejpql,params.toArray());
+		if( qr.getTotalrecord()>0)
+			return qr.getResultlist();
+		return null;
 	}
 
 }

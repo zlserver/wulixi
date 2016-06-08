@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 
 <%
 String path = request.getContextPath();
@@ -344,10 +345,19 @@ display: none;
 			<td  width="15%">栏目名称</td>
 			<td  width="13%">分类码</td>
 			<td  width="12%">分类说明</td>
-			<td  width="15%">浏览程序</td>
-			<td  width="15%">管理程序</td>
-			<td  width="8%">组别</td>
-			<td  width="7%">顺序</td>
+			
+			<myc:choose>
+				<myc:when test="${parentId}">
+				
+					<td  width="15%">浏览程序</td>
+					<td  width="15%">管理程序</td>
+				</myc:when>
+				<myc:otherwise>
+				
+					<!-- <td  width="8%">组别</td> -->
+					<td  width="7%">顺序</td>
+				</myc:otherwise>
+			</myc:choose>
 			<td  width="8%">编辑</td>
 			<td  width="10%">删除</td>
 			</tr>
@@ -380,22 +390,29 @@ display: none;
 					  <option value="2" ${entity.typeDes.toString().equals("OTHER_TYPE")?"selected":"" }>其它类</option>
 				 </select>  
 			 </td>
-			 <td> 
-			   <span id="readUrl${entity.id}">${entity.readUrl }</span>
-			   <input  class="form-control"  type="hidden" id="ireadUrl${entity.id}" name="readUrl" value="${entity.readUrl }"> 
-			 </td>
-			 <td>
-			   <span id="manageUrl${entity.id}">${entity.manageUrl }</span>
-			   <input  class="form-control"  type="hidden" id="imanageUrl${entity.id}" name="manageUrl" value="${entity.manageUrl }"> 
-			 </td>
-			 <td>
-			   <span id="groupType${entity.id}">${entity.groupType }</span>
-			   <input  class="form-control"  type="hidden" id="igroupType${entity.id}" name="groupType" value="${entity.groupType }"> 
-			</td>
-			 <td> 
-			   <span id="sequence${entity.id}">${entity.sequence }</span>
-			   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
-			</td>
+			 
+			 <myc:choose>
+				<myc:when test="${parentId}">
+				 <td> 
+				   <span id="readUrl${entity.id}">${entity.readUrl }</span>
+				   <input  class="form-control"  type="hidden" id="ireadUrl${entity.id}" name="readUrl" value="${entity.readUrl }"> 
+				 </td>
+				 <td>
+				   <span id="manageUrl${entity.id}">${entity.manageUrl }</span>
+				   <input  class="form-control"  type="hidden" id="imanageUrl${entity.id}" name="manageUrl" value="${entity.manageUrl }"> 
+				 </td>
+				</myc:when>
+				<myc:otherwise>
+				<%-- <td>
+				   <span id="groupType${entity.id}">${entity.groupType }</span>
+				   <input  class="form-control"  type="hidden" id="igroupType${entity.id}" name="groupType" value="${entity.groupType }"> 
+				</td> --%>
+				 <td> 
+				   <span id="sequence${entity.id}">${entity.sequence }</span>
+				   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
+				</td>
+				</myc:otherwise>
+			  </myc:choose>
 			 <td>
 			  <a id="edit${entity.id}" href="javaScript:void(0)" onclick="displayEditButton('${entity.id}')" class="btn btn-info btn-xs" >编辑</a>
 			   <!--  glyphicon-ok  glyphicon-pencil-->

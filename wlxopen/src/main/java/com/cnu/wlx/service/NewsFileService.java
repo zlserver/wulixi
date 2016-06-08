@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.base.QueryResult;
+import com.cnu.wlx.myenum.FileTypeEnum;
 
 /**
 * @author 周亮 
@@ -19,6 +20,12 @@ public interface NewsFileService {
 	 */
 	public NewsFile find(String fileId);
 	/**
+	 * 获取一个数据
+	 * @param newsId
+	 * @return
+	 */
+	public NewsFile getHomeData(String newsId,FileTypeEnum type);
+	/**
 	 * 保存文件
 	 * @param newsFile 被保存文件实体
 	 */
@@ -33,7 +40,13 @@ public interface NewsFileService {
 	 * @param ids
 	 */
 	public void delete(String... ids);
-	
+	/**
+	 * 更加条件查询
+	 * @param wheresql
+	 * @param queryParams
+	 * @return
+	 */
+	public NewsFile find(String wheresql,Object[] queryParams);
 	
 	/**
 	 * 根据条件分页查询，结果根据条件排序

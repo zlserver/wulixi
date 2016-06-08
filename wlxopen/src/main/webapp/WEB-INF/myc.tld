@@ -66,5 +66,56 @@
         <type>java.lang.Long</type>
     </attribute>
   </tag>
+ <tag>
+    <description>
+           字符显示标签，显示的字符不超过设定长度的大小，可以给字符后面加上后缀
+    </description>
+    <name>strout</name>
+    <tag-class>com.cnu.wlx.tag.StrOutTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>
+                       要显示的字符串
+        </description>
+        <name>value</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+     <attribute>
+        <description>
+                      字符串显示的最大长度，不设置表示显示全部
+        </description>
+        <name>length</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+     <attribute>
+        <description>
+                    后缀字符，只有要显示的字符串不为空时才显示后缀
+        </description>
+        <name>suffix</name>
+        <required>false</required>
+        <rtexprvalue>false</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+  </tag>
+<tag>
+    <description>
+           校验字符串是否为有效字符串，有效字符串：非空且不是空字符串,如果是有效字符串则执行标签体内容
+    </description>
+    <name>validate</name>
+    <tag-class>com.cnu.wlx.tag.ValidateStrTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+        <description>
+                       被检验的字符串
+        </description>
+        <name>value</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+  </tag>
 
   </taglib>
