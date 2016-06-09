@@ -1,22 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="<%=basePath%>">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>首页</title>
-    <link href="css/default.css" type="text/css" rel="stylesheet">
+<base href="<%=basePath%>">   
+<title>首页body</title> 
+ <link href="css/default.css" type="text/css" rel="stylesheet">
     <style type="text/css">
         <!--
         @import url(css/default.css);
@@ -45,28 +38,6 @@
     </style>
 </head>
 <body>
-<div id="header">
-    <div id="headBg" style="margin-bottom:0px; margin-bottom:0px; *margin-bottom:0px; _margin-bottom:-3px; position:relative; ">
-        <img src="images/top.jpg" width="963" height="210" border="0" id="banar1"  />
-        <div style="width: 963px;height: 33px;">
-            <ul id="menu">
-                <li><a href="index.html"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
-                <li><a href="#"><b>学生组织</b></a></li>
-                <li><a href="#"><b>规章制度</b></a></li>
-                <li><a href="#"><b>思想教育</b></a></li>
-                <li><a href="#"><b>资助管理</b></a></li>
-                <li><a href="#"><b>心理咨询</b></a></li>
-                <li><a href="#"><b>就业工作</b></a></li>
-                <li><a href="#"><b>国防教育</b></a></li>
-                <li><a href="http://grad.cnu.edu.cn/index.htm"><b>研究生院</b></a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div style="color:#FFFFFF; font-weight:bold; position:absolute; right:20px; top:3px;">
-        <span style="CURSOR:pointer;" onclick="window.external.AddFavorite('http://test1.esl.net.cn','首师大学生处')" title="首师大学生处">加入收藏</span>&nbsp;|&nbsp;<span onclick="var strHref=window.location.href;this.style.behavior='url(#default#homepage)';this.setHomePage('http://student.cnu.edu.cn');" style="CURSOR:pointer;">设为首页</span>
-    </div>
-</div>
 
 <div id="container">
     <div id="main">
