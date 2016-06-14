@@ -95,4 +95,9 @@ public class NewsServiceImpl implements NewsService {
 		if( entityids!=null)
 		newsDao.delete(entityids);
 	}
+	@Override
+	public List<News> getAll() {
+		
+		return newsDao.getAllData();
+	}
 }

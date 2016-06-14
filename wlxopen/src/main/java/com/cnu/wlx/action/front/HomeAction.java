@@ -133,7 +133,7 @@ public class HomeAction {
 		List<Question> questions=questionService.getHomeData(huiyinPV.getFirstResult(), huiyinPV.getMaxresult());
 		if( questions!=null)
 			model.addAttribute("questions", questions);
-		return SiteUtils.getPage("front.home");
+		return SiteUtils.getPage("front.body");
 	}
 	public NewsService getNewsService() {
 		return newsService;

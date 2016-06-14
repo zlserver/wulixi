@@ -1,15 +1,27 @@
 package com.cnu.wlx.action.front;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cnu.wlx.bean.ColumnType;
+import com.cnu.wlx.bean.News;
+import com.cnu.wlx.bean.NewsFile;
+import com.cnu.wlx.bean.base.PageView;
+import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
+import com.cnu.wlx.myenum.FileTypeEnum;
+import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
+import com.cnu.wlx.service.NewsFileService;
+import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.utils.SiteUtils;
 
 /**
@@ -25,6 +37,9 @@ public class NewsAction {
 	  * 文件服务
 	  */
 	 private FileService fileService;
+	private NewsService newsService;
+	private NewsFileService newsFileService;
+	private ColumnTypeService columnTypeService;
 	/**
 	 * 根据文件保存的相对路径查看图片
 	 * @param savePath 文件保存的相对路径
@@ -46,12 +61,50 @@ public class NewsAction {
 			BaseForm.lookImage(response, fileResource);
 			return null;
 	}
+	
+	@RequestMapping(value="newsdetail")
+	public String newsdetail(String classCode,String newsId,Model model){
+		//新闻列表
+		ColumnType ct = columnTypeService.findByClassCode(classCode);
+		if( ct!=null){
+			List<News> listnews =newsService.getAll();
+			model.addAttribute("list",listnews);
+		}
+		News news =newsService.find(newsId);
+		model.addAttribute("news",news);
+		
+		return SiteUtils.getPage("front.newsdetail");
+	}
 	public FileService getFileService() {
 		return fileService;
 	}
 	@Autowired
 	public void setFileService(FileService fileService) {
 		this.fileService = fileService;
+	}
+
+	public NewsService getNewsService() {
+		return newsService;
+	}
+	@Autowired
+	public void setNewsService(NewsService newsService) {
+		this.newsService = newsService;
+	}
+
+	public NewsFileService getNewsFileService() {
+		return newsFileService;
+	}
+	@Autowired
+	public void setNewsFileService(NewsFileService newsFileService) {
+		this.newsFileService = newsFileService;
+	}
+
+	public ColumnTypeService getColumnTypeService() {
+		return columnTypeService;
+	}
+	@Autowired
+	public void setColumnTypeService(ColumnTypeService columnTypeService) {
+		this.columnTypeService = columnTypeService;
 	}
 	
 }

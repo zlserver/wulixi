@@ -1,6 +1,7 @@
 package com.cnu.wlx.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.base.QueryResult;
@@ -30,6 +31,11 @@ public interface NewsService {
 	 * @return
 	 */
 	public QueryResult<News> getHomeScrollData(int firstResult, int maxresult,String columnId); 
+	/**
+	 * 获取所有数据
+	 * @return
+	 */
+	public List<News> getAll();
 	/**
 	 * 保存新闻
 	 * @param news

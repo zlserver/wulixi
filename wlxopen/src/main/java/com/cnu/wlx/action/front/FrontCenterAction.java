@@ -25,8 +25,9 @@ public class FrontCenterAction {
 		
 		return SiteUtils.getPage("front.top");
 	}
-	@RequestMapping(value="body")
-	public String body(){
-		return SiteUtils.getPage("front.body");
+	
+	@RequestMapping(value="bottom")
+	public String bottom(){
+		return SiteUtils.getPage("front.bottom");
 	}
 }

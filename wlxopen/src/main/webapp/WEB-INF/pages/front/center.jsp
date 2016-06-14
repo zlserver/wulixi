@@ -10,10 +10,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">   
 <title>标题</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">     
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+<style type="text/css">
+body{
+text-align: center;
+}
+</style>   
+
 </head>
-<frameset rows="600,*" cols="*" frameborder="no" border="0" framespacing="0">
-	<frame src='<c:url value='front/center/top.uhtml'/>' name="front_topFrame" scrolling="no"  id="front_topFrame" title="front_topFrame" />
-	<frame src=""  frameborder="1" name="front_bodyFrame" scrolling="yes" id="front_bodyFrame" title="front_bodyFrame" />		
-</frameset>
+
+<body>
+
+<iframe name="topframe" width="980" id="topframe" frameborder="0"  name="win" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/center/top.uhtml'/>"></iframe>
+
+<iframe name="bodyframe" width="980" id="bodyframe" frameborder="0"  name="win" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/home.uhtml'/>"></iframe>
+
+<iframe name="bottomframe" width="980" id="bottomframe" frameborder="0"  name="bottom" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/center/bottom.uhtml'/>"></iframe>
+ 
+</body>
 </html>

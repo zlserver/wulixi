@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="<%=basePath%>">   
+<base href="<%=basePath%>" target="bodyframe">   
 <title>主页头部</title> 
    <link href="css/default.css" type="text/css" rel="stylesheet">
     <style type="text/css">
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <img src="images/top.jpg" width="963" height="210" border="0" id="banar1"  />
         <div style="width: 963px;height: 33px;">
             <ul id="menu">
-                <li><a href="index.html"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
+                <li><a href="front/home.uhtml"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
                 <li><a href="#"><b>学生组织</b></a></li>
                 <li><a href="#"><b>规章制度</b></a></li>
                 <li><a href="#"><b>思想教育</b></a></li>
@@ -64,9 +64,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <span style="CURSOR:pointer;" onclick="window.external.AddFavorite('http://test1.esl.net.cn','首师大学生处')" title="首师大学生处">加入收藏</span>&nbsp;|&nbsp;<span onclick="var strHref=window.location.href;this.style.behavior='url(#default#homepage)';this.setHomePage('http://student.cnu.edu.cn');" style="CURSOR:pointer;">设为首页</span>
     </div>
 </div>
-
-<div id="mainbody">
-<iframe name="Conframe" width="963" id="Conframe" frameborder="0" scrolling="no" height="1600" src="<c:url value='front/center/body.uhtml'/>"></iframe>
-</div>
 </body>
+
 </html>
