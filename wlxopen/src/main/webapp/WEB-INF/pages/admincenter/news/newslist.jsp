@@ -68,8 +68,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <td  width="3%">选项</td>
 			</c:if>
 			<td  width="50%">新闻名称</td>
-			<td  width="9%">作者</td>
-			<td  width="9%">是否推荐</td>
+			<td  width="8%">作者</td>
+			<td  width="10%">
+			<select class="form-control" name="suggest" onchange="query()">
+				  <option value="0" ${formbean.suggest==0?'selected':'' }>推荐状态</option>
+				  <option value="1" ${formbean.suggest==1?'selected':'' }>推荐</option>
+				  <option value="2"  ${formbean.suggest==2?'selected':'' }>不推荐</option>
+				</select>
+			</td>
 			<td  width="10%">
 				<select class="form-control" name="state" onchange="query()">
 				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
@@ -159,7 +165,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   	 <input  class="form-control  input-sm"  type="text" name="sequences" value="${entity.sequence }"> 
 			   </c:if>
 			 </td>
-			 <td> 
+			 <td>
 			   <span >${entity.readCount }</span>
 			 </td>
 		  </c:forEach>

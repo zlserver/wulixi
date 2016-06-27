@@ -9,14 +9,14 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 #area2 {float:right; position:relative;
-		width:237px;  *margin-left:0px !important; *margin-left:-4px; /*Í¬ÉÏ*/
+		width:237px;  margin-right: 6px; /*Í¬ï¿½ï¿½*/
 }
 
 /*=============area1 style=============*/
 #Box1 {margin:0px; padding:0px;height: 156px;
 	width:714px; zoom:1;
 }
-/*ÐÂÎÅ*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 #artiNews {margin:0px; padding:0px; padding-bottom:6px; margin-bottom:8px;
 		 width: 714px; background:url(../images/AritNewsBot.jpg) no-repeat left bottom;
 }
@@ -36,7 +36,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 .NewsMain table tr td ul li {padding-left:11px;
 						  	 background:url(../images/titlK.gif) no-repeat 0px 8px;
 }
-/*Í¨Öª¹«¸æ*/
+/*Í¨Öªï¿½ï¿½ï¿½ï¿½*/
 #AritTG {float:left;margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
 	width:342px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
@@ -52,7 +52,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 #TgImg { margin-left:7px; border:1px solid #ccc; }
-/*¾ÍÒµÐÅÏ¢*/
+/*ï¿½ï¿½Òµï¿½ï¿½Ï¢*/
 #AritYx {float:left; margin:0px; margin-left:17px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
 	background:url(../images/JYBot.jpg) no-repeat left bottom;width: 355px;
 }
@@ -62,7 +62,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 #AritYx ul li {padding-left:15px;
-	background:url(../images/titlJT.gif) no-repeat 0px 4px;
+	background:url(../images/titlK.gif) no-repeat 0px 4px;
 }
 
 #banMid { clear:both; margin-top:0px; padding:0px; position:relative; top:-4px; *top:4px !important; *top:-4px;}
@@ -70,7 +70,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 #Box2 {margin:0px; padding:0px; margin-bottom:8px; *margin-bottom:16px !important; *margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
 	width:714px; height: 225px;
 }
-/*×¨Ìâ*/
+/*×¨ï¿½ï¿½*/
 #artiZhuanti {margin:0px 2px 4px 2px; padding:0; padding-bottom:4px;
 	width:188px; background:url(../images/zhuanTiBot.jpg) no-repeat left bottom;
 }
@@ -95,7 +95,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 	height:39px; *height:94px; border:1px solid #ccc; width: 178px;border-right-width: 2px;margin-left: 2px;margin-top: 2px;margin-right: 2px;
 }
 
-/*Ð£Ô°ÎÄ»¯*/
+/*Ð£Ô°ï¿½Ä»ï¿½*/
 #XYWH{float: right;height: 225px}
 #artiXYWH { margin:0px; padding:0px; position:relative; top:-6px; *top:2px !important; *top:-6px; clear:both;
 	width:514px;height: 225px;
@@ -126,7 +126,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 #XYWH_nav1 a:link,#XYWH_nav1 a:visited,#XYWH_nav2 a:link,#XYWH_nav2 a:visited{color:#9D632F;}
 
 /*=============area2 style=============*/
-/*ÏÂÔØ×¨Çø*/
+/*ï¿½ï¿½ï¿½ï¿½×¨ï¿½ï¿½*/
 #AritLoad {float:left; margin:0px; margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
 	width:237px; height: 260px; background:url(../images/YXBot.jpg) no-repeat left bottom;
 }
@@ -139,7 +139,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 	background:url(../images/titlJT.gif) no-repeat 0px 4px;
 }
 
-/*»ØÒô±Ú*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 #artiHYB {margin:0; padding:0;margin-left:4px; padding-bottom:6px; margin-top:4px;
 	width:228px; background:url(../images/AritJDBot.jpg) no-repeat left bottom;
 }
@@ -149,7 +149,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 #artiHYB ul li { position:relative;}
-/*Ê¦Éú¿¬Ä£*/
+/*Ê¦ï¿½ï¿½ï¿½ï¿½Ä£*/
 #AritSS {margin:0px; margin-top:4px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
 		 width:237px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
@@ -158,7 +158,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #SSKM tr td p{line-height:1.5em;}
 
-/*ÈÙÓþ±íÕÃ*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 #AritBM {margin:0px; margin-top:4px; margin-left:4px;padding:0px; padding-bottom:6px; margin-bottom:0px;
 	width:237px;  background:url(../images/AritJLGBot.jpg) no-repeat left bottom;
 }

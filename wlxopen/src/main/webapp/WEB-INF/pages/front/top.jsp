@@ -22,6 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="js/scriptaculous.js?load=effects"></script>
     <script type="text/javascript" src="js/lightbox.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
+<script  type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
      <style type="text/css">
         #header{padding:0px 0 10px 0;}
         #menu { font:12px verdana, arial, sans-serif; }
@@ -39,7 +40,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        #mainbody{
        height: auto;
        }
+       
+       #menu .chosen{
+       	background-color: white;
+       }
     </style>
+    <script type="text/javascript">
+    function setChosen(anode) {
+    	$("a").removeClass("chosen");
+		$(anode).addClass("chosen");
+	}
+    </script>
 </head>
 <body>
 <div id="header">
@@ -47,15 +58,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <img src="images/top.jpg" width="963" height="210" border="0" id="banar1"  />
         <div style="width: 963px;height: 33px;">
             <ul id="menu">
-                <li><a href="front/home.uhtml"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
-                <li><a href="#"><b>学生组织</b></a></li>
-                <li><a href="#"><b>规章制度</b></a></li>
-                <li><a href="#"><b>思想教育</b></a></li>
-                <li><a href="#"><b>资助管理</b></a></li>
-                <li><a href="#"><b>心理咨询</b></a></li>
-                <li><a href="#"><b>就业工作</b></a></li>
-                <li><a href="#"><b>国防教育</b></a></li>
-                <li><a href="http://grad.cnu.edu.cn/index.htm"><b>研究生院</b></a></li>
+                <li><a class="chosen" onclick="setChosen(this)" style="border-left:1px solid #000;" href="front/home.uhtml"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
+                <li><a  onclick="setChosen(this)" href="#"><b>学生组织</b></a></li>
+                <li><a  onclick="setChosen(this)" href="#"><b>规章制度</b></a></li>
+                <li><a  onclick="setChosen(this)"  href="#"><b>思想教育</b></a></li>
+                <li><a  onclick="setChosen(this)" href="#"><b>资助管理</b></a></li>
+                <li><a  onclick="setChosen(this)"  href="#"><b>心理咨询</b></a></li>
+                <li><a  onclick="setChosen(this)"  href="#"><b>就业工作</b></a></li>
+                <li><a  onclick="setChosen(this)"  href="#"><b>国防教育</b></a></li>
+                <li><a  onclick="setChosen(this)"  href="http://grad.cnu.edu.cn/index.htm"><b>研究生院</b></a></li>
             </ul>
         </div>
     </div>

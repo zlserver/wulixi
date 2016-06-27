@@ -69,7 +69,7 @@ public class FileManageAction {
 		
 		//结果集根据时间降序来排列
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
-		orderby.put("sequence", "desc");
+		//orderby.put("sequence", "desc");
 		orderby.put("createTime", "desc");
 		
 		String columnId = formbean.getColumnId();
@@ -94,6 +94,11 @@ public class FileManageAction {
 				params.add(FileTypeEnum.valueOf(formbean.getType()));
 				if( formbean.getType().equals(FileTypeEnum.IMAGE.toString()))
 					page="control.download.listpic";
+			}
+			if( formbean.getSuggest()==1|| formbean.getSuggest()==2)
+			{
+				wherejpql.append(" and o.suggest= ?");
+				params.add(formbean.getSuggest());
 			}
 		}
 		QueryResult<DownloadFile> queryResult= downloadFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
@@ -157,10 +162,11 @@ public class FileManageAction {
 				int i = formbean.getCheckeds().get(j);
 				String id= formbean.getFileIds().get(i);
 				String state = formbean.getStates().get(i);
+				int suggest = formbean.getSuggests().get(i);
 				DownloadFile downloadFile = downloadFileService.find(id);
 				
 				downloadFile.setState(FileStateEnum.valueOf(state));
-				
+				downloadFile.setSuggest(suggest);
 				downloadFileService.update(downloadFile);
 				
 			}

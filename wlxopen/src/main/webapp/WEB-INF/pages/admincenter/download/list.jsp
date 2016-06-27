@@ -80,8 +80,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td  width="50%">名称</td>
 			<td  width="10%">作者</td>
 			<td width="10%">大小</td>
-			<td>下载量</td>
-			<td  width="20%">
+			<td width="7%">下载量</td>
+			<td  width="10%">
+			<select class="form-control" name="suggest" onchange="query()">
+				  <option value="0" ${formbean.suggest==0?'selected':'' }>推荐状态</option>
+				  <option value="1" ${formbean.suggest==1?'selected':'' }>推荐</option>
+				  <option value="2"  ${formbean.suggest==2?'selected':'' }>不推荐</option>
+				</select>
+			</td>
+			<td  width="10%">
 				<select class="form-control" name="state" onchange="query()">
 				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
 				  <option value="VALIDATE" ${formbean.state.equals("VALIDATE")?'selected':'' }>已发表</option>
@@ -93,7 +100,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</thead>
 		<tbody>
 			 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
-				 
 			<tr>
 			<c:if test="${formbean.editState }">
 				 <td> 
@@ -118,6 +124,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <td> 
 			   <span >${entity.downloadCount }</span>
 			 </td>
+			  <td>
+			  <c:if test="${!formbean.editState }">
+			   <span >
+			    <font color="blue">${entity.suggest==1?"推荐":"" }</font>
+			    <font color="black">${entity.suggest==2?"不推荐":"" }</font>
+			   </span>
+			  </c:if>
+
+			   <c:if test="${formbean.editState }">
+			    <select  class="form-control input-sm"  name="suggests" >
+					  <option value="1"  ${entity.suggest==1?"selected":"" } >推荐</option>
+					  <option value="2" ${entity.suggest==2?"selected":"" }>不推荐</option>
+				 </select> 
+			   </c:if>
+			 </td>
 			<td> 
 			   <c:if test="${!formbean.editState }">
 			   <span >
@@ -141,13 +162,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  
 		  <c:if test="${formbean.editState }">
 		   <tr>
-			   <td colspan="4">
+			   <td colspan="7">
 			   <div id="fileuploader">上传附件</div>
 			   </td>
 			</tr> 
 		  </c:if>
 		 <tr>
-			 <td colspan="6" align="center">
+			 <td colspan="7" align="center">
 			   <c:if test="${formbean.editState }">
 			   	  <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('add')"  disabled="disabled"	value="添加">
 			     <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">

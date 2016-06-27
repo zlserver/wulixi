@@ -12,6 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>添加成功</title>        
 </head>
 <body>
-成功
+<img src="front/download/lookImage.uhtml?savePath=download/201606161446355326.png"></img>
+
 </body>
 </html>

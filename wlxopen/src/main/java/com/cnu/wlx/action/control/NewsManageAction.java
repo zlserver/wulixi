@@ -116,8 +116,8 @@ public class NewsManageAction {
         	returnResult(response, result);
         	return null;  
         }  
-        if(upload.getSize()> 600*1024){  
-        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件大小不得大于600k','');";
+        if(upload.getSize()> 1024*1024){  
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件大小不得大于1M','');";
         	returnResult(response, result);
             return null;  
         }  
@@ -139,7 +139,7 @@ public class NewsManageAction {
         String path = request.getContextPath();
       	String basePath = request.getScheme() + "://"+ request.getServerName() + ":" + request.getServerPort()+ path + "/";
       	//返回图片访问路径
-        result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"control/news/lookImage.action?savePath=/" +relativeSavePath+ saveFileName + "','')";
+        result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'"+basePath +"front/news/lookImage.uhtml?savePath=/" +relativeSavePath+ saveFileName + "','')";
         returnResult(response, result);
         return null;  
 	}
@@ -294,17 +294,36 @@ public class NewsManageAction {
 			//状态PUBLISH("publish"),WAITING("waiting"),CLOSE("close");
 			//页面类
 			PageView<News> pageView = new PageView<News>(formbean.getMaxresult(), formbean.getPage());
-			QueryResult<News> queryResult= newsService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getColumnId(),formbean.getState());
-			pageView.setQueryResult(queryResult);
-			//传输到页面
-			model.addAttribute("pageView", pageView);
 			
+			//结果集根据栏目的顺序升序,时间降序来排列
+			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+			orderby.put("sequence", "asc");
+			orderby.put("createTime", "desc");
+			//父类不为null
+			if( BaseForm.validateStr(formbean.getColumnId())){
+				String wherejpql="o.column.id = ? ";
+				List<Object> params = new ArrayList<Object>();
+				params.add(formbean.getColumnId());
+				if( BaseForm.validateStr(formbean.getState())){
+					wherejpql+=" and o.state= ?";
+					NewsStateEnum st = NewsStateEnum.valueOf(formbean.getState());
+					params.add(st);
+				}
+				if( formbean.getSuggest()==1|| formbean.getSuggest()==2)
+				{
+					wherejpql+=" and o.suggest= ?";
+					params.add(formbean.getSuggest());
+				}
+				QueryResult<News> queryResult= 	newsService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), wherejpql, params.toArray(), orderby);
+				pageView.setQueryResult(queryResult);
+				//传输到页面
+				model.addAttribute("pageView", pageView);
+			}
 			model.addAttribute("formbean",formbean);
 		}
-		
-		return SiteUtils.getPage("control.news.list");
+ 		return SiteUtils.getPage("control.news.list");
 	}
-     
+    
 	/**
 	 * 查看新闻相关文件
 	 * @param newsId 新闻id

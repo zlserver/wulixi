@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 String path = request.getContextPath();
@@ -36,6 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             margin:0 auto 0;
             display:block;
             width:963px;
+            margin-left: -8px;
         }
     </style>
 </head>
@@ -49,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="artiNews">
                     <img id="artiNews1" src="images/ArtiNews.jpg" alt="学工新闻" usemap="#artiNewsMap" />
                     <map id="artiNewsMap" name="artiNewsMap">
-                        <area shape="rect" coords="616,2,695,23" href="front/news/newsdetail.uhtml?classCode=xue" alt="更多" title="更多">
+                        <area shape="rect" coords="616,2,695,23" href="front/news/siglenews.uhtml?classCode=xue" alt="更多" title="更多">
                     </map>
 
                     <div class="NewsMain">
@@ -69,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <tr height="22">
                                             <td width="21" align="center"><img src="images/titlK.gif" /></td>
                                             <td>
-                                            <a  title="${xueNew.title}">
+                                            <a  title="${xueNew.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${xueNew.id }">
                                             <font color="${xueNew.titleColor.toString()}">
                                              <myc:strout value="${xueNew.title}" length="30" suffix="..." /> 
                                              </font>
@@ -92,13 +94,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div id="AritTG">
                     <img id="AritTG1" src="images/AritTG.jpg" alt="通知公告" usemap="#AritTGMap" />
                     <map id="AritTGMap" name="AritTGMap">
-                        <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
+                        <area shape="rect" coords="260,2,318,23" href="front/news/siglenews.uhtml?classCode=tong" alt="更多" title="更多">
                     </map>
                     <div class="TGCont">
                         <ul>
                         <c:forEach items="${tongNews }" var="tongNew">
                             <li style="color:#FF6600;">
-                             <a  title="${tongNew.title}" href="" style="">
+                             <a  title="${tongNew.title}" href="front/news/siglenews.uhtml?classCode=tong&newsId=${tongNew.id }" style="">
                                   <font color="${tongNew.titleColor.toString()}">
                                    <myc:strout value="${tongNew.title}" length="20" suffix="..." /> 
                                    </font>
@@ -113,13 +115,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div id="AritYx">
                     <img id="AritYx1" src="images/ArtiYX.jpg" alt="就业信息" usemap="#AritYXMap" />
                     <map id="AritYXMap" name="AritYXMap">
-                        <area shape="rect" coords="260,2,325,23" href="#" alt="更多" title="更多">
+                        <area shape="rect" coords="260,2,325,23" href="front/news/siglenews.uhtml?classCode=job" alt="更多" title="更多">
                     </map>
                     
                     <ul>
                        <c:forEach items="${jobNews }" var="jobNew">
                             <li style="color:#FF6600;">
-                             <a  title="${jobNew.title}" href="" style="">
+                             <a  title="${jobNew.title}" href="front/news/siglenews.uhtml?classCode=job&newsId=${jobNew.id }" style="">
                                   <font color="${jobNew.titleColor.toString()}">
                                    <myc:strout value="${jobNew.title}" length="25" suffix="..." /> 
                                    </font>
@@ -253,15 +255,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="AritLoad">
                 <img id="AritLoad1" src="images/ArtiLoad.jpg" alt="下载专区" usemap="#AritLoad1Map" />
                 <map id="AritLoad1Map" name="AritLoad1Map">
-                    <area shape="rect" coords="175,2,252,23" href="#" alt="更多" title="更多">
+                    <area shape="rect" coords="175,2,252,23" href="front/download/more.uhtml?classCode=down" alt="更多" title="更多">
                 </map>
-
+  
                 <ul>
                  <c:forEach items="${xiaFiles }" var="xiaFile">
                          <li style="color:#FF6600;">
-                          <a  title="${xiaFile.originName}" href="" style="">
+                          <a  title="${xiaFile.originName}" href="front/download/down.uhtml?savePath=${xiaFile.savePath }&originName=${xiaFile.originName}" style="">
                                <font color="${xiaFile.titleColor.toString()}">
-                                <myc:strout value="${xiaFile.originName}" length="15" suffix="..." /> 
+                                <myc:strout value="${xiaFile.originName}" length="16" suffix="..." /> 
                                 </font>
                            </a>
                          </li>
@@ -289,26 +291,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
             </div>
 
-            <!--师生楷模-->
+            <!--学习标兵-->
             <div id="AritSS">
                 <img id="AritSS1" src="images/AritSS.jpg" alt="师生楷模" usemap="#AritSSMap" />
                 <map id="AritSSMap" name="AritSSMap">
-                    <area shape="rect" coords="176,2,233,23" href="#" alt="更多" title="更多">
+                    <area shape="rect" coords="176,2,233,23" href="front/news/siglenews.uhtml?classCode=biao" alt="更多" title="更多">
                 </map>
                 <div class="TGCont">
                     <table id="SSKM" border="0" cellpadding="0" cellspacing="0">
 
                         <tr height="79">
                             <td valign="top" width="89">
-                                <div><a href=""><img src="front/news/lookImage.uhtml?savePath=${biaoPic.savePath}" alt="" width="80" height="110" /></a></div>
+                                <div>
+                                <a href="front/news/siglenews.uhtml?classCode=biao&newsId=${biaoNew.id }">
+                                <img src="front/news/lookImage.uhtml?savePath=${biaoPic.savePath}" alt="" width="80" height="110" />
+                                </a>
+                                </div>
                             </td>
                             <td valign="top" width="132">
                                 <h3>>>&nbsp;&nbsp;</h3>
-                                <p>
+                                <a href="front/news/siglenews.uhtml?classCode=biao&newsId=${biaoNew.id }">
                                 <font color="${biaoNew.titleColor.toString()}">
                                 <myc:strout value="${biaoNew.title}" length="35" suffix="..." /> 
                                 </font>
-                                </p>
+                                </a>
                             </td>
                         </tr>
                         <tr><td style="height:10px;"></td></tr>

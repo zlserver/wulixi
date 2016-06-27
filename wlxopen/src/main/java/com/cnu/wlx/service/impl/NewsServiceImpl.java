@@ -96,8 +96,14 @@ public class NewsServiceImpl implements NewsService {
 		newsDao.delete(entityids);
 	}
 	@Override
-	public List<News> getAll() {
+	public List<News> getAll(String wherejpql, Object[] queryParams, LinkedHashMap<String,String> orderby) {
+		return newsDao.getAllData(wherejpql, queryParams, orderby);
 		
-		return newsDao.getAllData();
+	}
+	@Override
+	public QueryResult<News> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,
+			LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return newsDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
 	}
 }

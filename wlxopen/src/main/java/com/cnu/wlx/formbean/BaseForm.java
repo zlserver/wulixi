@@ -46,8 +46,10 @@ public class BaseForm {
 	 * 编辑框被选中的序号
 	 */
 	private List<Integer> checkeds;
-	
-	
+	/**
+	 * 是否推荐
+	 */
+	private int suggest;
 	
 	/**
 	 * 存放表单校验后的结果
@@ -61,6 +63,12 @@ public class BaseForm {
 		return checkeds;
 	}
 
+	public int getSuggest() {
+		return suggest;
+	}
+	public void setSuggest(int suggest) {
+		this.suggest = suggest;
+	}
 	public void setCheckeds(List<Integer> checkeds) {
 		this.checkeds = checkeds;
 	}
@@ -229,11 +237,13 @@ public class BaseForm {
 	private static void loadFile(HttpServletResponse response,Resource fileResource,String originName,boolean isLoad){
 		
 		response.setCharacterEncoding("utf-8");
-        response.setContentType("multipart/form-data");
+       // 
         if( isLoad){
         	if( BaseForm.validateStr(originName) ){
+        		response.setContentType("multipart/form-data");
         		response.setHeader("Content-Disposition", "attachment;fileName="+ originName);
         	}else{
+        		response.setContentType("multipart/form-data");
         		response.setHeader("Content-Disposition", "attachment;fileName="+ fileResource.getFilename());
         	}
         }
