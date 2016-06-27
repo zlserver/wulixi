@@ -43,6 +43,7 @@ public class DownloadFile {
 	 * 保存名称
 	 */
 	private String saveName;
+	
 	/**
 	 * 上传者
 	 */

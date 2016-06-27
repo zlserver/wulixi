@@ -53,4 +53,12 @@ public interface ColumnTypeService {
 	 * @param column
 	 */
 	public void updateColumnType(ColumnType column);
+	/**
+	 * 根据条件查询，结果根据条件排序
+	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
+	 * @param queryParams 查询条件占位符对应的参数值，
+	 * @param orderby 排序条件  Key为属性,Value为asc/desc
+	 */
+	public List<ColumnType> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
+
 }

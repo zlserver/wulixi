@@ -31,13 +31,14 @@ public class StrOutTag extends SimpleTagSupport{
 		if( value !=null ){
 			int actLength = value.length();
 			
-			if( length >0 && length< actLength)
+			if( length >0 && length< actLength){
 			  result.append(value.substring(0, length));
-			else
+
+				if( suffix!=null)
+					result.append(suffix);
+			 }else
 				result.append(value);	
 			
-			if( suffix!=null)
-				result.append(suffix);
 		}
 		
         this.getJspContext().getOut().print(result);

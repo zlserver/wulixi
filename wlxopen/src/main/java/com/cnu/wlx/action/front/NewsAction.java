@@ -1,5 +1,6 @@
 package com.cnu.wlx.action.front;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class NewsAction {
 	 /**
 	  * 文件服务
 	  */
-	 private FileService fileService;
+	private FileService fileService;
 	private NewsService newsService;
 	private NewsFileService newsFileService;
 	private ColumnTypeService columnTypeService;
@@ -61,19 +62,119 @@ public class NewsAction {
 			BaseForm.lookImage(response, fileResource);
 			return null;
 	}
-	
-	@RequestMapping(value="newsdetail")
-	public String newsdetail(String classCode,String newsId,Model model){
+	/**
+	 * 更多新闻
+	 * @param classCode
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="morenews")
+	public String moreNews(String classCode,Model model){
+		model.addAttribute("classCode",classCode);
+		return SiteUtils.getPage("front.news.main");
+	}
+	/**
+	 * 新闻列表
+	 * @param classCode
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="newslist")
+	public String newList(String classCode ,Model model){
 		//新闻列表
 		ColumnType ct = columnTypeService.findByClassCode(classCode);
 		if( ct!=null){
-			List<News> listnews =newsService.getAll();
-			model.addAttribute("list",listnews);
+			String wherejpql = " o.column.id = ? ";
+			Object[] queryParams= new Object[]{ct.getId()};
+			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+			orderby.put("sequence", "asc");
+			orderby.put("createTime", "desc");
+			List<News> listnews =newsService.getAll( wherejpql, queryParams,orderby);
+			model.addAttribute("listnews",listnews);
+		}
+		return SiteUtils.getPage("front.news.newslist");
+	}
+	/**
+	 * 新闻详情
+	 * @param newsId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="newsdetail")
+	public String newsdetail(String newsId ,Model model){
+		
+		News news =newsService.find(newsId);
+		if( news!=null)
+		  model.addAttribute("news",news);
+		return SiteUtils.getPage("front.news.newsdetail");
+	}
+	/**
+	 * 从首页查看单个新闻
+	 * @param classCode
+	 * @param newsId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="news")
+	public String news(String classCode,String newsId,Model model){
+		
+		model.addAttribute("classCode",classCode);
+		model.addAttribute("newsId",newsId);
+		
+		return SiteUtils.getPage("front.news.main");
+	}
+	
+	/**
+	 * 从首页查看单个新闻
+	 * @param classCode
+	 * @param newsId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="siglenews")
+	public String siglenews(String classCode,String newsId,Model model){
+		
+		//新闻列表
+		ColumnType ct = columnTypeService.findByClassCode(classCode);
+		if( ct!=null){
+			String wherejpql = " o.column.id = ? ";
+			Object[] queryParams= new Object[]{ct.getId()};
+			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+			orderby.put("sequence", "asc");
+			orderby.put("createTime", "desc");
+			List<News> listnews =newsService.getAll( wherejpql, queryParams,orderby);
+			model.addAttribute("listnews",listnews);
 		}
 		News news =newsService.find(newsId);
-		model.addAttribute("news",news);
+		if( news!=null){
+			news.setReadCount(news.getReadCount()+1);
+			newsService.update(news);
+			
+			model.addAttribute("news",news);
+		}
+
+		  model.addAttribute("classCode",classCode);
+		return SiteUtils.getPage("front.news.siglenews");
+	}
+	/**
+	 * 下载新闻附件
+	 * @param savePath 文件保存路径
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="download")
+	public String download(String savePath,HttpServletRequest request,HttpServletResponse response){
+		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
+		String fileSystemRoot = SiteUtils.getFileSystemDir();
+		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
+		String fileSavePath = fileSystemRoot+savePath;
 		
-		return SiteUtils.getPage("front.newsdetail");
+		//2.1获取文件资源
+		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
+		//查看图片
+		BaseForm.loadFile(response, fileResource);
+		return null;
 	}
 	public FileService getFileService() {
 		return fileService;

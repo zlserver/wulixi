@@ -17,18 +17,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style type="text/css">
 #container{
 text-align: center;
-
+height:100%;
+/* border-right: 2px solid #DFF8DF;
+border-left: 2px solid #DFF8DF;
+margin-left: 15px; */
+/* background:url(images/AritTGMid.jpg) repeat-y; */
 }
 #left{
 text-align:left;
-float:left;margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
-margin-left:15px;
+float:left;
+margin:0px; 
+padding:0px; 
+padding-bottom:6px; 
+margin-bottom:0px;
+margin-left:3px;
 width:220px;  background:url(images/AritTGBot.jpg) no-repeat left bottom;
 border-right: 2px solid #A6C58A;
 }
 #right{
-width: 760;
+width: 731px;
 float: left;
+padding-left:6px;
+padding-right:6px;
+padding-bottom:6px;
+margin-left:5px;
+margin-top:3px;
+margin-bottom:5px;
+border: 2px solid #DFF8DF;
 }
 
 #title{
@@ -57,20 +72,47 @@ padding-left:10px;
  width:220px;
  height: 20px;
 }
+/* 附件 */
+#attach{
+margin-top:5px;
+text-align: left;
+
+}
+#clearfolat{
+clear: both;
+}
+#newlist_title{
+position: relative;
+}
+#title_text{
+position: absolute;
+top: 1px;
+left: 10px;
+color: #376934;
+font: bold;
+}
 </style>
 </head>
 <body>
 <div id="container">
 	<div id="left">
-          <img id="AritTG1" src="images/AritTG.jpg" alt="通知公告" usemap="#AritTGMap" />
-          <map id="AritTGMap" name="AritTGMap">
-              <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
-          </map>
+		 <!--  <span style="width: 220px;height:20px;background-color: #D0E4BF;">
+		  学工新闻
+		  </span> -->
+		  <div id="newlist_title">
+	           <img id="AritTG1" src="images/newlist_top.png" alt="通知公告" usemap="#AritTGMap" /> 
+	          <map id="AritTGMap" name="AritTGMap">
+	              <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
+	          </map>
+	          <p id="title_text">
+	          <myc:newstitle classCode="${classCode}"/>
+	          </p>
+          </div>
           <div class="left_list">
               <ul>
-              <c:forEach items="${list }" var="entity">
+              <c:forEach items="${listnews }" var="entity">
                   <li style="color:#FF6600;">
-                   <a  title="${entity.title}" href="" style="">
+                   <a  title="${entity.title}" href="front/news/siglenews.uhtml?classCode=${classCode}&newsId=${entity.id }" style="">
                         <font color="${entity.titleColor.toString()}">
                          <myc:strout value="${entity.title}" length="13" suffix="" /> 
                          </font>
@@ -81,7 +123,7 @@ padding-left:10px;
           </div>
 	</div>
 	<div id="right">
-	 <c:if test="${news }">
+	 <c:if test="${news!=null}">
 	 	<div id="title">
 			<h3><font color="${news.titleColor.toString()}">${news.title}</font> </h3>
 		</div>
@@ -91,8 +133,21 @@ padding-left:10px;
 		<div id="article">
 			${news.context }
 		</div>
+		<div id="attach">
+		
+		
+		<c:forEach items="${news.newsFiles}" var="newsFile" varStatus="status">
+		 <c:if test="${ status.count==1}">
+		 <p style="color: red;">附件：</p>
+		 </c:if>
+	      <c:if test="${newsFile.type.toString().equals('NO_IMAGE') }">
+	      <p><a href="front/news/download.uhtml?savePath=${newsFile.savePath}">${newsFile.originName }</a></p>
+	     </c:if>
+	     </c:forEach>
+		</div>
 	 </c:if>
   	</div>
+  	<p id="clearfolat"></p>
 </div>
 </body>
 </html>

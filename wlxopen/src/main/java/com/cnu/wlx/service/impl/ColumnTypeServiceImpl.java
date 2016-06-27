@@ -95,5 +95,10 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 		// TODO Auto-generated method stub
 		return columnTypeDao.find("o.classCode=? ", classCode);
 	}
+
+	@Override
+	public List<ColumnType> getAllData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby) {
+		return columnTypeDao.getAllData(wherejpql, queryParams, orderby);
+	}
 	
 }

@@ -117,5 +117,23 @@
         <type>java.lang.String</type>
     </attribute>
   </tag>
+  
+  <tag>
+    <description>
+          根据新闻分类码显示新闻标题
+    </description>
+    <name>newstitle</name>
+    <tag-class>com.cnu.wlx.tag.TitleTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>
+         	新闻分类码
+        </description>
+        <name>classCode</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+  </tag>
 
   </taglib>

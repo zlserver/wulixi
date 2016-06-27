@@ -26,6 +26,7 @@ public class NewsForm extends BaseForm {
 	 */
 	private String type;
 	
+	
 	/**
 	 * 批量更新
 	 */

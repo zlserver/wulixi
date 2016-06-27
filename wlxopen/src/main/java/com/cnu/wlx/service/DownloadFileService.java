@@ -54,6 +54,12 @@ public interface DownloadFileService {
 	 */
 	public DownloadFile find(String fileid);
 	/**
+	 * 查询
+	 * @param savePath
+	 * @return
+	 */
+	public DownloadFile findByPath(String savePath);
+	/**
 	 * 更新
 	 * @param downloadFile
 	 */

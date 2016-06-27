@@ -66,12 +66,10 @@ public class HomeAction {
 			}
 		}
 		//下载专区
-		ColumnType xiaCt = columnTypeService.findByClassCode(formbean.getXiaClassCode());
-		if( xiaCt!=null){
-			PageView<DownloadFile> xiaPv= new PageView<>(5, 0);
-			QueryResult<DownloadFile> xiaFiles= downloadFileService.getHomeScrollData(xiaPv.getFirstResult(), xiaPv.getMaxresult(), xiaCt.getId());
-			model.addAttribute("xiaFiles", xiaFiles.getResultlist());
-		}
+		PageView<DownloadFile> xiaPv= new PageView<>(10, 0);
+		QueryResult<DownloadFile> xiaFiles= downloadFileService.getHomeScrollData(xiaPv.getFirstResult(), xiaPv.getMaxresult(), null);
+		model.addAttribute("xiaFiles", xiaFiles.getResultlist());
+		
 		//通知公告
 		ColumnType tongCt = columnTypeService.findByClassCode(formbean.getTongClassCode());
 		if(tongCt!=null)

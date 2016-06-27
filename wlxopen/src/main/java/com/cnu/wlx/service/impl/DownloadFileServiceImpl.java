@@ -13,6 +13,7 @@ import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.DownloadFileDao;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.myenum.FileStateEnum;
+import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.DownloadFileService;
 
@@ -63,15 +64,23 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 		orderby.put("sequence", "desc");
 		orderby.put("createTime", "desc");
 		//父类不为null
-		if( BaseForm.validateStr(columnId)){
-			String wherejpql="o.column.id = ? ";
+		if( BaseForm.validateStr(columnId)){//查询图片
+			String wherejpql="o.column.id = ? and o.suggest=? and o.state=? and o.type= ? ";
 			List<Object> params = new ArrayList<Object>();
 			params.add(columnId);
-			wherejpql+=" and o.state= ?";
+			params.add(1);
 			params.add(FileStateEnum.VALIDATE);
+			params.add(FileTypeEnum.IMAGE);
 			return downloadFileDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
+		}else{//查询文件
+			String wherejpql="o.suggest=? and o.state=? and o.type= ? ";
+			List<Object> params = new ArrayList<Object>();
+			params.add(1);
+			params.add(FileStateEnum.VALIDATE);
+			params.add(FileTypeEnum.NO_IMAGE);
+			return downloadFileDao.getScrollData(firstResult, maxresult, wherejpql, params.toArray(), orderby);
+		
 		}
-		return null;
 	}
 	@Override
 	public void save(DownloadFile downloadFile) {
@@ -98,6 +107,12 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 			Object[] queryParams, LinkedHashMap<String, String> orderby) {
 		// TODO Auto-generated method stub
 		return downloadFileDao.getScrollData(firstindex, maxresult, wherejpql, queryParams, orderby);
+	}
+	@Override
+	public DownloadFile findByPath(String savePath) {
+		// TODO Auto-generated method stub
+		
+		return downloadFileDao.find("o.savePath = ?" , savePath);
 	}
 	
 }
