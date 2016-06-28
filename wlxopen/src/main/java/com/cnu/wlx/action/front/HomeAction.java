@@ -121,6 +121,7 @@ public class HomeAction {
 			
 			if(biaozhangNews!=null &&biaozhangNews.getTotalrecord()>0){
 				News biaozhangNew = biaozhangNews.getResultlist().get(0);
+				model.addAttribute("biaozhangNew", biaozhangNew);
 				//查询条件：所属新闻，文件类型
 				NewsFile biaoPic=newsFileService.getHomeData(biaozhangNew.getId(), FileTypeEnum.IMAGE);
 				model.addAttribute("biaozhangPic", biaoPic);

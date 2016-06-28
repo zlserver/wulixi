@@ -89,7 +89,7 @@ public class FileAction {
 	
 	/**
 	 * 从首页查看更多下载
-	 * @param classCode  前缀
+	 * @param classCode  前缀 ,定为down
 	 * @param model 
 	 * @return
 	 */
@@ -98,7 +98,7 @@ public class FileAction {
 		String wherejpql = " o.classCode like ? ";
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 		orderby.put("sequence", "asc");
-
+		
 		List<Object> params = new ArrayList<Object>();
 		
 		params.add(classCode+"%");
@@ -106,6 +106,57 @@ public class FileAction {
 		List<ColumnType>  columns = columnTypeService.getAllData(wherejpql, params.toArray(), orderby);
 		model.addAttribute("listColumn",columns);
 		model.addAttribute("classCode", classCode);
+		
+		return SiteUtils.getPage("front.download.more");
+	}
+	
+	/**
+	 * 从首页查看校园文化
+	 * @param preClassCode  前缀,定为xy
+	 * @param classCode  栏目类
+	 * @param model 
+	 * @return
+	 */
+	@RequestMapping(value="xiaoyuan")
+	public String xiaoyuan(DownloadFileForm formbean,String preClassCode,String classCode ,Model model){
+		//根据前缀preClassCode查询出“活动掠影”、“校园风光”两个栏目
+		String wherejpql = " o.classCode like ? ";
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("sequence", "asc");
+		
+		List<Object> params = new ArrayList<Object>();
+		
+		params.add(classCode+"%");
+		
+		List<ColumnType>  columns = columnTypeService.getAllData(wherejpql, params.toArray(), orderby);
+		model.addAttribute("listColumn",columns);
+		model.addAttribute("classCode", classCode);
+		//根据具体的栏目查询图片
+		//查询某个类别下的下载列表
+		PageView<DownloadFile> pageView = new PageView<DownloadFile>(formbean.getMaxresult(), formbean.getPage());
+		//结果集根据时间降序来排列
+		LinkedHashMap<String,String> orderby2=new LinkedHashMap<String,String>();
+		orderby.put("createTime", "desc");
+		
+		StringBuffer jpql=new StringBuffer("");
+		List<Object> pars = new ArrayList<Object>();
+		
+		jpql.append("o.column.id = ?");
+		pars.add(formbean.getColumnId());
+		//有效
+		jpql.append(" and o.state= ?");
+		pars.add(FileStateEnum.VALIDATE);
+		//文件
+		jpql.append("and o.type = ?");
+		pars.add(FileTypeEnum.IMAGE);
+		
+		QueryResult<DownloadFile> queryResult=downloadFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), jpql.toString(), pars.toArray(), orderby2);
+		pageView.setQueryResult(queryResult);
+		//传输到页面
+		model.addAttribute("pageView", pageView);
+		
+		model.addAttribute("formbean",formbean);
+		
 		
 		return SiteUtils.getPage("front.download.more");
 	}
@@ -122,7 +173,7 @@ public class FileAction {
 		String jpql = " o.classCode like ? ";
 		LinkedHashMap<String,String> order=new LinkedHashMap<String,String>();
 		order.put("sequence", "asc");
-
+		
 		List<Object> param = new ArrayList<Object>();
 		
 		param.add(classCode+"%");

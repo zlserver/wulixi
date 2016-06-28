@@ -327,7 +327,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <img id="AritBM1" src="images/AritBM.jpg" alt="部门荣誉" width="237" height="40" />
                 <div class="AritBM">
                     <div class="AritBMCont1">
-                        <a href="" target="_parent" ><img src="front/news/lookImage.uhtml?savePath=${biaozhangPic.savePath}" width="190" height="125" style="border:none; position:relative; left:-4px; top:48px;" /></a>
+                        <a href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${biaozhangNew.id }"  >
+                        <img src="front/news/lookImage.uhtml?savePath=${biaozhangPic.savePath}" width="190" height="125" style="border:none; position:relative; left:-4px; top:48px;" />
+                        </a>
                     </div>
                 </div>
             </div>
