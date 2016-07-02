@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>新闻列表</title> 
+<title>图片列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <style type="text/css">
@@ -91,31 +91,34 @@ left: 10px;
 color: #376934;
 font: bold;
 }
+tr{
+border-bottom: 1px solid #BDC9D5;
+}
+td{
+ height: 28px;
+ 
+}
 </style>
 </head>
 <body>
 <div id="container">
 	<div id="left">
 		 <!--  <span style="width: 220px;height:20px;background-color: #D0E4BF;">
-		  学工新闻
+		  
 		  </span> -->
 		  <div id="newlist_title">
 	           <img id="AritTG1" src="images/newlist_top.png" alt="列表" usemap="#AritTGMap" /> 
-	         <!--  <map id="AritTGMap" name="AritTGMap">
-	              <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
-	          </map> -->
+	         
 	          <p id="title_text">
-	          <myc:newstitle classCode="${classCode}"/>
+	          <myc:newstitle classCode="${preClassCode}"/>
 	          </p>
           </div>
           <div class="left_list">
               <ul>
-              <c:forEach items="${listnews }" var="entity">
+              <c:forEach items="${listColumn }" var="entity">
                   <li style="color:#FF6600;">
-                   <a  title="${entity.title}" href="front/news/siglenews.uhtml?classCode=${classCode}&newsId=${entity.id }" style="">
-                        <font color="${entity.titleColor.toString()}">
-                         <myc:strout value="${entity.title}" length="13" suffix="" /> 
-                         </font>
+                   <a  title="${entity.name}" href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${entity.id }" style="">
+                       ${entity.name}
                     </a>
                   </li>
               </c:forEach>
@@ -123,29 +126,23 @@ font: bold;
           </div>
 	</div>
 	<div id="right">
-	 <c:if test="${news!=null}">
-	 	<div id="title">
-			<h3><font color="${news.titleColor.toString()}">${news.title}</font> </h3>
-		</div>
-		<div id="info">
-		  <span>发表时间：<fmt:formatDate value="${news.createTime }" pattern="yyyy-MM-dd hh:mm" /> </span>  <span style="margin-left: 30px;">阅读量：${news.readCount }</span> 
-		</div>
-		<div id="article">
-			${news.context }
-		</div>
-		<div id="attach">
+	 <table> 
 		
-		
-		<c:forEach items="${news.newsFiles}" var="newsFile" varStatus="status">
-		 <c:if test="${ status.count==1}">
-		 <p style="color: red;">附件：</p>
+		<tbody>
+		 <c:forEach  items="${pageView.records }" var="entity" varStatus="status" >
+		 <c:if test="${status.index%2==0 }">
+		 <tr>
 		 </c:if>
-	      <c:if test="${newsFile.type.toString().equals('NO_IMAGE') }">
-	      <p><a href="front/news/download.uhtml?savePath=${newsFile.savePath}">${newsFile.originName }</a></p>
-	     </c:if>
-	     </c:forEach>
-		</div>
-	 </c:if>
+			 <td style="text-align: left;padding-left: 20px;">
+				<img style="width: 300px;height: 280px;margin-left: 20px;" alt="" src="front/download/lookImage.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
+			 	<p align="center">校园风光</p>
+			 </td>
+	    <c:if test="${status.index%2==1 }">
+		 </tr>
+		 </c:if>
+		 </c:forEach> 
+		</tbody>
+	</table>
   	</div>
   	<p id="clearfolat"></p>
 </div>

@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>新闻列表</title> 
+<title>文件列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <style type="text/css">
@@ -107,10 +107,8 @@ td{
 		  
 		  </span> -->
 		  <div id="newlist_title">
-	           <img id="AritTG1" src="images/newlist_top.png" alt="通知公告" usemap="#AritTGMap" /> 
-	          <map id="AritTGMap" name="AritTGMap">
-	              <area shape="rect" coords="260,2,318,23" href="#" alt="更多" title="更多">
-	          </map>
+	           <img id="AritTG1" src="images/newlist_top.png" alt="列表" usemap="#AritTGMap" /> 
+	          
 	          <p id="title_text">
 	          <myc:newstitle classCode="${classCode}"/>
 	          </p>

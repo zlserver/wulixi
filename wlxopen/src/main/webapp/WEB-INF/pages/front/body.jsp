@@ -174,8 +174,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div id="XYWH">
                     <div id="artiXYWH">
                     <img id="artiXYWH1" src="images/ArtiXYWH.jpg" alt="校园文化" />
-                    <span id="XYWH_nav1"><a href="#" style="font-size: 15px">活动掠影</a>&nbsp;&nbsp;&nbsp;</span>
-                    <span id="XYWH_nav2"><a href="#" style="font-size: 15px">校园风光</a>&nbsp;&nbsp;&nbsp;</span>
+                    <span id="XYWH_nav1"><a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }" style="font-size: 15px">活动掠影</a>&nbsp;&nbsp;&nbsp;</span>
+                    <span id="XYWH_nav2"><a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }" style="font-size: 15px">校园风光</a>&nbsp;&nbsp;&nbsp;</span>
 
                     <div id="XYWH_box">
                         <table id="XYWH_tab" cellpadding="0" cellspacing="0" style="height: 151px">
@@ -183,10 +183,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td width="50%" style="border-right:none; border-bottom:none;"><table cellpadding="0" cellspacing="0" border="0">
                                     <tr>
                                         <td class="XYWH_img"><img src="images/test11.jpg" alt="活动掠影" /><br />
-                                            <a href="#">活动掠影</a></td>
+                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">活动掠影</a></td>
                                         <td style="padding-left:4px; padding-top:4px;">
                                          <c:forEach items="${huoFiles }" var="huoFile">
-                                           &nbsp; &nbsp; <a ><img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" /></a>
+                                           &nbsp; &nbsp; <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">
+                                           <img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" />
+                                           </a>
                                          </c:forEach>
                                         </td>
                                     </tr>
@@ -194,10 +196,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td style="border-bottom:none;">
                                     <table cellpadding="0" cellspacing="0" border="0">
                                         <tr>
-                                            <td class="XYWH_img"><img src="images/test12.jpg" alt="校园风光" /><br><a href="#">校园风光</a></td>
+                                            <td class="XYWH_img"><img src="images/test12.jpg" alt="校园风光" /><br>
+                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">校园风光</a></td>
                                             <td  style="padding-left:4px; padding-top:4px;">
                                                 <c:forEach items="${fengFiles }" var="fengFile">
-		                                            &nbsp; &nbsp; <a ><img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" /></a>
+		                                            &nbsp; &nbsp; 
+		                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">
+		                                            <img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" />
+		                                            </a>
 		                                         </c:forEach>
                                             </td>
                                         </tr>

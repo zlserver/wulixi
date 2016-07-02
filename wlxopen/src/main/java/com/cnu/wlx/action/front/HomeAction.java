@@ -48,7 +48,7 @@ public class HomeAction {
 	 */
 	@RequestMapping(value="home")
 	public String home(HomeForm formbean,Model model){
-		formbean=new HomeForm("xue", "xia", "tong", "job", "huo", "feng", "biao","biaozhang");
+		formbean=new HomeForm("xue", "xia", "tong", "job", "xy_huo", "xy_feng", "biao","biaozhang");
 		//学工新闻
 		ColumnType xueCt = columnTypeService.findByClassCode(formbean.getXueClassCode());
 		if( xueCt!=null){
@@ -91,6 +91,7 @@ public class HomeAction {
 			PageView<DownloadFile> huoPv= new PageView<>(2, 0);
 			QueryResult<DownloadFile> huoFiles= downloadFileService.getHomeScrollData(huoPv.getFirstResult(), huoPv.getMaxresult(),huoCt.getId());
 			model.addAttribute("huoFiles", huoFiles.getResultlist());
+			model.addAttribute("huoCt", huoCt);
 		}
 		//校园文化--》校园风光
 		ColumnType fengCt = columnTypeService.findByClassCode(formbean.getFengClassCode());
@@ -98,6 +99,8 @@ public class HomeAction {
 			PageView<DownloadFile> fengPv= new PageView<>(2, 0);
 			QueryResult<DownloadFile> fengFiles= downloadFileService.getHomeScrollData(fengPv.getFirstResult(), fengPv.getMaxresult(),fengCt.getId());
 			model.addAttribute("fengFiles", fengFiles.getResultlist());
+
+			model.addAttribute("fengCt", fengCt);
 		}
 		//学习标兵
 		ColumnType biaoCt = columnTypeService.findByClassCode(formbean.getBiaoClassCode());
