@@ -77,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<thead>
 			<tr>
 			<c:if test="${formbean.editState }">
-			  <td  width="3%">选项</td>
+			  <td  width="6%">选项</td>
 			</c:if>
 			<td  width="50%">名称</td>
 			<td  width="10%">作者</td>
@@ -166,13 +166,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr> 
 			</c:if>
 		 <tr>
-			 <td colspan="7" align="center">
-			   <c:if test="${formbean.editState }">
+		 <c:if test="${formbean.editState }">
+		 
+		    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
+			 <td colspan="6" align="center">
 			   	  <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('add')"  disabled="disabled"	value="添加">
 			     <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
 			      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
-			    </c:if>
 			 </td>
+			</c:if>
 		</tr>
 		</tbody>
 	</table>
@@ -187,6 +189,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
 <script>
+/* 全选 */
+function selectAll(checkNode){
+	var checkeds=document.getElementsByName("checkeds");
+	var state=checkNode.checked;
+	for( var i = 0;i <checkeds.length;i++)
+	  checkeds[i].checked=state;
+}
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
@@ -200,8 +209,8 @@ $(document).ready(function() {
 		acceptFiles:"image/jpeg,image/png,application/msword" , //限制上传文件格式
 		extErrorStr:"上传文件格式不对",
 		maxFileCount:10,       //上传文件数量
-		maxFileSize:1024*1024, //大小限制1M
-		sizeErrorStr:"上传文件不能大于1M", 
+		maxFileSize:5*1024*1024, //大小限制5M
+		sizeErrorStr:"上传文件不能大于5M", 
 		dragDropStr: "<span><b>附件拖放于此</b></span>",
 		showFileCounter:false,
 		returnType:"json",  //返回数据格式为json

@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <div id="bottArea">
 
-        <h3 class="bottLink"><a href="">短信平台</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="/index.asp">物理系首页</a>
+        <h3 class="bottLink"><a href="javascript:void()">短信平台</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">物理系首页</a>
         &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="login.jsp" >后台管理</a></h3>
         <p>地址:北京市海淀区西三环北路105号&nbsp;邮编：100048<br>
             版权所有：首都师范大学物理系<br>

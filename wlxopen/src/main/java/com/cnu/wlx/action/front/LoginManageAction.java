@@ -66,7 +66,7 @@ public class LoginManageAction {
 	@RequestMapping(value="exit")
 	public String exit(HttpServletRequest request){
 		request.getSession().invalidate();
-		return SiteUtils.getPage("admin.login");
+		return SiteUtils.getPage("control.admin.login");
 	}
 
 	public AdminService getAdminService() {

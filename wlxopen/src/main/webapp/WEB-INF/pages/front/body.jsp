@@ -59,10 +59,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <tr>
                                 <td width="247" align="center">
                                     <div id="fgImg">
+                                     <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
                                        <img src="front/news/lookImage.uhtml?savePath=${xuePic.savePath}" alt="" width="240" height="210" />
+                                     </a>
                                    </div>
                                     <!--新闻链接-->
-                                    <a href="#"></a>
+                                    <%-- <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
+                                          <font color="${hotNews.titleColor.toString()}">
+                                           <myc:strout value="${hotNews.title}" length="30" suffix="..." /> 
+                                           </font>
+                                     </a> --%>
                                 </td>
                                 <td valign="top">
                                     <table width="100%" cellpadding="0" cellspacing="0" border="0">

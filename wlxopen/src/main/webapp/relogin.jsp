@@ -10,10 +10,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>内容</title>
-
+<script type="text/javascript">
+function choice() {
+	window.parent.location.href="login.jsp";
+}
+</script>
 </head>
 
-<body >
+<body onload="choice()">
 
 
 </body>

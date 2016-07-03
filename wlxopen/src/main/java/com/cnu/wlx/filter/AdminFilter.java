@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cnu.wlx.bean.Admin;
+import com.cnu.wlx.utils.SiteUtils;
 /**
  * 管理员拦截器：对非管理员访问后台界面时进行拦截
  * @author dell
@@ -50,9 +51,11 @@ public class AdminFilter implements Filter {
 			String path = req.getContextPath();
 			String basePath = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
-					+ path + "/";
-			resp.sendRedirect(basePath+"login.jsp");
-			//req.getRequestDispatcher("/index.jsp").forward(req, response);
+					+ path + "/relogin.jsp";
+			resp.sendRedirect(basePath);
+			
+			//System.out.println(basePath);
+			//req.getRequestDispatcher(basePath).forward(req, response);
 		} else {
 			chain.doFilter(request, response);//放行
 		}

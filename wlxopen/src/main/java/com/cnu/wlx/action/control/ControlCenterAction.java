@@ -41,7 +41,6 @@ public class ControlCenterAction {
 	}
 	@RequestMapping(value="left",method=RequestMethod.GET)
 	public String left(Model model){//获取顶级父类栏目
-		System.out.println("ddd");
 		List<ColumnType> topColumns= columnTypeService.getTopColumns();
 		//保存到
 		model.addAttribute("topColumns", topColumns);

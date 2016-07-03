@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>     
 <body>
 	<div class="row-fluid">
-		<h1>0000</h1>
+		<h1>物理系学生工作网站</h1>
 		<span id="error" style="color: red;" >${formbean.result.error }</span> 
 		       
 		<form method="post" action='<c:url value="/common/login.uhtml" />' class="form-horizontal" style="width: 500px;">
