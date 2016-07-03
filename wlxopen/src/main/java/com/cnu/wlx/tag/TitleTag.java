@@ -39,6 +39,8 @@ public class TitleTag extends SimpleTagSupport {
 				title="荣誉表彰";
 			if( classCode.equals("down"))
 				title="下载专区";
+			if( classCode.equals("huiyin"))
+				title="回音壁热点问题";
 		}
 		this.getJspContext().getOut().print(title);
 	}

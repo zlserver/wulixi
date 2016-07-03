@@ -11,6 +11,7 @@ import com.cnu.wlx.bean.Question;
 */
 public class QuestionForm extends BaseForm {
 
+	private String questionId;
 	private Question question;
 	/**
 	 * 是否热点
@@ -35,6 +36,15 @@ public class QuestionForm extends BaseForm {
 	private List<Integer> checkeds;
 	
 	private List<String> answers;
+
+	
+	public String getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(String questionId) {
+		this.questionId = questionId;
+	}
 
 	public String getHot() {
 		return hot;

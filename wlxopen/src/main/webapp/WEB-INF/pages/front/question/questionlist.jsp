@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>文件列表</title> 
+<title>回应壁列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <style type="text/css">
@@ -98,7 +98,38 @@ td{
  height: 28px;
  
 }
+.comm{
+text-align: left;
+border: 1px solid #BDC9D5;
+margin:0px 0px 5px 5px;
+padding-bottom:3px;
+position: relative;
+}
+.q_title{
+background-color:#DFF8DF;
+margin: 0px 0px 5px 0px;
+padding-left: 3px;
+}
+.desc{
+padding:0px 0px 0px 13px;
+}
+.question{
+margin-bottom: 10px;
+}
+.quesarea{
+text-align: left;
+border: 1px solid #BDC9D5;
+margin:0px 0px 5px 5px;
+padding: 5px 0px 3px 5px;
+position: relative;
+
+}
+.quesarea p{
+padding: 0px;
+margin: 0px;
+}
 </style>
+
 </head>
 <body>
 <div id="container">
@@ -115,10 +146,10 @@ td{
           </div>
           <div class="left_list">
               <ul>
-              <c:forEach items="${listColumn }" var="entity">
+              <c:forEach items="${hotQuestions }" var="entity">
                   <li style="color:#FF6600;">
-                   <a  title="${entity.name}" href="front/download/single.uhtml?columnId=${entity.id}&page=1&classCode=down" style="">
-                       ${entity.name}
+                   <a  title="${entity.title}" href="front/question/hot.uhtml?questionId=${entity.id}&classCode=${classCode}" style="">
+                       ${entity.title}
                     </a>
                   </li>
               </c:forEach>
@@ -126,51 +157,74 @@ td{
           </div>
 	</div>
 	<div id="right">
-	<form  action="front/download/single.uhtml" method="get">
-		 <input type="hidden" name="classCode" value="${classCode}">
-	    <input type="hidden" name="columnId" value="${formbean.columnId}">
-	    <input type="hidden" name="page" >
-	  	
-		 <table> 
-			<thead>
-			 <tr>
-			   <td  width="50%">文件名 </td>
-		       <td  width="14%">上传时间  </td>
-		       <td  width="10%"> 大小</td>
-		       <td  width="6%">下载量</td>
-			 </tr>
-			</thead>
-			<tbody>
-			<c:forEach  items="${pageView.records }" var="entity" >
-			 <tr>
-				 <td style="text-align: left;">
-					 <a title="${entity.originName }" href="front/download/down.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
-					<myc:strout value="${entity.originName }" length="35" suffix="..." /> 
-					 </a> 
-				 </td>
-				 <td>
-				 <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd" />
-				 </td>
-				 <td><myc:convert size="${entity.size}"/> </td>
-				 <td><span >${entity.downloadCount }</span></td>
-			 </tr>
-			 </c:forEach>
-			</tbody>
-		</table>
-		<div> 
-			 <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
-		</div>
-	</form>
+	   <div class="quesarea">
+	    <form action="front/question/add.uhtml" method="post" onsubmit="return checkcontent()">
+	    	<input type="hidden" name="classCode" value="${classCode}">
+		    <p>问&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：
+		         <input type="text"  name="question.title" id="q_title" style="width:587px " >  </p>
+		    <p>角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：
+		    	<input type="radio" value="student" checked="checked" name="question.identity">学生 
+		    	<input type="radio" value="teacher" name="question.identity">老师
+		    </p>
+		    <p>问题描述：<textarea rows="3" cols="90" id="q_content" name="question.content"></textarea>  </p>
+		    <p style="margin-left: 69px;"><input type="submit" value="提问">  </p>
+	    </form>
+	   </div>
+	   
+	<form  action="front/question/list.uhtml" method="get">
+	 <input type="hidden" name="classCode" value="${classCode}">
+     
+    <input type="hidden" name="page" >
+  	 <c:forEach  items="${pageView.records }" var="entity" >
+		 <div class="comm">
+		   <div class="question">
+			   <p class="q_title">
+			       <myc:strout value="${entity.title }" length="35" suffix="..." /> 
+			          <span style="position:absolute; right:10px;">
+			             <font color="#337AB7"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd HH:mm" /></font>
+				      </span>
+				</p>
+			    <div class="desc" >
+				    <span class="label label-success">问题描述</span>
+				    <span>${entity.content}</span>
+				</div>
+		   </div>
+		   <div class="desc" >
+			    <span class="label label-info">回答</span>
+			    <span>${entity.answer }</span>
+		   </div>
+		 </div>
+		 </c:forEach>
+		 <div> 
+		 <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
+		 </div>
+	  </form>
   	</div>
   	<p id="clearfolat"></p>
 </div>
 </body>
 
 <script type="text/javascript">
+function checkcontent() {
+	var title =$("#q_title").val();
+	var content =$("#q_content").val();
+	if( !title || title.trim()==""){
+
+		alert("请输入问题");
+		return false;
+	}
+	if( !content || content.trim()==""){
+
+		alert("请输入问题描述");
+		return false;
+	}
+	
+	return true;
+}
 //查询
 function topage(page)
 {
-	var form = document.forms[0];
+	var form = document.forms[1];
 	form.page.value= page;
 	form.submit();
 }

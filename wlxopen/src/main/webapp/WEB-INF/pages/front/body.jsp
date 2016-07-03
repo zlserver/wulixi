@@ -280,13 +280,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="artiHYB" style="width: 237px">
                 <img id="AritHYB1" src="images/AritHYB.jpg" alt="回音壁" usemap="#AritHYBMap" />
                 <map id="AritHYBMap" name="AritHYBMap">
-                    <area shape="rect" coords="151,2,224,23" href="#" alt="更多" title="更多">
+                    <area shape="rect" coords="151,2,224,23" href="front/question/list.uhtml?page=1&classCode=huiyin" alt="更多" title="更多">
                 </map>
 
                 <ul>
                 <c:forEach items="${questions }" var="question">
                         <li>
-                          <a  title="${question.title}" href="" style="">
+                          <a  title="${question.title}" href="front/question/hot.uhtml?questionId=${question.id}&classCode=huiyin" style="">
                                 <myc:strout value="${question.title}" length="13" suffix="..." /> 
                            </a>
                            <span class="pRight">

@@ -76,14 +76,23 @@ public class QuestionServiceImpl implements QuestionService {
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 		orderby.put("createTime", "desc");
 		//可见
-		String wherejpql=" o.visible= ? ";
+		String wherejpql=" o.visible= ?  and o.hot = ? ";
+
 		List<Object> params = new ArrayList<Object>();
 		params.add(StateEnum.YES);
-		
+
+		params.add(StateEnum.YES);
 		QueryResult<Question>  qr = questionDao.getScrollData(firstindex, maxresult,wherejpql,params.toArray());
 		if( qr.getTotalrecord()>0)
 			return qr.getResultlist();
 		return null;
+	}
+
+	@Override
+	public List<Question> getAllData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		
+		return questionDao.getAllData(wherejpql, queryParams, orderby);
 	}
 
 }

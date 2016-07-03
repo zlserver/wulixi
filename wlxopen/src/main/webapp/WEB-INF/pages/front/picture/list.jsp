@@ -117,7 +117,7 @@ td{
               <ul>
               <c:forEach items="${listColumn }" var="entity">
                   <li style="color:#FF6600;">
-                   <a  title="${entity.name}" href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${entity.id }" style="">
+                   <a  title="${entity.name}" href="front/picture/pictureList.uhtml?preClassCode=${ preClassCode}&columnId=${entity.id }" style="">
                        ${entity.name}
                     </a>
                   </li>
@@ -126,25 +126,43 @@ td{
           </div>
 	</div>
 	<div id="right">
-	 <table> 
-		
-		<tbody>
-		 <c:forEach  items="${pageView.records }" var="entity" varStatus="status" >
-		 <c:if test="${status.index%2==0 }">
-		 <tr>
-		 </c:if>
-			 <td style="text-align: left;padding-left: 20px;">
-				<img style="width: 300px;height: 280px;margin-left: 20px;" alt="" src="front/download/lookImage.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
-			 	<p align="center">校园风光</p>
-			 </td>
-	    <c:if test="${status.index%2==1 }">
-		 </tr>
-		 </c:if>
-		 </c:forEach> 
-		</tbody>
-	</table>
+		<form  action="front/picture/pictureList.uhtml" method="get">
+		 <input type="hidden" name="preClassCode" value="${preClassCode}">
+	    <input type="hidden" name="columnId" value="${formbean.columnId}">
+	    <input type="hidden" name="page" >
+	  	
+		 <table> 
+			
+			<tbody>
+			 <c:forEach  items="${pageView.records }" var="entity" varStatus="status" >
+			 <c:if test="${status.index%2==0 }">
+			 <tr>
+			 </c:if>
+				 <td style="text-align: left;padding-left: 20px;">
+					<img style="width: 300px;height: 280px;margin-left: 20px;" alt="" src="front/download/lookImage.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
+				 	<p align="center">校园风光</p>
+				 </td>
+		    <c:if test="${status.index%2==1 }">
+			 </tr>
+			 </c:if>
+			 </c:forEach> 
+			</tbody>
+		</table>
+	   <div> 
+	    <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
+		</div>
+	</form>
   	</div>
   	<p id="clearfolat"></p>
 </div>
+<script type="text/javascript">
+//查询
+function topage(page)
+{
+	var form = document.forms[0];
+	form.page.value= page;
+	form.submit();
+}
+</script>
 </body>
 </html>

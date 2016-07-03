@@ -108,6 +108,23 @@ public class QuestionManageAction {
 		
 		return "redirect:/control/question/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
 	}
+	@RequestMapping(value="delete")
+	public String delete(QuestionForm formbean,HttpServletRequest request){
+		//获取批量id
+		//获取批量state
+		//获取批量sequence
+		if( formbean.getCheckeds()!=null){
+			String[] ids = new String[formbean.getCheckeds().size()];
+			
+			for(int j=0;j < formbean.getCheckeds().size();j++){
+				int i = formbean.getCheckeds().get(j);
+				ids[j]= formbean.getIds().get(i);
+			}
+			questionService.delete(ids);
+		}
+		
+		return "redirect:/control/question/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page="+formbean.getPage();
+	}
 	
 	
 	public QuestionService getQuestionService() {

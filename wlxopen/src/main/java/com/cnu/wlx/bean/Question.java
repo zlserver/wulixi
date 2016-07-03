@@ -52,7 +52,7 @@ public class Question {
 	/**
 	 * 是否可见
 	 */
-	private StateEnum visible=StateEnum.NO;
+	private StateEnum visible=StateEnum.YES;
 	/**
 	 * 是否回答
 	 */

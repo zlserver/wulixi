@@ -15,7 +15,10 @@
     <context:component-scan base-package="com.cnu.wlx.action.control"/> 
 <!-- SpringMvc注解 ，会默认装配好一个LocalValidatorFactoryBean，
       JSR-303的校验是基于注解的,通过在处理方法的入参上标注@Valid注解即可让SpringMvc在完成数据绑定后执行数据校验工作-->
-	 <mvc:annotation-driven /> 
+	<!--  <mvc:annotation-driven />  -->
+	 
+	
+	 
 	 
 	 <!-- 校验器 -->
 	 <!-- <bean id="validator"
