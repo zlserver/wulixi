@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -41,6 +42,7 @@ import com.cnu.wlx.myenum.FileStateEnum;
 import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.myenum.StateEnum;
+import com.cnu.wlx.service.AdminService;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
 import com.cnu.wlx.service.NewsFileService;
@@ -70,6 +72,7 @@ public class NewsManageAction {
 	  * 文件服务
 	  */
 	 private FileService fileService;
+	 private AdminService adminService;
 	 /**
 	  * 新闻附件服务类
 	  */
@@ -197,7 +200,11 @@ public class NewsManageAction {
 		BaseForm.loadFile(response, fileResource);
 		return null;
 	}
-	
+	/**
+	 * 后期上传新闻附件
+	 * @param formbean
+	 * @return
+	 */
 	@RequestMapping(value="saveNewsFile")
 	public String saveNewsFile(NewsFileForm formbean){
 		
@@ -288,9 +295,11 @@ public class NewsManageAction {
 	 * @return
 	 */
 	@RequestMapping(value="list")
-	public String list(NewsForm formbean,Model model){
+	public String list(NewsForm formbean,Model model,HttpServletRequest request){
 		//校验栏目是否为null
 		if( formbean.validateList()){
+			//生成导航信息
+			BaseForm.navigationColumn(formbean, request);
 			//状态PUBLISH("publish"),WAITING("waiting"),CLOSE("close");
 			//页面类
 			PageView<News> pageView = new PageView<News>(formbean.getMaxresult(), formbean.getPage());
@@ -323,6 +332,7 @@ public class NewsManageAction {
 		}
  		return SiteUtils.getPage("control.news.list");
 	}
+	
     
 	/**
 	 * 查看新闻相关文件
@@ -480,8 +490,10 @@ public class NewsManageAction {
 					NewsStateEnum state = NewsStateEnum.valueOf(formbean.getState());
 					news.setState(state);
 					//设置作者
-					Admin ad =(Admin) request.getSession().getAttribute("admin");
-					news.setAuthor(ad.getAccount());
+
+					HttpSession session= request.getSession();
+					Admin admin =(Admin)session.getAttribute("admin");
+					news.setAuthor(admin.getAccount());
 					//throw new RuntimeException("测试");
 					newsService.save(news);
 					//保存附件
@@ -490,11 +502,17 @@ public class NewsManageAction {
 							String fileid= formbean.getFileIds().get(i);
 							//保存附件
 							NewsFile newsFile=newsFileService.find(fileid);
+							newsFile.setType(FileTypeEnum.NO_IMAGE);
 							newsFile.setNews(news);
 							//更新
 							newsFileService.update(newsFile);
 						}
 					}
+					//作者发文章
+					admin=adminService.find(admin.getAccount());
+					admin.setPublishCount(admin.getPublishCount()+1);
+					adminService.update(admin);
+					session.setAttribute("admin", admin);
 					flage = true;
 				}
 			}
@@ -668,6 +686,14 @@ public class NewsManageAction {
 	@Autowired
 	public void setNewsFileService(NewsFileService newsFileService) {
 		this.newsFileService = newsFileService;
+	}
+	public AdminService getAdminService() {
+		return adminService;
+	}
+
+	@Autowired
+	public void setAdminService(AdminService adminService) {
+		this.adminService = adminService;
 	}
 
 

@@ -59,15 +59,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body style="position: relative;">
 <div class="panel panel-default">
   <div class="panel-heading">
-  	${formbean.columnName}
-  
+  <a href="control/news/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
+  	${navigationColumnName}
+  </a>
   </div>
   <div class="panel-body">
 	<form  action="<c:url value='control/news/list.action'/>" method="post">
    <!-- 查询参数 -->
+    <input type="hidden" name="columnName" value="${navigationColumnName}" >
     <input type="hidden" name="page" value="${formbean.page}" >
-    <input type="hidden" name="editState"  value="${formbean.editState}">
-    <input type="hidden" name="columnId" value="${formbean.columnId}">
+    <input type="hidden" name="editState"  value="${navigationColumnEditState}">
+    <input type="hidden" name="columnId" value="${navigationColumnId}">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>

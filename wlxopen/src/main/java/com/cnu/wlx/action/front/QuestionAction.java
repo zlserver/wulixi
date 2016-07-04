@@ -43,7 +43,6 @@ public class QuestionAction {
 		
 		if( formbean.getQuestion()!=null){
 			questionService.save(formbean.getQuestion());
-			System.out.println("ok ");
 		}
 		
 		return "redirect:/front/question/list.uhtml?page=1&classCode="+classCode;

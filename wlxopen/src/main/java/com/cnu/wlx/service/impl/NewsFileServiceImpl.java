@@ -95,6 +95,19 @@ public class NewsFileServiceImpl implements NewsFileService {
 		
 	}
 
+	@Override
+	public List<NewsFile> getAllFile(String newsId, FileTypeEnum type) {
+		StringBuffer wherejpql=new StringBuffer("");
+		List<Object> params = new ArrayList<Object>();
+		wherejpql.append(" o.news.id = ? and o.type = ? and  o.state = ? ");
+		params.add(newsId);
+		params.add(type);
+		params.add(FileStateEnum.VALIDATE);
+		List<NewsFile> list =newsFileDao.find(wherejpql.toString(), params.toArray());
+		
+		return list;
+	}
+
 	
 	
 }

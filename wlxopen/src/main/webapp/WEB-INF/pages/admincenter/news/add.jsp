@@ -24,38 +24,13 @@ top: 110px;
 left: 265px;
 }
 </style>
- <script>
-    $(function () {
-        $("#publishTime").calendar({
-            controlId: "divDate",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
-            speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
-            complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
-            readonly: true,                                        // 日期下限，默认：NaN(不限制)
-            callback: function () {                               // 点击选择日期后的回调函数
-               $("#publishTime").val();
-            }
-        });
-    });
-    
-    /*  */
-	function _action(choice) {
-		
-    	var state = $("#state");
-    	
-		if(choice=="save")
-			state.val("WAITING");
-		if(choice=="publish")
-			state.val("PUBLISH");
-		
-		return true;
-	}
-</script>
 </head>
 <body>
 <div class="panel panel-default">
   <div class="panel-heading">
-  	${formbean.columnName}
-  
+  	<a href="control/news/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
+  	${navigationColumnName}
+  </a>
   </div>
   <div class="panel-body">
 	<form id="newsform" method="post" action="control/news/add.action" class="form-horizontal" enctype="multipart/form-data" >	
@@ -111,8 +86,8 @@ left: 265px;
 			</tr>
 			<tr>
 				<td  align="center">
-					<input type="submit"  value="保存" class="btn btn-info" onclick="return _action('save')" >
 					<input type="submit"  value="发表" class="btn btn-info" onclick=" return _action('publish')" >
+					<input type="submit"  value="保存" class="btn btn-success" onclick="return _action('save')" >
 					<a href="javascript:history.go(-1);" class="btn btn-warning">返回</a>
 				</td>
 			</tr>
@@ -124,6 +99,19 @@ left: 265px;
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
 <script>
+
+/*  */
+function _action(choice) {
+	
+	var state = $("#state");
+	
+	if(choice=="save")
+		state.val("WAITING");
+	if(choice=="publish")
+		state.val("PUBLISH");
+	
+	return true;
+}
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({

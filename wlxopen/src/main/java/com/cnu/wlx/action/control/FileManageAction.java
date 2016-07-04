@@ -62,8 +62,12 @@ public class FileManageAction {
 	  */
 	 private FileService fileService;
 	@RequestMapping(value="list")
-	public String list(DownloadFileForm formbean,Model model){
+	public String list(DownloadFileForm formbean,Model model,HttpServletRequest request){
 		String page ="control.download.list";
+		
+		//生成导航信息
+		formbean.navigationColumn(formbean, request);
+		
 		//页面类
 		PageView<DownloadFile> pageView = new PageView<DownloadFile>(formbean.getMaxresult(), formbean.getPage());
 		

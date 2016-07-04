@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.core.io.Resource;
@@ -30,6 +32,10 @@ public class BaseForm {
 	 * 每页显示最大数，默认10
 	 */
 	private int maxresult=8;
+	/**
+	 * 左边导航栏，标识第一次进入开始为右边左上角进行导航
+	 */
+	private boolean navigation=false;
 	/**
 	 * 栏目id
 	 */
@@ -63,6 +69,12 @@ public class BaseForm {
 		return checkeds;
 	}
 
+	public boolean getNavigation() {
+		return navigation;
+	}
+	public void setNavigation(boolean navigation) {
+		this.navigation = navigation;
+	}
 	public int getSuggest() {
 		return suggest;
 	}
@@ -327,5 +339,20 @@ public class BaseForm {
 		if(!str.matches(regex))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * 生成导航信息
+	 * @param formbean
+	 * @param request
+	 */
+	public static  void navigationColumn(BaseForm formbean, HttpServletRequest request) {
+		//从 左边导航条过来的进行导航
+		if( formbean.getNavigation()){
+			HttpSession session = request.getSession();
+			session.setAttribute("navigationColumnId", formbean.getColumnId());
+			session.setAttribute("navigationColumnName", formbean.getColumnName());
+			session.setAttribute("navigationColumnEditState", formbean.getEditState());
+		}
 	}
 }

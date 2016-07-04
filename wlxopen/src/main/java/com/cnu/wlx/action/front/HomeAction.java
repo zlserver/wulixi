@@ -48,7 +48,7 @@ public class HomeAction {
 	 */
 	@RequestMapping(value="home")
 	public String home(HomeForm formbean,Model model){
-		formbean=new HomeForm("xue", "xia", "tong", "job","xy_huo", "xy_feng", "biao","biaozhang");
+		formbean=new HomeForm("xue", "down", "tong", "job","xy_huo", "xy_feng", "biao","biaozhang");
 		//学工新闻
 		ColumnType xueCt = columnTypeService.findByClassCode(formbean.getXueClassCode());
 		if( xueCt!=null){
@@ -132,7 +132,7 @@ public class HomeAction {
 			}
 		}
 		//回音壁
-		PageView<Question> huiyinPV = new PageView<Question>(5, 0);
+		PageView<Question> huiyinPV = new PageView<Question>(6, 0);
 		List<Question> questions=questionService.getHomeData(huiyinPV.getFirstResult(), huiyinPV.getMaxresult());
 		if( questions!=null)
 			model.addAttribute("questions", questions);

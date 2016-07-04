@@ -46,8 +46,12 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 	public List<ColumnType> getTopColumns() {
 		// TODO Auto-generated method stub
 		String wherejpql="o.parent is NULL";
+		//结果集根据栏目的顺序升序排列
+		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("sequence", "asc");
+
 		//查询父类为null的所有栏目
-		return columnTypeDao.getAllData(wherejpql, null);
+		return columnTypeDao.getAllData(wherejpql, null,orderby);
 	}
 
 	@Override
@@ -56,6 +60,7 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 		//结果集根据栏目的顺序升序排列
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 		orderby.put("sequence", "asc");
+
 		//父类不为null
 		if( BaseForm.validateStr(parentId)){
 			String wherejpql="o.parent.id = ? ";

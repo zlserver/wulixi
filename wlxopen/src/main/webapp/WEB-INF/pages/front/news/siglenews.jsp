@@ -136,14 +136,12 @@ font: bold;
 		<div id="attach">
 		
 		
-		<c:forEach items="${news.newsFiles}" var="newsFile" varStatus="status">
+		<c:forEach items="${newsFiles}" var="newsFile" varStatus="status">
 		 <c:if test="${ status.count==1}">
 		 <p style="color: red;">附件：</p>
 		 </c:if>
-	      <c:if test="${newsFile.type.toString().equals('NO_IMAGE') }">
 	      <p><a href="front/news/download.uhtml?savePath=${newsFile.savePath}">${newsFile.originName }</a></p>
-	     </c:if>
-	     </c:forEach>
+	    </c:forEach>
 		</div>
 	 </c:if>
   	</div>

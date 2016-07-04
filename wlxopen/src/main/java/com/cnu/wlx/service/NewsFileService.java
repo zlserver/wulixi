@@ -1,6 +1,7 @@
 package com.cnu.wlx.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.base.QueryResult;
@@ -58,5 +59,14 @@ public interface NewsFileService {
 	 * @return 查询结果类
 	 */
 	public QueryResult<NewsFile> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,LinkedHashMap<String, String> orderby);
+	
+
+	/**
+	 * 查询新闻所有附件
+	 * @param newsId 新闻id
+	 * @param type 附件类型，文件和图片
+	 * @return
+	 */
+	public List<NewsFile> getAllFile(String newsId,FileTypeEnum type);
 	
 }

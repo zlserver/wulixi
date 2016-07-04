@@ -22,6 +22,7 @@ import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.ColumnTypeForm;
+import com.cnu.wlx.formbean.ColumnTypeNoTypeDesForm;
 import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.utils.SiteUtils;
@@ -84,14 +85,14 @@ public class ColumnTypeManageAction {
 		return  SiteUtils.getPage("json");
 	}
 	@RequestMapping(value="delete")
-	public String deleteColumn(ColumnTypeForm formbean){
+	public String deleteColumn(ColumnTypeNoTypeDesForm formbean){
 		
 		if( formbean.getColumn()!=null){
 			ColumnType column= columnTypeService.find(formbean.getColumn().getId());
 			if( column!=null)
 				columnTypeService.delete(column.getId());
 		}
-		return "redirect:/control/column/list.action?parentid="+formbean.getParentId()+"&page="+formbean.getPage();
+		return "redirect:/control/column/list.action?parentId="+formbean.getParentId()+"&page="+formbean.getPage();
 	}
 	/**
 	 * 添加栏目
@@ -123,9 +124,10 @@ public class ColumnTypeManageAction {
 		return "redirect:/control/column/list.action?parentId="+formbean.getParentId();
 	}
 	@RequestMapping(value="list")
-	public String list(ColumnTypeForm formbean,Model model,HttpServletRequest request){
+	public String list(ColumnTypeNoTypeDesForm formbean,Model model,HttpServletRequest request){
 		//页面类
 		PageView<ColumnType> pageView = new PageView<ColumnType>(formbean.getMaxresult(), formbean.getPage());
+		
 		QueryResult<ColumnType> queryResult= columnTypeService.getScrollData(pageView.getFirstResult(),pageView.getMaxresult(), formbean.getParentId());
 		pageView.setQueryResult(queryResult);
 		//传输到页面
@@ -149,7 +151,7 @@ public class ColumnTypeManageAction {
 	 * @param request  
 	 * @param formbean 
 	 */
-	private void generatorNavigation(HttpServletRequest request,ColumnTypeForm formbean){
+	private void generatorNavigation(HttpServletRequest request,ColumnTypeNoTypeDesForm formbean){
 		//从session中获取栏目导航信息
 		HttpSession session =request.getSession();
 		LinkedHashMap<String,String> columnNavigation= (LinkedHashMap<String, String>)session.getAttribute("columnNavigation");

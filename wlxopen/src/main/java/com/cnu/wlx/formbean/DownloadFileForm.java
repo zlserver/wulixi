@@ -2,6 +2,8 @@ package com.cnu.wlx.formbean;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cnu.wlx.bean.DownloadFile;
 
 /**
@@ -119,6 +121,15 @@ public class DownloadFileForm extends BaseForm {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	
+	/**
+	 * 导航
+	 * @param formbean
+	 * @param request
+	 */
+	public void navigationColumn(DownloadFileForm formbean,HttpServletRequest request){
+		BaseForm.navigationColumn(formbean, request);
+		if( formbean.getNavigation()){
+		 request.getSession().setAttribute("navigationType", formbean.getType());
+		}
+	}
 }

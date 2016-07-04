@@ -63,8 +63,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="panel panel-default">
   <div class="panel-heading">
-  	${formbean.columnName}
-  
+  	<a href="control/download/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}&type=${navigationType}">
+  	${navigationColumnName}
+  </a>
   </div>
   <div class="panel-body">
 	<form id="downloadform" action="<c:url value='control/download/list.action'/>" method="post">
@@ -72,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <input type="hidden" name="page" value="${formbean.page}" >
     <input type="hidden" name="editState"  value="${formbean.editState}">
     <input type="hidden" name="columnId" value="${formbean.columnId}">
-    <input type="hidden" name="type" value="${formbean.type}">
+    <input type="hidden" name="type" value="${navigationType}">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>

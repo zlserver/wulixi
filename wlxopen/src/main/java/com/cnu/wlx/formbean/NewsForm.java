@@ -102,7 +102,7 @@ public class NewsForm extends BaseForm {
 	@Override
 	public int getMaxresult() {
 		// TODO Auto-generated method stub
-		return 15;
+		return 10;
 	}
 
 	public List<String> getFileIds() {

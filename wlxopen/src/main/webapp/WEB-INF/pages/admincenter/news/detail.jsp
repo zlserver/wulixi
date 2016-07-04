@@ -31,7 +31,9 @@ padding-top: 20px;
 <body>
 <div  class="panel panel-default">
   <div class="panel-heading">
-    <a class="btn btn-info" href="javascript:history.go(-1);">返回</a>
+    <a href="control/news/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
+  	${navigationColumnName}
+  </a>
   </div>
   <div class="panel-body">
 	<div id="title">

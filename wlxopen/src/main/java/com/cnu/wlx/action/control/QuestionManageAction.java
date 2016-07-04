@@ -1,6 +1,7 @@
 package com.cnu.wlx.action.control;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cnu.wlx.bean.Admin;
 import com.cnu.wlx.bean.DownloadFile;
@@ -17,6 +19,7 @@ import com.cnu.wlx.bean.Question;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
+import com.cnu.wlx.formbean.NewsForm;
 import com.cnu.wlx.formbean.QuestionForm;
 import com.cnu.wlx.myenum.FileStateEnum;
 import com.cnu.wlx.myenum.StateEnum;
@@ -39,9 +42,46 @@ public class QuestionManageAction {
 	
 	private ColumnTypeService columnTypeService;
 	
-	@RequestMapping(value="list")
-	public String list(QuestionForm formbean,Model model){
+	
+	
+	/**
+	 * 转发到添加热点问题界面
+	 * @return
+	 */
+	@RequestMapping(value="addHotUi")
+	public String addHotUi(Model model){
+		return SiteUtils.getPage("control.question.addhot");
+	}
+	
+	
+	
+	/**
+	 * 添加热点问题
+	 * @param formbean
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "addHot",method=RequestMethod.POST)
+	public String addHot(QuestionForm formbean,Model model,HttpServletRequest request){
+		Question question = formbean.getQuestion();
+		if( question!=null){
+			Admin ad =(Admin) request.getSession().getAttribute("admin");
+			question.setVisible(StateEnum.YES);
+			question.setAccount(ad.getAccount());
+			question.setAnswerTime(new Date());
+			question.setHandle(StateEnum.YES);
+			question.setHot(StateEnum.YES);
+			questionService.save(formbean.getQuestion());
+		}
 		
+		return "redirect:/control/question/list.action?columnId="+formbean.getColumnId()+"&editState="+formbean.getEditState()+"&page=1";
+		
+	}
+	@RequestMapping(value="list")
+	public String list(QuestionForm formbean,Model model,HttpServletRequest request){
+		
+		//生成导航信息
+		BaseForm.navigationColumn(formbean, request);
 		PageView<Question> pageView = new PageView<Question>(formbean.getMaxresult(), formbean.getPage());
 		//排序：时间
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<>();

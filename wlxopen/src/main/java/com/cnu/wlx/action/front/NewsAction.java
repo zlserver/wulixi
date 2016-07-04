@@ -69,18 +69,18 @@ public class NewsAction {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="morenews")
+	/*@RequestMapping(value="morenews")
 	public String moreNews(String classCode,Model model){
 		model.addAttribute("classCode",classCode);
 		return SiteUtils.getPage("front.news.main");
-	}
+	}*/
 	/**
 	 * 新闻列表
 	 * @param classCode
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="newslist")
+	/*@RequestMapping(value="newslist")
 	public String newList(String classCode ,Model model){
 		//新闻列表
 		ColumnType ct = columnTypeService.findByClassCode(classCode);
@@ -95,21 +95,8 @@ public class NewsAction {
 			model.addAttribute("listnews",listnews);
 		}
 		return SiteUtils.getPage("front.news.newslist");
-	}
-	/**
-	 * 新闻详情
-	 * @param newsId
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value="newsdetail")
-	public String newsdetail(String newsId ,Model model){
-		
-		News news =newsService.find(newsId);
-		if( news!=null)
-		  model.addAttribute("news",news);
-		return SiteUtils.getPage("front.news.newsdetail");
-	}
+	}*/
+	
 	/**
 	 * 从首页查看单个新闻
 	 * @param classCode
@@ -117,14 +104,14 @@ public class NewsAction {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="news")
+	/*@RequestMapping(value="news")
 	public String news(String classCode,String newsId,Model model){
 		
 		model.addAttribute("classCode",classCode);
 		model.addAttribute("newsId",newsId);
 		
 		return SiteUtils.getPage("front.news.main");
-	}
+	}*/
 	
 	/**
 	 * 从首页查看单个新闻
@@ -152,7 +139,9 @@ public class NewsAction {
 		if( news!=null){
 			news.setReadCount(news.getReadCount()+1);
 			newsService.update(news);
-			
+			List<NewsFile> newsFiles =newsFileService.getAllFile(news.getId(), FileTypeEnum.NO_IMAGE);
+
+			 model.addAttribute("newsFiles",newsFiles);
 			model.addAttribute("news",news);
 		}
 

@@ -60,15 +60,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="panel panel-default">
   <div class="panel-heading">
-  	${formbean.columnName}
-  
+  	<a href="control/question/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
+  	${navigationColumnName}
+  </a>
   </div>
   <div class="panel-body">
 	<form  action="<c:url value='control/question/list.action'/>" method="post">
    <!-- 查询参数 -->
     <input type="hidden" name="page" value="${formbean.page}" >
-    <input type="hidden" name="editState"  value="${formbean.editState}">
-    <input type="hidden" name="columnId" value="${formbean.columnId}">
+    <input type="hidden" name="editState"  value="${navigationColumnEditState}">
+    <input type="hidden" name="columnId" value="${navigationColumnId}">
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
@@ -200,6 +201,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   <td colspan="6" align="center">
 		   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
 		      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+		       <a class="btn btn-primary" href="control/question/addHotUi.action">设置热点问题</a>
+			 
 		    </td>
 		    </tr>
 		  </c:if>

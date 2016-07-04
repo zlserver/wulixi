@@ -125,6 +125,12 @@ public class QuestionForm extends BaseForm {
 	public void setAnswers(List<String> answers) {
 		this.answers = answers;
 	}
+
+	@Override
+	public int getMaxresult() {
+		// TODO Auto-generated method stub
+		return 6;
+	}
 	
 	
 }

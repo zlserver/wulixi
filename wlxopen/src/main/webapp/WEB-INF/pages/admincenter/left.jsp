@@ -59,14 +59,14 @@ font-size: 20px;
 				      <li>
 				      <myc:choose>
 						  	<myc:when test="${child.readUrl}">
-						  	<a target="mainFrame" href="<c:url value='${child.readUrl }columnId=${child.id}&columnName=${child.name}'/>" >${child.name}</a>
+						  	<a target="mainFrame" href="<c:url value='${child.readUrl }columnId=${child.id}&columnName=${child.name}&navigation=true'/>"> ${child.name}</a>
 				       		</myc:when>
 						  	<myc:otherwise>
 						  	<a target="mainFrame" href="javascript:void()" >${child.name}</a>
 				     		</myc:otherwise>
 					  </myc:choose>
 					    <c:if test="${!child.manageUrl.equals('')}">
-					    &nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+					    &nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true&navigation=true'/>"><font color="red">管理</font></a>]
 			 		   </c:if>
 			 		  </li>
 					</c:if>
@@ -79,14 +79,14 @@ font-size: 20px;
 							 
 							  <myc:choose>
 							  	<myc:when test="${cchild.readUrl}">
-							  	 <a target="mainFrame" href="<c:url value='${cchild.readUrl }columnId=${cchild.id}&columnName=${cchild.name}'/>" >${cchild.name}</a>
+							  	 <a target="mainFrame" href="<c:url value='${cchild.readUrl }columnId=${cchild.id}&columnName=${cchild.name}&navigation=true'/>" >${cchild.name}</a>
 								</myc:when>
 							  	<myc:otherwise>
 							  	 <a target="mainFrame" href="javascript:void()" >${cchild.name}</a>
 								</myc:otherwise>
 							  </myc:choose>
 								  <c:if test="${!cchild.manageUrl.equals('')}">
-								    &nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
+								    &nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true&navigation=true'/>" ><font color="red">管理</font></a>]
 								  </c:if>
 							  </li>    
 							 </c:forEach>

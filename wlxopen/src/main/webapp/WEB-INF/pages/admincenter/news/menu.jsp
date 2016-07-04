@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <style type="text/css">
-ul {
+#box ul {
  list-style-type: none;
  margin:0px;
  padding:0px;
@@ -28,19 +28,19 @@ li {
  height:30px;
  text-align: center;
 }
-li a{
+ul li a{
 display:block;
 height: 25px;
 }
-a:HOVER {
+ul a:HOVER {
 	background-color: blue;
 	color: white;
 }
-a:ACTIVE {
+ul a:ACTIVE {
 	background-color: blue;
 	color: white;
 }
-a:FOCUS{
+ul a:FOCUS{
 	color: white;
 }
 .selected{
@@ -54,17 +54,25 @@ color: black;
 </style>
 <script type="text/javascript">
 $(function () {
-    $("a:first").addClass("selected");
+    $("ul a:first").addClass("selected");
 });
 
  function selected(anode){
 	 $(".ano").removeClass("selected");
 	 $(anode).addClass("selected");     
  }
+ function navigation(columnId,columnName,editState) {
+	 window.parent.location.href="control/news/list.action?columnId="+columnId+"&columnName="+columnName+"&editState="+editState;
+}
 </script>
 
 </head>
 <body>
+<div class="panel-heading">
+  <a onclick="navigation('${navigationColumnId}','${navigationColumnName}','${navigationColumnEditState}')" href="javascript:void(0)">
+  	${navigationColumnName}
+  </a>
+  </div>
 <div id="box">
 	<ul>
 	 <li ><a class="ano" href="<c:url value='control/news/editUi.action?id=${newsId}&columnId=${columnId}'/>" onclick="selected(this)">新闻详情</a> </li>

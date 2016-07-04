@@ -41,9 +41,6 @@ left: 265px;
 </head>
 <body>
 <div class="panel panel-default">
-  <div class="panel-heading">
-       编辑新闻
-  </div>
   <div class="panel-body">
 	<form id="newsform" method="post" action="control/news/edit.action" class="form-horizontal" enctype="multipart/form-data" >	
 		<input type="hidden" name="columnId" value="${formbean.columnId }">
