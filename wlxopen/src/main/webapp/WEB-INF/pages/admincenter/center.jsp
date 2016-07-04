@@ -9,12 +9,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>标题</title> 
+<title>物理系学生工作网站管理后台</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<frameset rows="10,*" cols="*" frameborder="no" border="0" framespacing="0">
+<frameset rows="0,*" cols="*" frameborder="no" border="0" framespacing="0">
 	<frame src='<c:url value='control/center/top.action'/>' name="topFrame" scrolling="no"  id="topFrame" title="topFrame" />
-	<frameset cols="200,*" frameborder="yes" border="1"  bordercolor="#F5F5F5" framespacing="1">
+	<frameset cols="210,*" frameborder="yes" border="1"  bordercolor="#F5F5F5" framespacing="1">
 		<frame src="<c:url value='control/center/left.action'/>"  frameborder="1" name="leftFrame" scrolling="yes" id="leftFrame" title="leftFrame" />
 		<frame src="<c:url value='control/center/main.action'/>" name="mainFrame" id="mainFrame" title="mainFrame"  scrolling="yes"/>
 	</frameset>

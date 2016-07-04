@@ -31,16 +31,16 @@ public class TitleTag extends SimpleTagSupport {
 				title="就业实习信息";
 			if( classCode.equals("huiying"))
 				title="回音壁";
-			if( classCode.equals("huo"))
-				title="活动剪影";
-			if( classCode.equals("feng"))
-				title="校园风光";
+			if( classCode.equals("xy"))
+				title="校园文化";
 			if( classCode.equals("biao"))
 				title="学习标兵";
 			if( classCode.equals("biaozhang"))
 				title="荣誉表彰";
 			if( classCode.equals("down"))
 				title="下载专区";
+			if( classCode.equals("huiyin"))
+				title="回音壁热点问题";
 		}
 		this.getJspContext().getOut().print(title);
 	}

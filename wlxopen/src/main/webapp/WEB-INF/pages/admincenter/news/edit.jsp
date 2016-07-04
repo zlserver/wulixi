@@ -122,8 +122,8 @@ $(document).ready(function() {
 		acceptFiles:"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" , //限制上传文件格式
 		extErrorStr:"上传文件格式不对",
 		maxFileCount:10,       //上传文件数量
-		maxFileSize:1024*1024, //大小限制1M
-		sizeErrorStr:"上传文件不能大于1M", 
+		maxFileSize:5*1024*1024, //大小限制5M
+		sizeErrorStr:"上传文件不能大于5M", 
 		dragDropStr: "<span><b>附件拖放于此</b></span>",
 		showFileCounter:false,
 		returnType:"json",  //返回数据格式为json

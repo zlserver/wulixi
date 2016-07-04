@@ -89,7 +89,7 @@ public class FileAction {
 	
 	/**
 	 * 从首页查看更多下载
-	 * @param classCode  前缀
+	 * @param classCode  前缀 ,定为down
 	 * @param model 
 	 * @return
 	 */
@@ -98,7 +98,7 @@ public class FileAction {
 		String wherejpql = " o.classCode like ? ";
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 		orderby.put("sequence", "asc");
-
+		
 		List<Object> params = new ArrayList<Object>();
 		
 		params.add(classCode+"%");
@@ -109,6 +109,8 @@ public class FileAction {
 		
 		return SiteUtils.getPage("front.download.more");
 	}
+	
+	
 	/**
 	 * 查看一个栏目的所有下载文件
 	 * @param columnId
@@ -122,7 +124,7 @@ public class FileAction {
 		String jpql = " o.classCode like ? ";
 		LinkedHashMap<String,String> order=new LinkedHashMap<String,String>();
 		order.put("sequence", "asc");
-
+		
 		List<Object> param = new ArrayList<Object>();
 		
 		param.add(classCode+"%");

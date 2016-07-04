@@ -40,4 +40,13 @@ public interface QuestionService {
 	 * @return 查询结果类
 	 */
 	public QueryResult<Question> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams);
+	/**
+	 * 根据条件查询，结果根据条件排序
+	 * @param wherejpql 查询条件  "o.email=? and o.account=?"
+	 * @param queryParams 查询条件占位符对应的参数值，
+	 * @param orderby 排序条件  Key为属性,Value为asc/desc
+	 */
+	public List<Question> getAllData(final  String wherejpql,final  Object[] queryParams,final LinkedHashMap<String,String> orderby);
+
+
 }

@@ -46,6 +46,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var form = document.forms[0];
 		form.submit();
 	}
+	/* 全选 */
+	function selectAll(checkNode){
+		var checkeds=document.getElementsByName("checkeds");
+		var state=checkNode.checked;
+		for( var i = 0;i <checkeds.length;i++)
+		  checkeds[i].checked=state;
+	}
 </script>
 </head>
 <body style="position: relative;">
@@ -66,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<thead>
 			<tr>
 			<c:if test="${formbean.editState }">
-			  <td  width="3%">选项</td>
+			  <td  width="6%">选项</td>
 			</c:if>
 			<td  width="40%">问题</td>
 			<td  width="9%">提问者</td>
@@ -189,7 +196,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 
 		   <c:if test="${formbean.editState }">
 		   <tr>
-		   <td colspan="7" align="center">
+		    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
+		   <td colspan="6" align="center">
 		   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
 		      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
 		    </td>

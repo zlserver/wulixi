@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<table class="table table-bordered table-striped"> <!-- table-bordered -->
 		<thead>
 			<tr>
-			<td  width="3%">选项</td>
+			<td  width="5%">选项</td>
 			<td  width="50%">名称</td>
 			<td  width="10%">大小</td>
 			<td  width="10%">显示状态</td>
@@ -115,7 +115,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   </td>
 			</tr> 
 		 <tr>
-			 <td colspan="6" align="center">
+		 
+		    <td >全选 &nbsp; <input type="checkbox" onclick="selectAll(this)">  </td>
+			 <td colspan="5" align="center">
 			   	 <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('saveNewsFile')"  disabled="disabled"	value="添加">
 			     <input type="button" class="btn btn-info" onclick="javascript:_action('updateFile')"	value="确认修改">
 			     <input type="button" class="btn btn-warning" onclick="javascript:_action('deleteFile')"	value="删除">
@@ -134,6 +136,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
 <script>
+/* 全选 */
+function selectAll(checkNode){
+	var checkeds=document.getElementsByName("checkeds");
+	var state=checkNode.checked;
+	for( var i = 0;i <checkeds.length;i++)
+	  checkeds[i].checked=state;
+}
 $(document).ready(function() {
 	
 	$("#fileuploader").uploadFile({
@@ -147,8 +156,8 @@ $(document).ready(function() {
 		acceptFiles:"application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" , //限制上传文件格式
 		extErrorStr:"上传文件格式不对",
 		maxFileCount:10,       //上传文件数量
-		maxFileSize:1024*1024, //大小限制1M
-		sizeErrorStr:"上传文件不能大于1M", 
+		maxFileSize:5*1024*1024, //大小限制5M
+		sizeErrorStr:"上传文件不能大于5M", 
 		dragDropStr: "<span><b>附件拖放于此</b></span>",
 		showFileCounter:false,
 		returnType:"json",  //返回数据格式为json

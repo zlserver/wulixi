@@ -69,7 +69,7 @@ $(function () {
 	<ul>
 	 <li ><a class="ano" href="<c:url value='control/news/editUi.action?id=${newsId}&columnId=${columnId}'/>" onclick="selected(this)">新闻详情</a> </li>
 	 <li ><a class="ano"  href="<c:url value='control/news/listfile.action?newsId=${newsId }&type=NO_IMAGE'/>" onclick="selected(this)" >新闻附件</a> </li>
-	 <li ><a  class="ano" href="<c:url value='control/news/listfile.action?newsId=${newsId }&type=IMAGE'/>"  onclick="selected(this)">预览图片</a> </li>
+	 <li ><a  class="ano" href="<c:url value='control/news/listfile.action?newsId=${newsId }&type=IMAGE'/>"  onclick="selected(this)">展示图片</a> </li>
 	</ul>
 </div>
 

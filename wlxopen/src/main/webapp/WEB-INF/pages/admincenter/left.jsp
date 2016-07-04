@@ -33,18 +33,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  #main{
  
  }
- 
+ .header{
+background-color: #FBFBFB;
+padding-left: 0px;
+text-align:center;
+margin: 0px;
+font-size: 20px;
+}
 </style>
 </head>
 
 <body>
-
+<div class="header">
+  物理系学生工作网站
+</div>
 <div id="main">
 	<div class="st_tree">
 		<ul>
 			<c:forEach items="${topColumns }" var="column">
 			  <li><a href="javascript:void(0)" >${column.name }</a></li>
-			  <ul show="true">
+			  <ul show="false">
 				  <c:forEach items="${column.childrens }" var="child">
 				  	<!-- 无二级子类 -->
 				  	<c:if test="${fn:length(child.childrens)<=0}">
@@ -58,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				     		</myc:otherwise>
 					  </myc:choose>
 					    <c:if test="${!child.manageUrl.equals('')}">
-					    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
+					    &nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true'/>" ><font color="red">管理</font></a>]
 			 		   </c:if>
 			 		  </li>
 					</c:if>
@@ -78,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								</myc:otherwise>
 							  </myc:choose>
 								  <c:if test="${!cchild.manageUrl.equals('')}">
-								    &nbsp;&nbsp;&nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
+								    &nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true'/>" ><font color="red">管理</font></a>]
 								  </c:if>
 							  </li>    
 							 </c:forEach>
@@ -94,8 +102,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <p >登录时间:<font ><fmt:formatDate value="${admin.loginTime}" pattern="yy-MM-dd HH:mm"/> </font></p>
 		 <p >登录次数:<font > ${admin.loginCount } </font></p>
 		 <p >发稿篇数:<font > ${admin.publishCount } </font></p>
-		  <span>
-		   <a href='<c:url value="/common/exit.uhtml"/>' class="btn btn-success" onclick="return exit()" ><font color="black">安全退出</font></a>
+		  <span><%-- <c:url value="/common/exit.uhtml"/> --%>
+		    <a href='javascript:void()' target="_self" class="btn btn-success" onclick="return exit()" ><font color="black">安全退出</font></a>
 	      </span>
 	 </div>
 </div>
@@ -117,6 +125,7 @@ function exit() {
 	{
 		return false;
 	}else{
+		window.parent.location.href="common/exit.uhtml";
 		return true;
 	}
 }

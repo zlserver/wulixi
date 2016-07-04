@@ -19,6 +19,7 @@ import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.myenum.FileTypeEnum;
+import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.FileService;
 import com.cnu.wlx.service.NewsFileService;
@@ -84,8 +85,9 @@ public class NewsAction {
 		//新闻列表
 		ColumnType ct = columnTypeService.findByClassCode(classCode);
 		if( ct!=null){
-			String wherejpql = " o.column.id = ? ";
-			Object[] queryParams= new Object[]{ct.getId()};
+			String wherejpql = " o.column.id = ?  and o.state= ? ";
+			Object[] queryParams= new Object[]{ct.getId(),NewsStateEnum.PUBLISH};
+
 			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 			orderby.put("sequence", "asc");
 			orderby.put("createTime", "desc");
@@ -137,8 +139,9 @@ public class NewsAction {
 		//新闻列表
 		ColumnType ct = columnTypeService.findByClassCode(classCode);
 		if( ct!=null){
-			String wherejpql = " o.column.id = ? ";
-			Object[] queryParams= new Object[]{ct.getId()};
+			String wherejpql = " o.column.id = ?  and o.state= ? ";
+			Object[] queryParams= new Object[]{ct.getId(),NewsStateEnum.PUBLISH};
+
 			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
 			orderby.put("sequence", "asc");
 			orderby.put("createTime", "desc");

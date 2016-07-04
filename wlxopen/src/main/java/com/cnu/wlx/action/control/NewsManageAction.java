@@ -116,8 +116,8 @@ public class NewsManageAction {
         	returnResult(response, result);
         	return null;  
         }  
-        if(upload.getSize()> 1024*1024){  
-        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "文件大小不得大于1M','');";
+        if(upload.getSize()> 5*1024*1024){  
+        	result="window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "图片大小不得大于5M','');";
         	returnResult(response, result);
             return null;  
         }  
@@ -504,7 +504,7 @@ public class NewsManageAction {
 		}
 		if( flage )//添加成功
 		{
-			return  "redirect:/control/news/list.action?columnId="+formbean.getColumnId();
+			return  "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true";
 		}else{//添加失败
 			model.addAttribute("formbean", formbean);
 			return SiteUtils.getPage("control.news.addUi");

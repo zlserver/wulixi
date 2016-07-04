@@ -47,6 +47,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		form.page.value=1;
 		form.submit();
 	}
+	/* 全选 */
+	function selectAll(checkNode){
+		var checkeds=document.getElementsByName("checkeds");
+		var state=checkNode.checked;
+		for( var i = 0;i <checkeds.length;i++)
+		  checkeds[i].checked=state;
+	}
 </script>
 </head>
 <body style="position: relative;">
@@ -65,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<thead>
 			<tr>
 			<c:if test="${formbean.editState }">
-			  <td  width="3%">选项</td>
+			  <td  width="6%">选项</td>
 			</c:if>
 			<td  width="50%">新闻名称</td>
 			<td  width="8%">作者</td>
@@ -79,12 +86,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td  width="10%">
 				<select class="form-control" name="state" onchange="query()">
 				  <option value=" " ${formbean.state.equals(" ")?'selected':'' }>状态</option>
-				  <option value="PUBLISH" ${formbean.state.equals("PUBLISH")?'selected':'' }>已发表</option>
+				  <option value="PUBLISH" ${formbean.state.equals("PUBLISH")?'selected':'' }>发表</option>
 				  <option value="WAITING"  ${formbean.state.equals("WAITING")?'selected':'' }>待发表</option>
 				  <option value="CLOSE" ${formbean.state.equals("CLOSE")?'selected':'' }>已屏蔽</option>
 				</select>
 			</td>
-			<td  width="8%">顺序</td>
+			<td  width="6%">顺序</td>
 			<td  width="6%">阅读量</td>
 			</tr>
 		</thead>
@@ -142,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td> 
 			   <c:if test="${!formbean.editState }">
 			   <span >
-			    <font color="blue">${entity.state.toString().equals("PUBLISH")?"已发表":"" }</font>
+			    <font color="blue">${entity.state.toString().equals("PUBLISH")?"发表":"" }</font>
 			    <font color="black">${entity.state.toString().equals("WAITING")?"待发表":"" }</font>
 			    <font color="red">${entity.state.toString().equals("CLOSE")?"已屏蔽":"" }</font>
 			   </span>
@@ -151,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			   <c:if test="${formbean.editState }">
 			    <select  class="form-control input-sm"  name="states" >
-					  <option  value="PUBLISH"  ${entity.state.toString().equals("PUBLISH")?"selected":"" } >已发表</option>
+					  <option  value="PUBLISH"  ${entity.state.toString().equals("PUBLISH")?"selected":"" } >发表</option>
 					  <option  value="WAITING" ${entity.state.toString().equals("WAITING")?"selected":"" }>待发表</option>
 					  <option  value="CLOSE" ${entity.state.toString().equals("CLOSE")?"selected":"" }>已屏蔽</option>
 			     </select> 
@@ -170,15 +177,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </td>
 		  </c:forEach>
 		 <tr>
-			 <td colspan="6" align="center">
-			  <c:if test="${!formbean.editState }">
+			 <%--  <c:if test="${!formbean.editState }">
+			  <td colspan="6" align="center">
 			    <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
-			  </c:if>
+			  </td>
+			  </c:if> --%>
 			   <c:if test="${formbean.editState }">
+			   
+			    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
+			    <td colspan="5" align="center">
+			   	  <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
+			 
 			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
 			      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+			     </td>
 			   </c:if>
-			 </td>
+			 
 		</tr>
 		</tbody>
 	</table>
