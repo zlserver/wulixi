@@ -27,6 +27,29 @@ public class LoginManageAction {
 	private AdminService adminService;
 
 	/**
+	 * 初始化，加入两个管理员
+	 */
+	@RequestMapping(value="systeminit")
+	public String init(){
+		Admin admin= new Admin();
+		admin.setAccount("admin");
+		admin.setPassword("Admin68902660");
+		admin.setRole(1);
+		if(adminService.find(admin.getAccount())==null){
+			adminService.add(admin);
+		}
+		
+		Admin comm= new Admin();
+		comm.setAccount("student");
+		comm.setPassword("wlx6890");
+		comm.setRole(2);
+		if(adminService.find(comm.getAccount())==null){
+			adminService.add(comm);
+		}
+		return "redirect:/"+SiteUtils.getPage("control.admin.login")+".jsp";
+	}
+	
+	/**
 	 * 登录
 	 * @param formbean
 	 * @param request

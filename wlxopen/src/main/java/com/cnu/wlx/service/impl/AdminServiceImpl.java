@@ -32,17 +32,23 @@ public class AdminServiceImpl implements AdminService{
 		}
 			return null;
 	}
-	public boolean add(AdminForm formbean) {
-		String md5ps = WebUtils.MD5Encode(formbean.getAdmin().getPassword().trim());
-		Admin ad = new Admin(formbean.getAdmin().getAccount().trim(), md5ps);
-		try {
-			adminDao.save(ad);
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e.getMessage());
-			return false;
+	public boolean add(Admin admin ) {
+		if( admin !=null){
+			String pas = WebUtils.MD5Encode(admin.getPassword());
+			admin.setPassword(pas);
+			try {
+				adminDao.save(admin);
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e.getMessage());
+				return false;
+			}
+			return true;
+		}else{
+			throw new RuntimeException("保存管理员不能为null");
 		}
-		return true;
+			
+		
 	}
 	public AdminDao getAdminDao() {
 		return adminDao;

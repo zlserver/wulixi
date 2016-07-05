@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>内容</title>
+<title>重新登录</title>
 <script type="text/javascript">
 function choice() {
 	window.parent.location.href="login.jsp";

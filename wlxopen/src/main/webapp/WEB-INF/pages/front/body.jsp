@@ -190,11 +190,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     <tr>
                                         <td class="XYWH_img"><img src="images/test11.jpg" alt="活动掠影" /><br />
                                             <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">活动掠影</a></td>
-                                        <td style="padding-left:4px; padding-top:4px;">
-                                         <c:forEach items="${huoFiles }" var="huoFile">
+                                        <td style="padding-left:4px;padding-top:0px;margin-top: 0px;height: 65px">
+                                         
+                                         <c:forEach items="${huoFiles }" var="huoFile" varStatus="status">
+                                         
                                            &nbsp; &nbsp; <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">
-                                           <img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" />
+                                           <img style="width:70px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" />
                                            </a>
+                                            
                                          </c:forEach>
                                         </td>
                                     </tr>
@@ -204,11 +207,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <tr>
                                             <td class="XYWH_img"><img src="images/test12.jpg" alt="校园风光" /><br>
                                             <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">校园风光</a></td>
-                                            <td  style="padding-left:4px; padding-top:4px;">
-                                                <c:forEach items="${fengFiles }" var="fengFile">
-		                                            &nbsp; &nbsp; 
-		                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">
-		                                            <img style="width:60px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" />
+                                            <td  style="padding-left:4px;padding-top:0px;margin-top: 0px;height: 65px">
+                                              
+                                                <c:forEach items="${fengFiles }" var="fengFile" varStatus="status">
+                                                 <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">
+		                                            <img style="width:70px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" />
 		                                            </a>
 		                                         </c:forEach>
                                             </td>

@@ -42,6 +42,10 @@ public class Admin {
 	 */
 	private Date createTime=new Date();
 	/**
+	 * 角色：1.超级管理员，2：普通管理员
+	 */
+	private int role=2;
+	/**
 	 * 登录时间
 	 */
 	private Date loginTime ;
@@ -112,6 +116,14 @@ public class Admin {
 		this.loginTime = loginTime;
 	}
 	
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 	/**
 	 * 登录次数加1
 	 */

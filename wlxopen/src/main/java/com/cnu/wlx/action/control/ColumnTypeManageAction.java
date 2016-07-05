@@ -53,23 +53,29 @@ public class ColumnTypeManageAction {
 			ColumnType column=columnTypeService.find(formbean.getColumn().getId());
 			if( column!=null){
 				try {
-					
-					column.setClassCode(formbean.getColumn().getClassCode());
-					column.setName(formbean.getColumn().getName());
-					column.setGroupType(formbean.getColumn().getGroupType());
-					column.setManageUrl(formbean.getColumn().getManageUrl());
-					column.setReadUrl(formbean.getColumn().getReadUrl());
-					column.setSequence(formbean.getColumn().getSequence());
-					//2.设置分类说明
-					column.setTypeDes(ColumnTypeDesEnum.values()[formbean.getTypeDes()]);
-					/*//设置父类
-					ColumnType parent =columnTypeService.find(formbean.getParentId());
-					if( parent !=null)
-					  column.setParent(parent);
-					*/
-					columnTypeService.updateColumnType(column);
-					//成功
-					flage = true;
+					String classCode = column.getClassCode();
+						//非系统栏目才可以修改
+						if(!classCode.equalsIgnoreCase("system")){
+							column.setClassCode(formbean.getColumn().getClassCode());
+							column.setName(formbean.getColumn().getName());
+							column.setGroupType(formbean.getColumn().getGroupType());
+							column.setManageUrl(formbean.getColumn().getManageUrl());
+							column.setReadUrl(formbean.getColumn().getReadUrl());
+							column.setSequence(formbean.getColumn().getSequence());
+							//2.设置分类说明
+							column.setTypeDes(ColumnTypeDesEnum.values()[formbean.getTypeDes()]);
+							/*//设置父类
+							ColumnType parent =columnTypeService.find(formbean.getParentId());
+							if( parent !=null)
+							  column.setParent(parent);
+							*/
+							columnTypeService.updateColumnType(column);
+							//成功
+							flage = true;
+						}else{
+							formbean.getResult().put("error", "不可修改");
+						}
+						
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

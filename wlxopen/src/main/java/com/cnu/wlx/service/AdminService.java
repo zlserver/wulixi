@@ -15,10 +15,10 @@ public interface AdminService {
 	
 	/**
 	 * 添加管理员,添加成功返回true,管理员已存在返回false
-	 * @param formbean
+	 * @param admin
 	 * @return
 	 */
-	public boolean add(AdminForm formbean);
+	public boolean add(Admin admin);
 	/**
 	 * 更加账号查找用户.
 	 * @param account

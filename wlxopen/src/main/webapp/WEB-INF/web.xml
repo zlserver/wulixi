@@ -12,6 +12,9 @@
     <param-value>classpath:wlx-service.xml</param-value>
   </context-param>
   
+  
+   <!-- context-param -> listener -> filter -> servlet  -->
+    
   <!-- 编码过滤器 -->
   <filter>
         <filter-name>encodeFilter</filter-name>
@@ -69,4 +72,23 @@
   </servlet-mapping>
   
   
+	<!-- 配置访问页面资源不存在异常 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errors/404.jsp</location>
+	</error-page>
+
+
+	<!-- 未知异常 -->
+	<error-page>
+		<exception-type>Exception</exception-type>
+		<location>/errors/UnKnowException.jsp</location>
+	</error-page>
+
+	<!-- 服务器端出现异常错误 -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/errors/500.jsp</location>
+	</error-page>
+    
 </web-app>

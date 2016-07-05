@@ -91,9 +91,12 @@ public class ColumnTypeForm extends BaseForm {
 		if( column==null)
 			this.getResult().put("error", "请填写信息!");
 		else{
-			if(!BaseForm.validateStr(column.getClassCode())|| !BaseForm.validateStr(column.getName())) {
+			String classCode =column.getClassCode().trim();
+			if(!BaseForm.validateStr(classCode)|| !BaseForm.validateStr(column.getName())) {
+				
 				this.getResult().put("error", "名称和分类码必须填写!");
 			}
+			
 		}
 		if( this.getResult().isEmpty())
 			return true;

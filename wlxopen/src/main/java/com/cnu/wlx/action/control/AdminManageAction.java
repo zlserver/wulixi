@@ -56,7 +56,7 @@ public class AdminManageAction {
 			return "index";
 		}
 		// 3.添加
-		if (adminService.add(formbean)) { // 成功
+		if (adminService.add(formbean.getAdmin())) { // 成功
 			return "index";
 		} else { // 失败
 			model.addAttribute("formbean", formbean);

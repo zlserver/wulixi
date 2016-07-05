@@ -1,5 +1,8 @@
 本项目采用技术SpringMvc3.0+Hibernate3.0+缓存Ehcache+数据源c3p0
 
+初始化项目：用于添加两个管理员账号
+http://localhost:8080/wlxopen/common/systeminit.uhtml
+
 该系统有三种类型文章和一个回音壁。
 一是新闻类型文章：有标题有内容，有附件，有预览图片。适合发布新闻通知
 二是图片类型文章：有图片标题，图片。适合通过图片展示新闻。

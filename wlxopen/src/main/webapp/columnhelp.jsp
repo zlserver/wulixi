@@ -28,6 +28,7 @@ text-align: center;
 <tr><td class="title">栏目名称</td><td class="title">分类码命名</td><td class="title">浏览链接</td><td class="title">管理链接</td></tr>
 </thead>
 <tbody>
+
 <tr>
 <td class="title">新闻类栏目</td><td>*</td>
 <td>control/news/list.action?</td><td>control/news/list.action?</td>
@@ -114,5 +115,18 @@ text-align: center;
 </tbody>
 </table>
 
+<table border="1px">
+<thead>
+<tr><td colspan="3"><h4>一级栏目的分类码命名规则，*代表任意名称，不要超过15个字符。</h4></td></tr>
+<tr><td class="title">栏目名称</td><td class="title">分类码命名</td><td class="title">说明</td></tr>
+</thead>
+<tbody>
+
+<tr>
+<td class="title">系统栏目</td><td>system</td>
+<td>不可修改</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>智能自适应问答系统</title>
+<title>物理系学生工作网站</title>
 </head>
 <body>
 亲-_-, 500服务器端出现异常，我们会尽快维护！

@@ -51,7 +51,11 @@ font-size: 20px;
 	<div class="st_tree">
 		<ul>
 			<c:forEach items="${topColumns }" var="column">
-			  <li><a href="javascript:void(0)" >${column.name }</a></li>
+				<%--非系统栏目直接显示，系统栏目有权限才可以显示 --%>
+			 <c:choose>
+			 
+			  <c:when test="${!column.classCode.equals('system')}">
+			  	 <li><a href="javascript:void(0)" >${column.name }</a></li>
 			  <ul show="false">
 				  <c:forEach items="${column.childrens }" var="child">
 				  	<!-- 无二级子类 -->
@@ -94,6 +98,57 @@ font-size: 20px;
 					</c:if> 
 				  </c:forEach>
 			  </ul>
+			  </c:when>
+			  <c:otherwise>
+				  <%--超级管理员才显示 --%>  
+			     <c:if test="${admin.role==1}">
+				       <li><a href="javascript:void(0)" >${column.name }</a></li>
+				    <ul show="false">
+					  <c:forEach items="${column.childrens }" var="child">
+					  	<!-- 无二级子类 -->
+					  	<c:if test="${fn:length(child.childrens)<=0}">
+					      <li>
+					      <myc:choose>
+							  	<myc:when test="${child.readUrl}">
+							  	<a target="mainFrame" href="<c:url value='${child.readUrl }columnId=${child.id}&columnName=${child.name}&navigation=true'/>"> ${child.name}</a>
+					       		</myc:when>
+							  	<myc:otherwise>
+							  	<a target="mainFrame" href="javascript:void()" >${child.name}</a>
+					     		</myc:otherwise>
+						  </myc:choose>
+						    <c:if test="${!child.manageUrl.equals('')}">
+						    &nbsp;[<a target="mainFrame" href="<c:url value='${child.manageUrl}columnId=${child.id}&columnName=${child.name}&editState=true&navigation=true'/>"><font color="red">管理</font></a>]
+				 		   </c:if>
+				 		  </li>
+						</c:if>
+						<!-- 有二级子类 -->
+						 <c:if test="${fn:length(child.childrens)>0}">
+						   <li><a href="javascript:void(0)" >${child.name }</a></li>
+							<ul>
+								<c:forEach  items="${child.childrens }" var="cchild">
+								 <li>
+								 
+								  <myc:choose>
+								  	<myc:when test="${cchild.readUrl}">
+								  	 <a target="mainFrame" href="<c:url value='${cchild.readUrl }columnId=${cchild.id}&columnName=${cchild.name}&navigation=true'/>" >${cchild.name}</a>
+									</myc:when>
+								  	<myc:otherwise>
+								  	 <a target="mainFrame" href="javascript:void()" >${cchild.name}</a>
+									</myc:otherwise>
+								  </myc:choose>
+									  <c:if test="${!cchild.manageUrl.equals('')}">
+									    &nbsp;[<a target="mainFrame" href="<c:url value='${cchild.manageUrl}columnId=${cchild.id}&columnName=${cchild.name}&editState=true&navigation=true'/>" ><font color="red">管理</font></a>]
+									  </c:if>
+								  </li>    
+								 </c:forEach>
+					        </ul> 
+						</c:if> 
+					  </c:forEach>
+				  </ul>
+			     </c:if>
+			  </c:otherwise>
+			 </c:choose>
+			
 			</c:forEach>
 		</ul>
 	</div>

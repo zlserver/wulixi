@@ -91,6 +91,7 @@
 			 </props>
 		</property>
 	</bean>
+	
 	<!--
     让多个方法在同一个事务中。
     1.HibernateTemplate中的模板方法确保Hibernate会话正常打开和关闭，并且还能使原生的Hibernate事务参与到Spring声明的事务管理中，

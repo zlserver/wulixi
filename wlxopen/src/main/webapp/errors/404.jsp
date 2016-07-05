@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>智能自适应问答系统</title>
+<title>物理系学生工作网站</title>
 </head>
 <body>
 亲-_-,404你访问的页面资源不存在
