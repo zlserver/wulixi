@@ -70,7 +70,7 @@ public class LoginManageAction {
 				adminService.update(ad);
 				//5.进入管理中心。
 				request.getSession().setAttribute("admin", ad);
-				log.info(ac+"登录");
+				//log.info(ac+"登录");
 				return "redirect:/"+"control/center/controlCenter.action";
 				//return SiteUtils.getSite("admin.controlcenter");
 			}

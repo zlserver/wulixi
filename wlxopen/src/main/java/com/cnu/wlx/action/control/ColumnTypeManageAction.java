@@ -138,7 +138,7 @@ public class ColumnTypeManageAction {
 	}
 	@RequestMapping(value="list")
 	public String list(ColumnTypeNoTypeDesForm formbean,Model model,HttpServletRequest request){
-		log.info("查询栏目");
+		//log.info("查询栏目");
 		//页面类
 		PageView<ColumnType> pageView = new PageView<ColumnType>(formbean.getMaxresult(), formbean.getPage());
 		

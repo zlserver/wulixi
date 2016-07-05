@@ -34,14 +34,10 @@ public class EncodeFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		response.setCharacterEncoding(charset);
 		HttpServletRequest req = (HttpServletRequest) request;
-		//System.out.println(req.getMethod()+"请求");
-		log.info(req.getMethod()+"请求");
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			if(!(req instanceof CharSetRequest)) {
 				req = new CharSetRequest(req, charset);//处理get请求编码
-				
 			}
 		} else {
 			req.setCharacterEncoding(charset);//处理post请求编码
