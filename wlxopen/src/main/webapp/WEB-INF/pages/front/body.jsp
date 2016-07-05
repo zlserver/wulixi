@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                              </font>
                                             </a>
                                             </td>
-                                            <td width="30">
+                                            <td width="50px">
                                             <fmt:formatDate value="${xueNew.createTime }" pattern="yy-MM-dd" />
                                             </td>
                                         </tr>
@@ -276,7 +276,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <ul>
                  <c:forEach items="${xiaFiles }" var="xiaFile">
                          <li style="color:#FF6600;">
-                          <a  title="${xiaFile.originName}" href="front/download/down.uhtml?savePath=${xiaFile.savePath }&originName=${xiaFile.originName}" style="">
+                          <a  title="${xiaFile.originName}" href="front/download/down.uhtml?savePath=${xiaFile.savePath }" style="">
                                <font color="${xiaFile.titleColor.toString()}">
                                 <myc:strout value="${xiaFile.originName}" length="16" suffix="..." /> 
                                 </font>

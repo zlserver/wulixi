@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </c:if>
 			 <td>
 			     <span >
-				     <a href="<c:url value='control/download/down.action?savePath=${entity.savePath }&originName=${entity.originName}'/>">
+				     <a href="<c:url value='control/download/down.action?savePath=${entity.savePath }'/>">
 				       <font color="${entity.titleColor.toString()}">${entity.originName}</font> 
 				      </a>
 				   &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>

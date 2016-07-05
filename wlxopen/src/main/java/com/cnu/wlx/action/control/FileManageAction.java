@@ -124,12 +124,15 @@ public class FileManageAction {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="down")
-	public String download(String savePath,String originName,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+	public String download(String savePath,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+		//
+		DownloadFile downFile= downloadFileService.findByPath(savePath);
+		String originName = downFile.getOriginName();
+		
 		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
 		String fileSystemRoot = SiteUtils.getFileSystemDir();
 		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
 		String fileSavePath = fileSystemRoot+savePath;
-		originName = URLEncoder.encode(originName, "utf-8");
 		//2.1获取文件资源
 		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
 		//查看图片
@@ -271,7 +274,8 @@ public class FileManageAction {
 						String fileName = iterator.next();
 						MultipartFile multipartFile = request.getFile(fileName);
 						String originName=multipartFile.getOriginalFilename();
-						
+						//替换掉原文件名称中的中文空格
+						originName=originName.replace(" ","");
 						//保存文件相对路径:download/
 						String relativedir= SiteUtils.getRelativeSavePath("download.file");
 						//保存文件名称

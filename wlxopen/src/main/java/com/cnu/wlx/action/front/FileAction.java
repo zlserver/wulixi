@@ -69,9 +69,10 @@ public class FileAction {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value="down")
-	public String download(String savePath,String originName,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
+	public String download(String savePath,HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException{
 		//下载次数加1
 		DownloadFile downFile= downloadFileService.findByPath(savePath);
+		String originName = downFile.getOriginName();
 		downFile.setDownloadCount(downFile.getDownloadCount()+1);
 		downloadFileService.update(downFile);
 		
@@ -79,7 +80,7 @@ public class FileAction {
 		String fileSystemRoot = SiteUtils.getFileSystemDir();
 		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
 		String fileSavePath = fileSystemRoot+savePath;
-		originName = URLEncoder.encode(originName, "utf-8");
+		//originName = URLEncoder.encode(originName, "utf-8");
 		//2.1获取文件资源
 		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
 		//查看图片

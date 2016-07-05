@@ -17,46 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
 <link href="css/uploadfile.css" rel="stylesheet">
-<script type="text/javascript">
-	//查询
-	function topage(page){
-   		var form = document.forms[0];
-		form.page.value= page;
-		form.submit();
-	}
-	
-	function _action(method) {
-		//如果未选中则不操作
-		var checkeds=document.getElementsByName("checkeds");
-		var flage = false;
-		for( var i = 0;i <checkeds.length;i++)
-			if(checkeds[i].checked ){
-				flage = true;
-				break;
-			}
-		if( flage){
-			var form = document.forms[0];
-			form.action="control/download/"+method+".action";
-			          
-			form.submit();
-	    }
-	}
 
-	/**
-	 将上传的附件保存
-	*/
-	function saveFile(method){
-		var form = document.forms[0];
-		form.action="control/download/"+method+".action";
-		          
-		form.submit();
-	}
-	function query() {
-		var form = document.forms[0];
-		form.page.value=1;
-		form.submit();
-	}
-</script>
 </head>
 <body style="position: relative;">
 
@@ -67,7 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	${navigationColumnName}
   </a>
   </div>
-  <div class="panel-body">
+  <div class="panel-body" >
+  
 	<form id="downloadform" action="<c:url value='control/download/list.action'/>" method="post">
    <!-- 查询参数 -->
     <input type="hidden" name="page" value="${formbean.page}" >
@@ -101,8 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 		</thead>
 		<tbody>
-			 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
-				 
+		 <c:forEach items="${pageView.records }" var="entity" varStatus="status">
 			<tr>
 			<c:if test="${formbean.editState }">
 				 <td> 
@@ -112,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 </c:if>
 			 <td>
 			     <span >
-			       <img style="width:100px;height: 80px;" class="img-rounded" alt="" src="<c:url value='control/download/lookImage.action?savePath=${entity.savePath}'/>">
+			       <img style="width:50px;height: 30px;" class="img-rounded hitimg" alt="" src="<c:url value='control/download/lookImage.action?savePath=${entity.savePath}'/>">
 				 
 				  &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
 				</span>
@@ -180,25 +141,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</tbody>
 	</table>
 	</form>
+	
   </div>
    <div class="panel-footer">
      <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
    </div>
-  
 </div>
+	<div  id="windiv">
+		<img id="winimg" class="img-rounded"  alt="" src="" >
+	</div>
+</body>
 
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
 <script>
-/* 全选 */
-function selectAll(checkNode){
-	var checkeds=document.getElementsByName("checkeds");
-	var state=checkNode.checked;
-	for( var i = 0;i <checkeds.length;i++)
-	  checkeds[i].checked=state;
-}
+
 $(document).ready(function() {
-	
+	//获取img标签  
+    var imgs = $(".hitimg");
+	var winimg = $("#winimg").width("350px").height("300px");
+	//设置div的样式  
+    var windiv = $("#windiv").css("border"," 1px solid #F9F9F9")  
+    .width("350px").height("300px").css("position","absolute").css("z-index","99")  
+    .css("background","white");  
+  //隐藏  
+    windiv.hide(); 
+  //注册鼠标移动上上面事件  
+    imgs.mouseover(function(event) {  
+    	windiv.show();  
+    	var imgNode = $(this); 
+    	var strattr= imgNode.attr("src");
+    	winimg.attr("src",strattr);
+        //出现在鼠标右下方  
+        //解决不同浏览器创建事件对象的差异  
+        var myEvent = event || window.event;  
+        windiv.css("left",myEvent.clientX+15+"px").css("top",myEvent.clientY+5+"px");  
+    });  
+    //注册鼠标离开时事件  
+    imgs.mouseout(function() {  
+    	windiv.hide();  
+    });  
+    
+    
 	$("#fileuploader").uploadFile({
 		url:"control/download/ajaxuploadFile.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
@@ -245,6 +229,50 @@ $(document).ready(function() {
 		}
 	});
 });
+/* 全选 */
+function selectAll(checkNode){
+	var checkeds=document.getElementsByName("checkeds");
+	var state=checkNode.checked;
+	for( var i = 0;i <checkeds.length;i++)
+	  checkeds[i].checked=state;
+}
+//查询
+function topage(page){
+		var form = document.forms[0];
+	form.page.value= page;
+	form.submit();
+}
+
+function _action(method) {
+	//如果未选中则不操作
+	var checkeds=document.getElementsByName("checkeds");
+	var flage = false;
+	for( var i = 0;i <checkeds.length;i++)
+		if(checkeds[i].checked ){
+			flage = true;
+			break;
+		}
+	if( flage){
+		var form = document.forms[0];
+		form.action="control/download/"+method+".action";
+		          
+		form.submit();
+    }
+}
+
+/**
+ 将上传的附件保存
+*/
+function saveFile(method){
+	var form = document.forms[0];
+	form.action="control/download/"+method+".action";
+	          
+	form.submit();
+}
+function query() {
+	var form = document.forms[0];
+	form.page.value=1;
+	form.submit();
+}
 </script>
-</body>
 </html>

@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         #menu { font:12px verdana, arial, sans-serif; }
         #menu, #menu li {list-style:none;padding:0;margin:0;}
         #menu li { float:left; display: block;width: 107px;}
-        #menu li a {display:block; padding:8px 29px;background:#DFF8DF;color:#31802F;text-decoration:none;border-right:1px solid #000;}
+        #menu li a {display:block; padding:8px 10px;background:#DFF8DF;color:#31802F;text-decoration:none;border-right:1px solid #000;}
         #menu li a:hover {background:#FEFEFE;color:#31802F;text-decoration:none;border-right:1px solid #000;}
         #menu li a.last {border-right:0; }
         #header, #container, #footer, #copyright{

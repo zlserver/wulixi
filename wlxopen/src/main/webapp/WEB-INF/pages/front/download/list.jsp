@@ -144,7 +144,7 @@ td{
 			<c:forEach  items="${pageView.records }" var="entity" >
 			 <tr>
 				 <td style="text-align: left;">
-					 <a title="${entity.originName }" href="front/download/down.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
+					 <a title="${entity.originName }" href="front/download/down.uhtml?savePath=${entity.savePath }">
 					<myc:strout value="${entity.originName }" length="35" suffix="..." /> 
 					 </a> 
 				 </td>

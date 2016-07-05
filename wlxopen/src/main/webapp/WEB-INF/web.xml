@@ -28,11 +28,12 @@
       <filter-name>encodeFilter</filter-name>
       <url-pattern>/control/*</url-pattern>
  </filter-mapping>  
- 
+  <!-- 前端的提问也需要过滤 -->
   <filter-mapping>
     <filter-name>encodeFilter</filter-name>
     <url-pattern>/front/question/*</url-pattern>
   </filter-mapping>
+
  <!-- 管理员过滤器 -->
    <filter>
     <display-name>AdminFilter</display-name>

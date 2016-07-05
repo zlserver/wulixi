@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -249,18 +250,20 @@ public class BaseForm {
 	private static void loadFile(HttpServletResponse response,Resource fileResource,String originName,boolean isLoad){
 		
 		response.setCharacterEncoding("utf-8");
-       // 
-        if( isLoad){
-        	if( BaseForm.validateStr(originName) ){
-        		response.setContentType("multipart/form-data");
-        		response.setHeader("Content-Disposition", "attachment;fileName="+ originName);
-        	}else{
-        		response.setContentType("multipart/form-data");
-        		response.setHeader("Content-Disposition", "attachment;fileName="+ fileResource.getFilename());
-        	}
-        }
-		//3.建立文件
+    
 		try {
+			// 
+	        if( isLoad){
+	        	if( BaseForm.validateStr(originName) ){
+	        		
+	        		response.setContentType("multipart/form-data");
+	        		response.setHeader("Content-Disposition", "attachment;fileName="+ new String(originName.getBytes("GBK"), "ISO-8859-1"));
+	        	}else{
+	        		response.setContentType("multipart/form-data");
+	        		response.setHeader("Content-Disposition", "attachment;fileName="+ fileResource.getFilename());
+	        	}
+	        }
+			//3.建立文件
 			//4.建立字节读取流
 			InputStream is = fileResource.getInputStream();
 			//5.建立缓冲流
