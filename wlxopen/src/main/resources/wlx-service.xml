@@ -32,7 +32,7 @@
 	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >  
 	    <property name="defaultEncoding" value="UTF-8"/> <!-- 默认编码 (ISO-8859-1)   -->
 	    <property name="maxInMemorySize" value="10240"/> <!-- 最大内存大小 (10240)   -->
-	    <!-- <property name="uploadTempDir" value="/temp"/> -->   <!-- 上传文件的临时路径,上传完成后，临时目录中的临时文件会被自动清除   -->
+	    <property name="uploadTempDir" value="/temp"/>   <!-- 上传文件的临时路径,上传完成后，临时目录中的临时文件会被自动清除   -->
 	     <property name="maxUploadSize" value="5242880"/><!--  最大文件大小5M,-1为无限止(-1)   -->
 	</bean> 
      <!-- 权限过滤器 -->
@@ -79,15 +79,15 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop><!-- 显示sql语句 -->
-				<prop key="hibernate.format_sql">true</prop><!-- 规范显示sql语句 -->
+				<prop key="hibernate.show_sql">false</prop><!-- 显示sql语句 -->
+				<prop key="hibernate.format_sql">false</prop><!-- 规范显示sql语句 -->
 	      		<prop key="hibernate.hbm2ddl.auto">update</prop>   <!-- 每次都更新表 -->
 				<!-- 配置二级缓存 -->
-				 <prop key="hibernate.cache.use_second_level_cache">true</prop> 
+				 <prop key="hibernate.cache.use_second_level_cache">false</prop> 
 				<!-- 由于查询的缓存命中率很低，所以我们关掉查询时的二级缓存 -->
 				<prop key="hibernate.cache.use_query_cache">false</prop>
 				<!-- 设置二级缓存的Provider类 Ehcache -->
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>  
+				<!-- <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>   -->
 			 </props>
 		</property>
 	</bean>

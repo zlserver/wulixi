@@ -28,7 +28,7 @@ import com.cnu.wlx.myenum.NewsStateEnum;
 
 @Entity
 @Table(name="t_news")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
+/*@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)*/
 @GenericGenerator(name="uuidGenderator",strategy="uuid")
 public class News implements Serializable{
 	

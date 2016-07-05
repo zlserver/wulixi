@@ -2,7 +2,7 @@
 <Configuration status="off" monitorInterval="1800">
 
     <properties>
-        <property name="LOG_HOME">logs</property>
+        <property name="LOG_HOME">D:/wlx/wlxlogs</property>
         <property name="FILE_NAME">mylog</property>
     </properties>
 
@@ -22,10 +22,10 @@
             <DefaultRolloverStrategy max="20" />
         </RollingRandomAccessFile>
     </Appenders>
-    
+
     <Loggers>
         <Logger name="com.cnu" level="info"
-            additivity="true">
+            additivity="false">
             <AppenderRef ref="running-log" />
         </Logger>
         <Root level="info">

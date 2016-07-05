@@ -18,7 +18,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 * 类说明
 */
 @Entity
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @Table(name="t_admin")
 public class Admin {
 	/**

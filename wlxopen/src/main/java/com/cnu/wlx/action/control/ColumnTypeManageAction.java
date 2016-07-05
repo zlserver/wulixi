@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import com.cnu.wlx.formbean.ColumnTypeForm;
 import com.cnu.wlx.formbean.ColumnTypeNoTypeDesForm;
 import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 import com.cnu.wlx.service.ColumnTypeService;
+import com.cnu.wlx.service.impl.AdminServiceImpl;
 import com.cnu.wlx.utils.SiteUtils;
 
 import net.sf.json.JSONObject;
@@ -38,6 +41,10 @@ import net.sf.json.JSONObject;
 @RequestMapping(value="/control/column/*")
 public class ColumnTypeManageAction {
 
+	/**
+	 * 日志输出
+	 */
+	private Logger log = LogManager.getLogger(ColumnTypeManageAction.class);
 	/**
 	 * 栏目服务类
 	 */
@@ -131,6 +138,7 @@ public class ColumnTypeManageAction {
 	}
 	@RequestMapping(value="list")
 	public String list(ColumnTypeNoTypeDesForm formbean,Model model,HttpServletRequest request){
+		log.info("查询栏目");
 		//页面类
 		PageView<ColumnType> pageView = new PageView<ColumnType>(formbean.getMaxresult(), formbean.getPage());
 		
