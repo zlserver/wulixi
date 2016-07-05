@@ -9,11 +9,11 @@ html,body {margin:0; text-align:center;
 }
 		  
 #container {position:relative; margin:0px auto; padding:0; text-align:left;
-		   color:#666; width:1003px; font-size:12px; background:url(/images/bodyBg.jpg) repeat-y;} /*ÈÝÆ÷»ù´¡ÑùÊ½*/
+		   color:#666; width:1003px; font-size:12px; background:url(/images/bodyBg.jpg) repeat-y;} /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½*/
 		   
-a:link,a:visited {color:#666; text-decoration:none;} a:hover { color:#9E713F; } /*Á´½Ó»ù´¡ÑùÊ½*/
+a:link,a:visited {color:#666; text-decoration:none;} a:hover { color:#9E713F; } /*ï¿½ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ï¿½Ê½*/
 
-img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; padding:0px; font-size:12px; font-weight:normal;} /*Í¼Æ¬¡¢±êÌâ¡¢¶ÎÂä»ù´¡ÑùÊ½*/
+img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; padding:0px; font-size:12px; font-weight:normal;} /*Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½â¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½*/
 /*=============Basic style=============*/
 
 #header {position:relative; left:7px; top:0;
@@ -67,9 +67,7 @@ img { border:none; } p { margin:0px; padding:0px; } h2,h3,h4,h5 {margin:0px; pad
 			  color:#666;
 }
 
-#bottArea p {position:relative; top:10px; line-height:1.4em;
-
-} 
+#bottArea p {position:relative; top:10px; line-height:1.2em;} 
 
 #bottArea p span{background:url(../images/machJs.jpg) no-repeat 0px -3px; padding-left:26px;}
 

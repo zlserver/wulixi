@@ -35,7 +35,6 @@ public class EncodeFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest) request;
-		System.out.println("过滤了---");
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			if(!(req instanceof CharSetRequest)) {
 				req = new CharSetRequest(req, charset);//处理get请求编码

@@ -72,8 +72,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <div style="color:#FFFFFF; font-weight:bold; position:absolute; right:20px; top:3px;">
-        <span style="CURSOR:pointer;" onclick="window.external.AddFavorite('http://test1.esl.net.cn','首师大学生处')" title="首师大学生处">加入收藏</span>&nbsp;|&nbsp;<span onclick="var strHref=window.location.href;this.style.behavior='url(#default#homepage)';this.setHomePage('http://student.cnu.edu.cn');" style="CURSOR:pointer;">设为首页</span>
-    </div>
+       <!-- <span style="CURSOR:pointer;" onclick="window.external.AddFavorite('http://test1.esl.net.cn','首师大学生处')" title="首师大学生处">加入收藏</span>&nbsp;|&nbsp;<span onclick="var strHref=window.location.href;this.style.behavior='url(#default#homepage)';this.setHomePage('http://student.cnu.edu.cn');" style="CURSOR:pointer;">设为首页</span>
+     --> </div>
 </div>
 </body>
 

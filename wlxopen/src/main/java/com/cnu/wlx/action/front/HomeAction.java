@@ -1,12 +1,15 @@
 package com.cnu.wlx.action.front;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cnu.wlx.bean.ColumnType;
@@ -14,6 +17,7 @@ import com.cnu.wlx.bean.DownloadFile;
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.Question;
+import com.cnu.wlx.bean.VistRecord;
 import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
@@ -26,6 +30,7 @@ import com.cnu.wlx.service.DownloadFileService;
 import com.cnu.wlx.service.NewsFileService;
 import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.service.QuestionService;
+import com.cnu.wlx.service.VistRecordService;
 import com.cnu.wlx.utils.SiteUtils;
 
 /**
@@ -42,12 +47,23 @@ public class HomeAction {
 	private ColumnTypeService columnTypeService;
 	private DownloadFileService downloadFileService;
 	private QuestionService questionService;
+	private VistRecordService vistRecordService;
 	/**
 	 * 获取首页内容:学工新闻、下载专区、通知公告、就业实习信息、回音壁、校园文化【活动剪影、校园风光】、学习标兵、荣誉表彰。
 	 * @return
 	 */
 	@RequestMapping(value="home")
-	public String home(HomeForm formbean,Model model){
+	public String home(HomeForm formbean,Model model,HttpServletRequest request){
+		
+		/**
+		 * 访问总数加1
+		 */
+		String ip =request.getRemoteHost();
+		VistRecord vr = new VistRecord(ip, new Date());
+		vistRecordService.save(vr);
+		request.getSession().setAttribute("vistcount", vistRecordService.getCount());
+		
+		
 		formbean=new HomeForm("xue", "down", "tong", "job","xy_huo", "xy_feng", "biao","biaozhang");
 		//学工新闻
 		ColumnType xueCt = columnTypeService.findByClassCode(formbean.getXueClassCode());
@@ -172,6 +188,13 @@ public class HomeAction {
 	@Resource
 	public void setQuestionService(QuestionService questionService) {
 		this.questionService = questionService;
+	}
+	public VistRecordService getVistRecordService() {
+		return vistRecordService;
+	}
+	@Resource
+	public void setVistRecordService(VistRecordService vistRecordService) {
+		this.vistRecordService = vistRecordService;
 	}
 	
 }

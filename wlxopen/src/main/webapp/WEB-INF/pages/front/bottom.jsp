@@ -118,11 +118,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <div id="bottArea">
 
-        <h3 class="bottLink"><a href="javascript:void()">短信平台</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">物理系首页</a>
+        <h3 class="bottLink"><a href="javascript:void(0)">短信平台</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="">物理系首页</a>
         &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="login.jsp" >后台管理</a></h3>
-        <p>地址:北京市海淀区西三环北路105号&nbsp;邮编：100048<br>
+        <p style="line-height:1.2em;">地址:北京市海淀区西三环北路105号&nbsp;邮编：100048<br>
             版权所有：首都师范大学物理系<br>
-            <span>当前访问总量：<b>5</b>&nbsp;&nbsp;人次</span></p>
+            <span>当前访问总量：<b>${vistcount }</b>&nbsp;&nbsp;人次</span></p>
     </div>
 </div>
 </body>
