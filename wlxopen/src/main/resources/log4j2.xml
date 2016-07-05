@@ -25,7 +25,7 @@
 
     <Loggers>
         <Logger name="com.cnu" level="info"
-            additivity="false">
+            additivity="true">
             <AppenderRef ref="running-log" />
         </Logger>
         <Root level="info">
