@@ -85,7 +85,16 @@ public class DownloadFileServiceImpl implements DownloadFileService {
 	@Override
 	public void save(DownloadFile downloadFile) {
 		// TODO Auto-generated method stub
-		downloadFileDao.save(downloadFile);
+		if( downloadFile!=null){
+			//替换掉原文件名称中的中文空格
+			String originName= downloadFile.getOriginName();
+			originName=originName.replace(" ","");
+			downloadFile.setOriginName(originName);
+			downloadFileDao.save(downloadFile);
+		}
+		else
+			throw new RuntimeException("保存文件不能为null");
+		
 	}
 	@Override
 	public DownloadFile find(String fileid) {

@@ -34,8 +34,13 @@ public class NewsFileServiceImpl implements NewsFileService {
 	}
 	
 	public void save(NewsFile newsFile){
-		if( newsFile!=null)
+		if( newsFile!=null){
+			//替换掉原文件名称中的中文空格
+			String originName= newsFile.getOriginName();
+			originName=originName.replace(" ","");
+			newsFile.setOriginName(originName);
 			newsFileDao.save(newsFile);
+		}
 		else
 			throw new RuntimeException("保存文件不能为null");
 		

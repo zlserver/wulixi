@@ -274,8 +274,7 @@ public class FileManageAction {
 						String fileName = iterator.next();
 						MultipartFile multipartFile = request.getFile(fileName);
 						String originName=multipartFile.getOriginalFilename();
-						//替换掉原文件名称中的中文空格
-						originName=originName.replace(" ","");
+						
 						//保存文件相对路径:download/
 						String relativedir= SiteUtils.getRelativeSavePath("download.file");
 						//保存文件名称
