@@ -407,7 +407,6 @@ public class NewsManageAction {
 	 */
 	@RequestMapping(value="editUi")
 	public String editUi(String id,String columnId,Model model){
-		System.out.println(id+" : "+columnId+"--");
 		News news=null;
 		if( BaseForm.validateStr(id)){
 			 news= newsService.find(id);
@@ -446,22 +445,24 @@ public class NewsManageAction {
 						String fileid= formbean.getFileIds().get(i);
 						//保存附件
 						NewsFile newsFile=newsFileService.find(fileid);
+						newsFile.setType(FileTypeEnum.NO_IMAGE);
 						newsFile.setNews(news);
 						//更新
 						newsFileService.update(newsFile);
 					}
 				}
 				newsService.update(news);
+				formbean.setNews(news);
 				flage = true;
 			}
 		}
-		if( flage )//添加成功
+		/*if( flage )//添加成功
 		{
 			return "redirect:/control/news/list.action?columnId="+formbean.getColumnId()+"&editState=true"+"&page="+formbean.getPage();
 		}else{//添加失败
-			model.addAttribute("formbean", formbean);
+*/			model.addAttribute("formbean", formbean);
 			return SiteUtils.getPage("control.news.edit");
-		}
+		//}
 		 
 	}
 	/**
