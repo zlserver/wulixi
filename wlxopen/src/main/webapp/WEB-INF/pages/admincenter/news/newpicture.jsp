@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				 </td>
 			 <td>
 			     <span >
-			      <img style="width:100px;height: 80px;" class="img-rounded" alt="。。。" src="control/news/lookImage.action?savePath=${entity.savePath}">
+			      <img style="width:50px;height: 30px;" class="img-rounded hitimg" alt="。。。" src="control/news/lookImage.action?savePath=${entity.savePath}">
 				   	<%--  <a href="control/news/download.action?savePath=${entity.savePath}">
 				       ${entity.originName}
 				     </a> --%>
@@ -91,55 +91,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    </div>
   
 </div>
+<div  id="windiv">
+		<img id="winimg" class="img-rounded"  alt="" src="" >
+</div>
+</body>
 
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
 <script>
-/* 全选 */
-function selectAll(checkNode){
-	var checkeds=document.getElementsByName("checkeds");
-	var state=checkNode.checked;
-	for( var i = 0;i <checkeds.length;i++)
-	  checkeds[i].checked=state;
-}
-//查询
-function topage(page){
-		var form = document.forms[0];
-	form.page.value= page;
-	form.submit();
-}
 
-function _action(method) {
-	//如果未选中则不操作
-	var checkeds=document.getElementsByName("checkeds");
-	var flage = false;
-	for( var i = 0;i <checkeds.length;i++)
-		if(checkeds[i].checked ){
-			flage = true;
-			break;
-		}
-	if( flage){
-		var form = document.forms[0];
-		form.action="control/news/"+method+".action";
-		          
-		form.submit();
-    }
-}
-/**
- 将上传的附件保存到新闻下
-*/
-function saveFile(method){
-	var form = document.forms[0];
-	form.action="control/news/"+method+".action";
-	          
-	form.submit();
-}
-function query() {
-	var form = document.forms[0];
-	form.page.value=1;
-	form.submit();
-}
 $(document).ready(function() {
+	
+	//获取img标签  
+    var imgs = $(".hitimg");
+	var winimg = $("#winimg").width("350px").height("300px");
+	//设置div的样式  
+    var windiv = $("#windiv").css("border"," 1px solid #F9F9F9")  
+    .width("350px").height("300px").css("position","absolute").css("z-index","99")  
+    .css("background","white");  
+  //隐藏  
+    windiv.hide(); 
+  //注册鼠标移动上上面事件  
+    imgs.mouseover(function(event) {  
+    	windiv.show();  
+    	var imgNode = $(this); 
+    	var strattr= imgNode.attr("src");
+    	winimg.attr("src",strattr);
+        //出现在鼠标右下方  
+        //解决不同浏览器创建事件对象的差异  
+        var myEvent = event || window.event;  
+        windiv.css("left",myEvent.clientX+15+"px").css("top",myEvent.clientY+5+"px");  
+    });  
+    //注册鼠标离开时事件  
+    imgs.mouseout(function() {  
+    	windiv.hide();  
+    });  
+	
+	
+	
+	
+	
+	/* 上传文件代码 */
 	
 	$("#fileuploader").uploadFile({
 		url:"control/news/ajaxuploadFile.action", //后台处理方法
@@ -187,6 +179,56 @@ $(document).ready(function() {
 		}
 	});
 });
+/* 全选 */
+function selectAll(checkNode){
+	var checkeds=document.getElementsByName("checkeds");
+	var state=checkNode.checked;
+	for( var i = 0;i <checkeds.length;i++)
+	  checkeds[i].checked=state;
+}
+//查询
+function topage(page){
+		var form = document.forms[0];
+	form.page.value= page;
+	form.submit();
+}
+
+function _action(method) {
+	//如果未选中则不操作
+	var checkeds=document.getElementsByName("checkeds");
+	var flage = false;
+	for( var i = 0;i <checkeds.length;i++)
+		if(checkeds[i].checked ){
+			flage = true;
+			break;
+		}
+	if( flage){
+		if( method=="deleteFile")
+		{
+			if( !confirm("确定删除"))
+			{
+				return false;
+			}
+		}
+		var form = document.forms[0];
+		form.action="control/news/"+method+".action";
+		          
+		form.submit();
+    }
+}
+/**
+ 将上传的附件保存到新闻下
+*/
+function saveFile(method){
+	var form = document.forms[0];
+	form.action="control/news/"+method+".action";
+	          
+	form.submit();
+}
+function query() {
+	var form = document.forms[0];
+	form.page.value=1;
+	form.submit();
+}
 </script>
-</body>
 </html>

@@ -38,6 +38,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				break;
 			}
 		if( flage){
+			if( method=="deleteFile")
+			{
+				if( !confirm("确定删除"))
+				{
+					return false;
+				}
+			}
 			var form = document.forms[0];
 			form.action="control/news/"+method+".action";
 			          

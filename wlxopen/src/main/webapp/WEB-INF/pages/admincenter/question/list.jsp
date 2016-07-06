@@ -35,6 +35,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				break;
 			}
 		if( flage){
+			if( method=="delete")
+			{
+				if( !confirm("确定删除"))
+				{
+					return false;
+				}
+			}
 			var form = document.forms[0];
 			form.action="control/question/"+method+".action";
 			          

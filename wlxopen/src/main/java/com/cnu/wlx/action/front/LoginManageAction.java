@@ -74,7 +74,7 @@ public class LoginManageAction {
 			ColumnType tong =  new ColumnType("通知公告", "tong");
 			ColumnType job =  new ColumnType("就业实习", "job");
 			ColumnType biao =  new ColumnType("学习标兵", "biao");
-			ColumnType biaozhang =  new ColumnType("学工新闻", "biaozhang");
+			ColumnType biaozhang =  new ColumnType("荣誉表彰", "biaozhang");
 			
 			ColumnType xszz =  new ColumnType("学生组织", "xszz");
 			ColumnType gzzd =  new ColumnType("规章制度", "gzzd");

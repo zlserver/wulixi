@@ -108,6 +108,12 @@ public class NewsFileServiceImpl implements NewsFileService {
 		return list;
 	}
 
+	@Override
+	public NewsFile findByPath(String savePath) {
+		// TODO Auto-generated method stub
+		return newsFileDao.find("o.savePath = ?" , savePath);
+	}
+
 	
 	
 }

@@ -157,6 +157,9 @@ public class NewsAction {
 	 */
 	@RequestMapping(value="download")
 	public String download(String savePath,HttpServletRequest request,HttpServletResponse response){
+		//
+		NewsFile newsFile= newsFileService.findByPath(savePath);
+		String originName = newsFile.getOriginName();
 		//1.获取文件系统的根路径:D:/Soft/wlxopensystem/
 		String fileSystemRoot = SiteUtils.getFileSystemDir();
 		//2.生成文件的绝对路径:D:/Soft/wlxopensystem/news/files/报名表.doc
@@ -165,7 +168,7 @@ public class NewsAction {
 		//2.1获取文件资源
 		Resource fileResource =fileService.getFileResource("file:"+fileSavePath);
 		//查看图片
-		BaseForm.loadFile(response, fileResource);
+		BaseForm.loadFile(response, fileResource,originName);
 		return null;
 	}
 	public FileService getFileService() {

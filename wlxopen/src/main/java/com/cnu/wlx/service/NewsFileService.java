@@ -13,7 +13,12 @@ import com.cnu.wlx.myenum.FileTypeEnum;
 * 类说明
 */
 public interface NewsFileService {
-
+	/**
+	 * 通过路径查找文件名
+	 * @param savePath
+	 * @return
+	 */
+	public NewsFile findByPath(String savePath);
 	/**
 	 * 查找文件
 	 * @param fileId 文件id

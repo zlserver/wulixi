@@ -34,6 +34,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				break;
 			}
 		if( flage){
+			if( method=="delete")
+			{
+				if( !confirm("确定删除"))
+				{
+					return false;
+				}
+			}
 			var form = document.forms[0];
 			form.action="control/download/"+method+".action";
 			          
@@ -44,6 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 将上传的附件保存
 	*/
 	function saveFile(method){
+		
 		var form = document.forms[0];
 		form.action="control/download/"+method+".action";
 		          

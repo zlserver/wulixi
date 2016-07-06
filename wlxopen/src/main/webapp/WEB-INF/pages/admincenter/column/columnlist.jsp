@@ -219,7 +219,6 @@ display: none;
 	}
 	/* 删除确认 */
 	function deleteColumn(id) {
-		
 		//检测是否有子类
 		var child = $("#child"+id+"1").attr("href");
 		

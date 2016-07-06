@@ -182,7 +182,7 @@ $(document).ready(function() {
     	windiv.hide();  
     });  
     
-    
+    /* 上传文件代码 */
 	$("#fileuploader").uploadFile({
 		url:"control/download/ajaxuploadFile.action", //后台处理方法
 		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
@@ -253,6 +253,13 @@ function _action(method) {
 			break;
 		}
 	if( flage){
+		if( method=="delete")
+		{
+			if( !confirm("确定删除"))
+			{
+				return false;
+			}
+		}
 		var form = document.forms[0];
 		form.action="control/download/"+method+".action";
 		          
