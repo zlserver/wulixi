@@ -180,8 +180,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div id="XYWH">
                     <div id="artiXYWH">
                     <img id="artiXYWH1" src="images/ArtiXYWH.jpg" alt="校园文化" />
-                    <span id="XYWH_nav1"><a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }" style="font-size: 15px">活动掠影</a>&nbsp;&nbsp;&nbsp;</span>
-                    <span id="XYWH_nav2"><a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }" style="font-size: 15px">校园风光</a>&nbsp;&nbsp;&nbsp;</span>
+                    <span id="XYWH_nav1"><a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${huoCt.id }" style="font-size: 15px">活动掠影</a>&nbsp;&nbsp;&nbsp;</span>
+                    <span id="XYWH_nav2"><a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${fengCt.id }" style="font-size: 15px">校园风光</a>&nbsp;&nbsp;&nbsp;</span>
 
                     <div id="XYWH_box">
                         <table id="XYWH_tab" cellpadding="0" cellspacing="0" style="height: 151px">
@@ -189,12 +189,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td width="50%" style="border-right:none; border-bottom:none;"><table cellpadding="0" cellspacing="0" border="0">
                                     <tr>
                                         <td class="XYWH_img"><img src="images/test11.jpg" alt="活动掠影" /><br />
-                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">活动掠影</a></td>
+                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${huoCt.id }">活动掠影</a></td>
                                         <td style="padding-left:4px;padding-top:0px;margin-top: 0px;height: 65px">
                                          
                                          <c:forEach items="${huoFiles }" var="huoFile" varStatus="status">
                                          
-                                           &nbsp; &nbsp; <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${huoCt.id }">
+                                           &nbsp; &nbsp; <a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${huoCt.id }">
                                            <img style="width:70px;height:55px;" src="front/download/lookImage.uhtml?savePath=${huoFile.savePath}" alt="活动掠影" />
                                            </a>
                                             
@@ -206,11 +206,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     <table cellpadding="0" cellspacing="0" border="0">
                                         <tr>
                                             <td class="XYWH_img"><img src="images/test12.jpg" alt="校园风光" /><br>
-                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">校园风光</a></td>
+                                            <a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${fengCt.id }">校园风光</a></td>
                                             <td  style="padding-left:4px;padding-top:0px;margin-top: 0px;height: 65px">
                                               
                                                 <c:forEach items="${fengFiles }" var="fengFile" varStatus="status">
-                                                 <a href="front/picture/pictureList.uhtml?preClassCode=xy&columnId=${fengCt.id }">
+                                                 <a href="front/picture/pictureList.uhtml?preClassCode=xy_&columnId=${fengCt.id }">
 		                                            <img style="width:70px;height:55px;" src="front/download/lookImage.uhtml?savePath=${fengFile.savePath}" alt="校园风光" />
 		                                            </a>
 		                                         </c:forEach>
@@ -270,7 +270,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="AritLoad">
                 <img id="AritLoad1" src="images/ArtiLoad.jpg" alt="下载专区" usemap="#AritLoad1Map" />
                 <map id="AritLoad1Map" name="AritLoad1Map">
-                    <area shape="rect" coords="175,2,252,23" href="front/download/more.uhtml?classCode=down" alt="更多" title="更多">
+                    <area shape="rect" coords="175,2,252,23" href="front/download/more.uhtml?classCode=down_" alt="更多" title="更多">
                 </map>
   
                 <ul>

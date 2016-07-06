@@ -62,7 +62,7 @@ public class ColumnTypeManageAction {
 				try {
 					String classCode = column.getClassCode();
 						//非系统栏目才可以修改
-						if(!classCode.equalsIgnoreCase("system")){
+						if(!classCode.equalsIgnoreCase("1system")){
 							column.setClassCode(formbean.getColumn().getClassCode());
 							column.setName(formbean.getColumn().getName());
 							column.setGroupType(formbean.getColumn().getGroupType());
@@ -188,18 +188,22 @@ public class ColumnTypeManageAction {
 			//如果id不存在navigation则新添加
 			if( !columnNavigation.containsKey(id)){
 				//如果父类的父类id不为空则先添加父类的父类
-				if(BaseForm.validateStr(doubleParentId))
+				if(BaseForm.validateStr(doubleParentId)&& !columnNavigation.containsKey(doubleParentId))
 					columnNavigation.put(doubleParentId, doubleParentName);
 				columnNavigation.put(id, name);
 			}else{
 			  //如果id存在则从后往前删除子栏目，直到当前访问的栏目。
 				boolean flage = false;
+				List<String> removeKeys = new ArrayList<>();
 				for(String key: columnNavigation.keySet()){
-					if( flage )
-						columnNavigation.remove(key);
+					if( flage ){
+						removeKeys.add(key);
+					}
 					if( key.equals(id))
 						flage = true;
 				}
+				for(String key : removeKeys)
+					columnNavigation.remove(key);
 			}
 		}else{
 			//访问顶层父类，则取消navigation中的其它栏目

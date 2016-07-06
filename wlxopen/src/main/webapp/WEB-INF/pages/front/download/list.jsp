@@ -117,7 +117,7 @@ td{
               <ul>
               <c:forEach items="${listColumn }" var="entity">
                   <li style="color:#FF6600;">
-                   <a  title="${entity.name}" href="front/download/single.uhtml?columnId=${entity.id}&page=1&classCode=down" style="">
+                   <a  title="${entity.name}" href="front/download/single.uhtml?columnId=${entity.id}&page=1&classCode=${classCode}" style="">
                        ${entity.name}
                     </a>
                   </li>

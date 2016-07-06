@@ -58,8 +58,9 @@ public class PictureAction {
 		orderby.put("sequence", "asc");
 		
 		List<Object> params = new ArrayList<Object>();
-		
-		params.add(preClassCode+"%");
+		String qpreClassCode=preClassCode.replace("_", "\\_");
+		System.out.println("前缀："+qpreClassCode);
+		params.add(qpreClassCode+"%");
 		
 		List<ColumnType>  columns = columnTypeService.getAllData(wherejpql, params.toArray(), orderby);
 		model.addAttribute("listColumn",columns);

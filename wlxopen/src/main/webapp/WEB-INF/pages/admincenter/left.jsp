@@ -54,7 +54,7 @@ font-size: 20px;
 				<%--非系统栏目直接显示，系统栏目有权限才可以显示 --%>
 			 <c:choose>
 			 
-			  <c:when test="${!column.classCode.equals('system')}">
+			  <c:when test="${!column.classCode.equals('1system')}">
 			  	 <li><a href="javascript:void(0)" >${column.name }</a></li>
 				  <ul show="false">
 					  <c:forEach items="${column.childrens }" var="child">

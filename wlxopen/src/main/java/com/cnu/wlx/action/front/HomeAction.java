@@ -72,6 +72,7 @@ public class HomeAction {
 			QueryResult<News> xueNews=newsService.getHomeScrollData(xuePV.getFirstResult(), xuePV.getMaxresult(), xueCt.getId());
 			List<News> xuesNews =xueNews.getResultlist();
 			model.addAttribute("xueNews",xuesNews);
+			if( xuesNews!=null && xuesNews.size()>0)
 			model.addAttribute("hotNews",xuesNews.get(0));
 			//获取第一个新闻的预览图
 			if( xuesNews!=null &&xuesNews.size()>0)

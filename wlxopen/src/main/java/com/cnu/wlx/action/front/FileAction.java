@@ -127,8 +127,8 @@ public class FileAction {
 		order.put("sequence", "asc");
 		
 		List<Object> param = new ArrayList<Object>();
-		
-		param.add(classCode+"%");
+		String qclassCode=classCode.replace("_", "\\_");
+		param.add(qclassCode+"%");
 		
 		List<ColumnType>  columns = columnTypeService.getAllData(jpql, param.toArray(), order);
 		model.addAttribute("listColumn",columns);
