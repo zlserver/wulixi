@@ -75,7 +75,6 @@ public class LoginManageAction {
 			ColumnType job =  new ColumnType("就业实习", "job");
 			ColumnType biao =  new ColumnType("学习标兵", "biao");
 			ColumnType biaozhang =  new ColumnType("学工新闻", "biaozhang");
-			ColumnType huiyin =  new ColumnType("回音壁", "huiyin");
 			
 			ColumnType xszz =  new ColumnType("学生组织", "xszz");
 			ColumnType gzzd =  new ColumnType("规章制度", "gzzd");
@@ -90,7 +89,6 @@ public class LoginManageAction {
 			newsChilds.add(job);
 			newsChilds.add(biao);
 			newsChilds.add(biaozhang);
-			newsChilds.add(huiyin);
 			newsChilds.add(xszz);
 			newsChilds.add(gzzd);
 			newsChilds.add(sxjy);
