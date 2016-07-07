@@ -87,7 +87,8 @@ display: none;
 			  <span>${entity.id }</span>
 			 </td>  --%> 
 			 <td>
-			     <span id="name${entity.id}"><a href="<c:url value='control/column/list.action?parentId=${entity.id }&parentName=${entity.name}'/>">${entity.name}</a></span>
+			     <span id="name${entity.id}">
+			     <a onclick="nagivation('${entity.id }','${entity.name}','','')" href="javascript:void(0)">${entity.name}</a></span>
 				 <input class="form-control" type="hidden" id="iname${entity.id}"  name="name" value="${entity.name}"> 
 			</td>
 			  <td>
@@ -146,7 +147,7 @@ display: none;
 			<tr>
 			   <td colspan="10">
 				<c:forEach  items="${entity.childrens }" var="child" varStatus="status" >
-			      &nbsp; &nbsp;[<a id="child${entity.id }${status.count}" href="<c:url value='control/column/list.action?parentId=${child.id }&parentName=${child.name}&doubleParentId=${entity.id}&doubleParentName=${entity.name}'/>"><font color="#992222">${child.name}</font></a>]  
+			      &nbsp; &nbsp;[<a id="child${entity.id }${status.count}" onclick="nagivation('${child.id }','${child.name}','${entity.id }','${entity.name}')" href="javascript:void(0)"><font color="#992222">${child.name}</font></a>]  
 				</c:forEach>
 			   </td>
 			</tr>
@@ -165,7 +166,7 @@ display: none;
 
 <div style="position:relative; bottom: 5px;right: 0px;left: 0px;">
 	
-  <form  action="<c:url value='control/column/add.action'/>" method="post"  onsubmit="return checkAdd()">
+  <form id="addform" action="<c:url value='control/column/add.action'/>" method="post"  onsubmit="return checkAdd()">
      <input type="hidden" name="parentId" value="${parentId }">
 	<table class="table table-bordered table-striped" width="100%">
 	 
@@ -176,7 +177,7 @@ display: none;
 	  	 <font color="red">${parentName}</font>
 	  	 </td>
 	  	 <td>类名称</td> <td><input type="text" id="name" name="column.name"    required="required" class="form-control"> </td>
-	  	 <td>分类码</td><td><input type="text" id="classCode" name="column.classCode"    required="required" class="form-control"> </td>
+	  	 <td>分类码</td><td><input  type="text" id="classCode" name="column.classCode"    required="required" class="form-control"> </td>
 	  	 <td>分类说明</td>
 	  	 <td>
 	  	    <select class="form-control" name="typeDes" >
@@ -203,20 +204,60 @@ display: none;
 	</table>
   </form>
 </div>
+
+<form id="nagform"  action="<c:url value='control/column/list.action'/>" method="post">
+
+    <input type="hidden" id="parentId" name="parentId" >
+    <input type="hidden" id="parentName" name="parentName" >
+    <input type="hidden" id="doubleParentId" name="doubleParentId" >
+    <input type="hidden" id="doubleParentName" name="doubleParentName" >
+</form>
 </body>
 <script type="text/javascript">
+$(document).ready(function(){
+	$("#addform").bind("submit",function(event){
+		var classCode = $("#classCode").val();
+		var result =true;
+		$.ajax({  
+			type: "POST",  
+	        url: "control/column/ajaxCheckCode.action", //orderModifyStatus  
+	        data: {"classCode":classCode},
+		    dataType:"json",  
+	        async:false,  
+	        cache:false,
+	        success: function(data){ 
+	        	var status = data.status;
+				var message = data.message;
+				if( status != 1){
+					//分类码重复，
+					alert(message);
+					result =false;
+				}
+	        }
+		});
+		//取消事件
+		if( !result)
+			event.preventDefault();
+	});
+});
+
 	//查询
 	function topage(page)
 	{
 		var form = document.forms[0];
-		 /* var len =form.typeDes.length;
-		var i=0;
-		for( i=0;i<len ;i++){
-			form.typeDes[i].value=null;
-		}  */
 		form.page.value= page;
 		form.submit();
 	}
+	/* 导航 */
+	function nagivation(parentId,parentName,doubleParentId,doubleParentName){
+		var form = document.getElementById("nagform");
+		form.parentId.value=parentId;
+		form.parentName.value=parentName;
+		form.doubleParentId.value=doubleParentId;
+		form.doubleParentName.value=doubleParentName;
+		form.submit();
+	}
+	
 	/* 删除确认 */
 	function deleteColumn(id) {
 		//检测是否有子类

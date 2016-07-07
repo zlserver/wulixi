@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,19 @@ public class ColumnTypeManageAction {
 	 */
 	private ColumnTypeService columnTypeService;
 	
+
+	@RequestMapping(value="ajaxCheckCode")
+	public String ajaxCheckCode(String classCode,HttpServletRequest request){
+		MyStatus status = new MyStatus();
+		if(columnTypeService.findByClassCode(classCode)!=null)
+		{
+			status.setStatus(0);
+			status.setMessage("分类码已存在!");
+		}
+		JSONObject json = JSONObject.fromObject(status);
+		request.setAttribute("json", json.toString());
+		return  SiteUtils.getPage("json");
+	}
 	
 	@RequestMapping(value="ajaxEdit")
 	public String  ajaxEdit(ColumnTypeForm formbean,HttpServletRequest request){
@@ -83,7 +97,10 @@ public class ColumnTypeManageAction {
 							formbean.getResult().put("error", "不可修改");
 						}
 						
-				} catch (Exception e) {
+				}catch(DataIntegrityViolationException de){
+					formbean.getResult().put("error", "分类码已存在!");
+					de.printStackTrace();
+				}catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -136,6 +153,7 @@ public class ColumnTypeManageAction {
 		
 		return "redirect:/control/column/list.action?parentId="+formbean.getParentId();
 	}
+	
 	@RequestMapping(value="list")
 	public String list(ColumnTypeNoTypeDesForm formbean,Model model,HttpServletRequest request){
 		//log.info("查询栏目");

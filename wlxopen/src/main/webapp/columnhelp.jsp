@@ -123,8 +123,12 @@ text-align: center;
 <tbody>
 
 <tr>
-<td class="title">系统栏目</td><td>system</td>
+<td class="title">系统栏目</td><td>1system</td>
 <td>不可修改</td>
+</tr>
+<tr>
+<td class="title">其它一级栏目</td><td>1*</td>
+<td>可修改</td>
 </tr>
 </tbody>
 </table>
