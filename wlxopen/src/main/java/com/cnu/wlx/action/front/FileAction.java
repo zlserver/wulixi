@@ -133,28 +133,36 @@ public class FileAction {
 		List<ColumnType>  columns = columnTypeService.getAllData(jpql, param.toArray(), order);
 		model.addAttribute("listColumn",columns);
 		
-		//查询某个类别下的下载列表
-		PageView<DownloadFile> pageView = new PageView<DownloadFile>(formbean.getMaxresult(), formbean.getPage());
-		//结果集根据时间降序来排列
-		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
-		orderby.put("createTime", "desc");
-		
-		StringBuffer wherejpql=new StringBuffer("");
-		List<Object> params = new ArrayList<Object>();
-		
-		wherejpql.append("o.column.id = ?");
-		params.add(formbean.getColumnId());
-		//有效
-		wherejpql.append(" and o.state= ?");
-		params.add(FileStateEnum.VALIDATE);
-		//文件
-		wherejpql.append("and o.type = ?");
-		params.add(FileTypeEnum.NO_IMAGE);
-		
-		QueryResult<DownloadFile> queryResult=downloadFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
-		pageView.setQueryResult(queryResult);
-		//传输到页面
-		model.addAttribute("pageView", pageView);
+		String columnId = formbean.getColumnId();
+		if(columnId==null && columns !=null && columns.size()>0){
+			columnId = columns.get(0).getId();
+			formbean.setColumnId(columnId);
+			formbean.setPage(1);
+		}
+		if( columnId !=null){
+			//查询某个类别下的下载列表
+			PageView<DownloadFile> pageView = new PageView<DownloadFile>(formbean.getMaxresult(), formbean.getPage());
+			//结果集根据时间降序来排列
+			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+			orderby.put("createTime", "desc");
+			
+			StringBuffer wherejpql=new StringBuffer("");
+			List<Object> params = new ArrayList<Object>();
+			
+			wherejpql.append("o.column.id = ?");
+			params.add(columnId);
+			//有效
+			wherejpql.append(" and o.state= ?");
+			params.add(FileStateEnum.VALIDATE);
+			//文件
+			wherejpql.append("and o.type = ?");
+			params.add(FileTypeEnum.NO_IMAGE);
+			
+			QueryResult<DownloadFile> queryResult=downloadFileService.getScrollData(pageView.getFirstResult(), pageView.getMaxresult(), wherejpql.toString(), params.toArray(), orderby);
+			pageView.setQueryResult(queryResult);
+			//传输到页面
+			model.addAttribute("pageView", pageView);
+		}
 		
 		model.addAttribute("formbean",formbean);
 

@@ -59,14 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div style="width: 963px;height: 33px;">
             <ul id="menu">
                 <li><a class="chosen" onclick="setChosen(this)" style="border-left:1px solid #000;" href="front/home.uhtml"><b>首&nbsp;&nbsp;&nbsp;页</b></a></li>
-                <li><a  onclick="setChosen(this)" href="front/news/siglenews.uhtml?classCode=xszz"><b>学生组织</b></a></li>
-                <li><a  onclick="setChosen(this)" href="front/news/siglenews.uhtml?classCode=gzzd"><b>规章制度</b></a></li>
-                <li><a  onclick="setChosen(this)"  href="front/news/siglenews.uhtml?classCode=sxjy"><b>思想教育</b></a></li>
-                <li><a  onclick="setChosen(this)" href="front/news/siglenews.uhtml?classCode=zzgl"><b>资助管理</b></a></li>
-                <li><a  onclick="setChosen(this)"  href="front/news/siglenews.uhtml?classCode=xlzx"><b>心理咨询</b></a></li>
-                <li><a  onclick="setChosen(this)"  href="front/news/siglenews.uhtml?classCode=jygz"><b>就业工作</b></a></li>
-                <li><a  onclick="setChosen(this)"  href="front/news/siglenews.uhtml?classCode=gfjy"><b>国防教育</b></a></li>
-                <li><a  onclick="setChosen(this)"  href="front/news/siglenews.uhtml?classCode=yjsy"><b>研究生院</b></a></li>
+                <c:forEach items="${listColumns }" var="entity">
+                  <li><a  onclick="setChosen(this)" href="front/news/siglenews.uhtml?classCode=${entity.classCode}"><b>${entity.name}</b></a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

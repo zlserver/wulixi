@@ -105,5 +105,21 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 	public List<ColumnType> getAllData(String wherejpql, Object[] queryParams, LinkedHashMap<String, String> orderby) {
 		return columnTypeDao.getAllData(wherejpql, queryParams, orderby);
 	}
+
+	@Override
+	public void setVisible(String id, Boolean visible) {
+		// TODO Auto-generated method stub
+		ColumnType columnType = columnTypeDao.find(id);
+		if( columnType!=null){
+			columnType.setVisible(visible);
+			columnTypeDao.update(columnType);
+		}
+	}
+
+	@Override
+	public QueryResult<ColumnType> getScrollData(int firstindex, int maxresult, String wherejpql, Object[] queryParams,
+			LinkedHashMap<String, String> orderby) {
+		return columnTypeDao.getScrollData(firstindex, maxresult, wherejpql, queryParams,orderby);
+	}
 	
 }

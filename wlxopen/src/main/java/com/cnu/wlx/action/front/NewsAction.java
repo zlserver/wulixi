@@ -134,6 +134,8 @@ public class NewsAction {
 			orderby.put("createTime", "desc");
 			List<News> listnews =newsService.getAll( wherejpql, queryParams,orderby);
 			model.addAttribute("listnews",listnews);
+			if( listnews!=null&& listnews.size()>0)
+				model.addAttribute("news", listnews.get(0));
 		}
 		News news =newsService.find(newsId);
 		if( news!=null){
@@ -144,7 +146,7 @@ public class NewsAction {
 			 model.addAttribute("newsFiles",newsFiles);
 			model.addAttribute("news",news);
 		}
-
+		
 		  model.addAttribute("classCode",classCode);
 		return SiteUtils.getPage("front.news.siglenews");
 	}

@@ -58,7 +58,7 @@ public interface Dao<T> {
 	 * @param <T>
 	 * @param wherejpql 查询条件  "o.email=? "
 	 * @param attribute 实体的属性值
-	 * @return
+	 * @return   
 	 */
 	public T find(String wherejpql, Object attribute);
 	/**
@@ -74,7 +74,7 @@ public interface Dao<T> {
 	 * @param firstindex 开始查询位置从0开始
 	 * @param maxresult 一页的最大记录数
 	 * @param wherejpql 查询条件  "o.email=? and o.account like ?"
-	 * @param queryParams  查询条件占位符对应的参数值，
+	 * @param queryParams  查询条件占位符对应的参数值，  
 	 * @param orderby 排序条件  Key为属性,Value为asc/desc
 	 * @return 查询结果类
 	 */

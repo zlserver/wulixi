@@ -2,16 +2,13 @@ package com.cnu.wlx.action.front;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.DownloadFile;
 import com.cnu.wlx.bean.News;
@@ -22,9 +19,7 @@ import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.HomeForm;
-import com.cnu.wlx.myenum.FileStateEnum;
 import com.cnu.wlx.myenum.FileTypeEnum;
-import com.cnu.wlx.myenum.NewsStateEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.DownloadFileService;
 import com.cnu.wlx.service.NewsFileService;
@@ -48,12 +43,35 @@ public class HomeAction {
 	private DownloadFileService downloadFileService;
 	private QuestionService questionService;
 	private VistRecordService vistRecordService;
+
+	
+	@RequestMapping(value="top")
+	public String top(Model model){
+		
+			//导航栏目
+			
+			//结果集根据栏目的顺序升序排列
+			LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+			orderby.put("sequence", "asc");
+			//父类不为null      
+			String wherejpql="o.parent.classCode = ?  and o.visible =?";
+			List<Object> params = new ArrayList<Object>();
+			params.add("DHLM1");
+			params.add(true);
+			QueryResult<ColumnType> queryResult =columnTypeService.getScrollData(0,8, wherejpql, params.toArray(), orderby);
+			
+			//传输到页面
+			model.addAttribute("listColumns", queryResult.getResultlist());
+		
+		
+		return SiteUtils.getPage("front.top");
+	}
 	/**
 	 * 获取首页内容:学工新闻、下载专区、通知公告、就业实习信息、回音壁、校园文化【活动剪影、校园风光】、学习标兵、荣誉表彰。
 	 * @return
 	 */
 	@RequestMapping(value="home")
-	public String home(HomeForm formbean,Model model,HttpServletRequest request){
+	public String body(HomeForm formbean,Model model,HttpServletRequest request){
 		
 		/**
 		 * 访问总数加1

@@ -43,9 +43,9 @@ display: none;
 	     <!-- 当且列表父类的父类，也就是导航列表的倒数第二个，用于返回上一层使用。-->
 	    <c:set var="backParentId" value="${parentId }" scope="page"></c:set>
 	    
-	    <!-- 当且列表的父类id -->
+	    <!-- 当前列表的父类id -->
 	    <c:set var="parentId" value="${item.key}" scope="page"></c:set>
-	    <!-- 当且列表的父类名称-->
+	    <!-- 当前列表的父类名称-->
 	    <c:set var="parentName" value="${item.value }" scope="page"></c:set>
 	   
 	  </c:forEach>
@@ -76,6 +76,9 @@ display: none;
 					<td  width="7%">顺序</td>
 				</myc:otherwise>
 			</myc:choose>
+			 <c:if test="${parentName.equals('导航栏目')}">
+			     <td  width="7%">顺序</td>
+			 </c:if>
 			<td  width="8%">编辑</td>
 			<td  width="10%">删除</td>
 			</tr>
@@ -122,16 +125,18 @@ display: none;
 				 </td>
 				</myc:when>
 				<myc:otherwise>
-				<%-- <td>
-				   <span id="groupType${entity.id}">${entity.groupType }</span>
-				   <input  class="form-control"  type="hidden" id="igroupType${entity.id}" name="groupType" value="${entity.groupType }"> 
-				</td> --%>
 				 <td> 
 				   <span id="sequence${entity.id}">${entity.sequence }</span>
 				   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
 				</td>
 				</myc:otherwise>
 			  </myc:choose>
+			    <c:if test="${parentName.equals('导航栏目')}">
+			    <td> 
+				   <span id="sequence${entity.id}">${entity.sequence }</span>
+				   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
+				</td>
+				</c:if>
 			 <td>
 			  <a id="edit${entity.id}" href="javaScript:void(0)" onclick="displayEditButton('${entity.id}')" class="btn btn-info btn-xs" >编辑</a>
 			   <!--  glyphicon-ok  glyphicon-pencil-->
@@ -142,7 +147,17 @@ display: none;
 			 </td>
 			 <td> 
 			   <input type="button"  value="删除" class="btn btn-info btn-xs" onclick="javascript:deleteColumn('${entity.id}')">&nbsp;&nbsp;
-			</td>
+			   <c:if test="${parentName.equals('导航栏目')}">
+			   <myc:choose>
+			   	<myc:when test="${entity.visible==true }">
+			   	 <input type="button"  value="下线" class="btn btn-success btn-xs" onclick="javascript:turnColumnState('${entity.id}',false)">&nbsp;&nbsp;
+			 	</myc:when>
+			 	<myc:otherwise>
+			 	 <input type="button"  value="上线" class="btn btn-warning btn-xs" onclick="javascript:turnColumnState('${entity.id}',true)">&nbsp;&nbsp;
+			   </myc:otherwise>
+			   </myc:choose>
+			   </c:if>
+			  </td>
 			</tr>
 			<tr>
 			   <td colspan="10">
@@ -256,6 +271,23 @@ $(document).ready(function(){
 		form.doubleParentId.value=doubleParentId;
 		form.doubleParentName.value=doubleParentName;
 		form.submit();
+	}
+	
+	/**
+	*visible:true 上线栏目 ；false 下线栏目
+	 id:要操作栏目的id
+	*/
+	function turnColumnState(id,visible) {
+		 var hitmsg = "";
+		if( visible)
+			hitmsg ="确定要上线该栏目？"
+		else 
+			hitmsg ="确定要下线该栏目？"
+		if( confirm(hitmsg)){
+			var form = document.forms[0];
+			form.action="control/column/turnColumnState.action?column.id="+id+"&column.visible="+visible;
+			form.submit();
+		}
 	}
 	
 	/* 删除确认 */

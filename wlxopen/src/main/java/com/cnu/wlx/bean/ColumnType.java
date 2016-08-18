@@ -68,6 +68,8 @@ public class ColumnType {
 	 * 父类栏目，多对一
 	 */
 	private ColumnType parent;
+	
+	private Boolean visible=false;
 	/**
 	 * 子类栏目，一对多
 	 */
@@ -103,6 +105,14 @@ public class ColumnType {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public Boolean getVisible() {
+		return visible;
+	}
+	
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
 	}
 	@Column(nullable=false,length=15)
 	public String getName() {

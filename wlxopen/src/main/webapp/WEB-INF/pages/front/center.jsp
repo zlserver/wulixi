@@ -39,7 +39,7 @@ function setHigh(win) {
 
 <body>
 
-<iframe name="topframe" width="980" id="topframe" frameborder="0"  name="win" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/center/top.uhtml'/>"></iframe>
+<iframe name="topframe" width="980" id="topframe" frameborder="0"  name="win" scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/top.uhtml'/>"></iframe>
 
 <iframe name="bodyframe" width="962" id="bodyframe" frameborder="0"  name="win" scrolling="no" onload="setHigh(this)" src="<c:url value='front/home.uhtml'/>"></iframe>
 

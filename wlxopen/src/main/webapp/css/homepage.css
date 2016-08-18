@@ -25,8 +25,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 		width:704px; background:url(../images/AritNewsMid.jpg) repeat-y; list-style:none;
 }
 
-#fgImg {margin-bottom:6px; *margin-bottom:6px !important; *margin-bottom:4px;
-		width:247px; height:216px; *height:234px !important;
+#fgImg {margin-bottom:6px; height:216px; 
 }
 
 .NewsMain table tr td ul { margin:0px; padding:0px; margin-left:11px; line-height:1.8em;
@@ -38,11 +37,14 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 /*֪ͨ����*/
 #AritTG {float:left;margin:0px; padding:0px; padding-bottom:6px; margin-bottom:0px;
-	width:342px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
+	width:350px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
 
 .TGCont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
 	background:url(../images/AritTGMid.jpg) repeat-y;height: 120px;
+}
+.XXBont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
+	background:url(../images/AritTGMid.jpg) repeat-y;height: 114px;
 }
 
 #AritTG ul {margin:0px; padding:0; padding-left:15px; padding-bottom:6px; list-style:none; line-height:1.8em; }
@@ -53,7 +55,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #TgImg { margin-left:7px; border:1px solid #ccc; }
 /*��ҵ��Ϣ*/
-#AritYx {float:left; margin:0px; margin-left:17px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
+#AritYx {float:left; margin:0px; margin-left:8px; padding:0px; padding-bottom:6px; margin-bottom:8px;	zoom:1;
 	background:url(../images/JYBot.jpg) no-repeat left bottom;width: 355px;
 }
 
@@ -150,7 +152,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #artiHYB ul li { position:relative;}
 /*ʦ����ģ*/
-#AritSS {margin:0px; margin-top:4px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
+#AritSS {margin:0px; margin-top:9px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
 		 width:237px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
 

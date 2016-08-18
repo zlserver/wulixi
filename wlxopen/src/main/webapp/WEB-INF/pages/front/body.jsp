@@ -57,10 +57,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="NewsMain">
                         <table cellpadding="0" cellspacing="0" border="0" width="695">
                             <tr>
-                                <td width="247" align="center">
+                                <td width="340" align="center">
                                     <div id="fgImg">
                                      <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
-                                       <img src="front/news/lookImage.uhtml?savePath=${xuePic.savePath}" alt="" width="240" height="210" />
+                                       <img src="front/news/lookImage.uhtml?savePath=${xuePic.savePath}" alt="" width="340" height="220" />
                                      </a>
                                    </div>
                                     <!--新闻链接-->
@@ -98,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="Box1">
                 <!--通知公告-->
                 <div id="AritTG">
-                    <img id="AritTG1" src="images/AritTG.jpg" alt="通知公告" usemap="#AritTGMap" />
+                    <img id="AritTG1" src="images/AritTG.jpg" alt="通知公告" usemap="#AritTGMap" style="width:350px;height:24px"/>
                     <map id="AritTGMap" name="AritTGMap">
                         <area shape="rect" coords="260,2,318,23" href="front/news/siglenews.uhtml?classCode=tong" alt="更多" title="更多">
                     </map>
@@ -119,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <!--就业信息-->
                 <div id="AritYx">
-                    <img id="AritYx1" src="images/ArtiYX.jpg" alt="就业信息" usemap="#AritYXMap" />
+                    <img id="AritYx1" src="images/ArtiYX.jpg" alt="就业信息" usemap="#AritYXMap"  style="width:355px;height:24px"/>
                     <map id="AritYXMap" name="AritYXMap">
                         <area shape="rect" coords="260,2,325,23" href="front/news/siglenews.uhtml?classCode=job" alt="更多" title="更多">
                     </map>
@@ -228,18 +228,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <div id="artiser" style="width: 188px;border-right-width: 0px;height: 171px;">
                     <img id="artiser1" src="images/Aritser.jpg" alt="为您服务" />
-                    <div class="serMain" style=" width: 186px; padding-left: 2px; margin: 0px;border-right-width: 0px; padding-right: 0px;
-    height: 130px;">
-                        <table cellpadding="0" cellspacing="0" border="0" width="188" style="margin-top: 10px;margin-left: 5px">
-                            <tr height="50">
-                                <td width="107" style="width: 90px"><a href="http://map.baidu.com/?newmap=1&ie=utf-8&daddr=%20&fr=alab0&s=s%26c%3D131%0D%0A%26wd%3D%E5%8C%97%E4%BA%AC" target="_blank"><img src="images/gjcx.jpg" alt="公交查询"  width="90"/></a></td>
-                                <td><a href="http://qq.ip138.com/train/" target="_blank"><img src="images/lcsk.jpg" alt="列车时刻" width="90" /></a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="http://qq.ip138.com/day/" target="_blank"><img src="images/wnl.jpg" alt="万年历"  width="90"/></a></td>
-                                <td><a href="http://www.cnu.edu.cn/pages/info_details.jsp?seq=2425&boardid=71103&classcode=71103" target="_blank"><img src="images/xl.jpg" alt="校历"  width="90"/></a></td>
-                            </tr>
-                        </table>
+                    <div class="serMain" style=" width: 186px; padding-left: 2px; margin: 0px;border-right-width: 0px; padding-right: 0px;height: 130px;">
+                        <a href="http://map.baidu.com/?newmap=1&ie=utf-8&daddr=%20&fr=alab0&s=s%26c%3D131%0D%0A%26wd%3D%E5%8C%97%E4%BA%AC" target="_blank">
+	                     <img src="images/gjcx.jpg" alt="公交查询" style="margin-top: 20px;margin-bottom: 20px;width: 90px" />
+	                     </a>
+                       <a href="http://qq.ip138.com/train/" target="_blank">
+                        <img src="images/lcsk.jpg" alt="列车时刻"  style="margin-top: 20px;margin-bottom: 20px;width: 90px"  />
+                        </a>
+                         <a href="http://qq.ip138.com/day/" target="_blank">
+                         <img src="images/wnl.jpg" alt="万年历"  width="90px"/>
+                         </a>
+                         <a href="http://www.cnu.edu.cn/pages/info_details.jsp?seq=2425&boardid=71103&classcode=71103" target="_blank">
+                         <img src="images/xl.jpg" alt="校历"  width="90px"/>
+                         </a>
                     </div>
                 </div>
 
@@ -268,9 +269,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="area2">
             <!--下载专区-->
             <div id="AritLoad">
-                <img id="AritLoad1" src="images/ArtiLoad.jpg" alt="下载专区" usemap="#AritLoad1Map" />
+                <img id="AritLoad1" src="images/ArtiLoad.jpg" alt="下载专区" usemap="#AritLoad1Map" style="height:24px;width:235px" />
                 <map id="AritLoad1Map" name="AritLoad1Map">
-                    <area shape="rect" coords="175,2,252,23" href="front/download/more.uhtml?classCode=down_" alt="更多" title="更多">
+                    <area shape="rect" coords="175,2,252,23" href="front/download/single.uhtml?classCode=down_" alt="更多" title="更多">
                 </map>
   
                 <ul>
@@ -312,7 +313,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <map id="AritSSMap" name="AritSSMap">
                     <area shape="rect" coords="176,2,233,23" href="front/news/siglenews.uhtml?classCode=biao" alt="更多" title="更多">
                 </map>
-                <div class="TGCont">
+                <div class="XXBont">
                     <table id="SSKM" border="0" cellpadding="0" cellspacing="0">
 
                         <tr height="79">

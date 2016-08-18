@@ -49,7 +49,6 @@ public class ColumnTypeNoTypeDesForm extends BaseForm {
 	public void setDoubleParentName(String doubleParentName) {
 		this.doubleParentName = doubleParentName;
 	}
-	
 	public ColumnType getColumn() {
 		return column;
 	}

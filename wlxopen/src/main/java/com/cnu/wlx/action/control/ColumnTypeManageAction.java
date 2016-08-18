@@ -124,6 +124,18 @@ public class ColumnTypeManageAction {
 		}
 		return "redirect:/control/column/list.action?parentId="+formbean.getParentId()+"&page="+formbean.getPage();
 	}
+
+	@RequestMapping(value="turnColumnState")
+	public String turnColumnState(ColumnTypeNoTypeDesForm formbean){
+		
+		if( formbean.getColumn()!=null){
+			columnTypeService.setVisible(formbean.getColumn().getId(),formbean.getColumn().getVisible());
+		
+		}
+		return "redirect:/control/column/list.action?parentId="+formbean.getParentId()+"&page="+formbean.getPage();
+	}
+	
+	
 	/**
 	 * 添加栏目
 	 * @param formbean

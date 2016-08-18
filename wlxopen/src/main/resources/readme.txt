@@ -1,6 +1,6 @@
 本项目采用技术SpringMvc3.0+Hibernate3.0+缓存Ehcache+数据源c3p0
 
-初始化项目：用于添加两个管理员账号
+初始化项目：用于添加两个管理员账号，在LoginManageAction类中
 http://localhost:8080/wlxopen/common/systeminit.uhtml
 
 该系统有三种类型文章和一个回音壁。
