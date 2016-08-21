@@ -35,8 +35,8 @@ width:220px;  background:url(images/AritTGBot.jpg) no-repeat left bottom;
 border-right: 2px solid #A6C58A;
 }
 #right{
-width: 731px;
-float: left;
+width: 730px;
+float: right;
 padding-left:6px;
 padding-right:6px;
 padding-bottom:6px;

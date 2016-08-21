@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.bean.DownloadFile;
+import com.cnu.wlx.bean.HotInform;
 import com.cnu.wlx.bean.News;
 import com.cnu.wlx.bean.NewsFile;
 import com.cnu.wlx.bean.Question;
@@ -22,6 +23,7 @@ import com.cnu.wlx.formbean.HomeForm;
 import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.DownloadFileService;
+import com.cnu.wlx.service.HotInformService;
 import com.cnu.wlx.service.NewsFileService;
 import com.cnu.wlx.service.NewsService;
 import com.cnu.wlx.service.QuestionService;
@@ -43,7 +45,7 @@ public class HomeAction {
 	private DownloadFileService downloadFileService;
 	private QuestionService questionService;
 	private VistRecordService vistRecordService;
-
+	private HotInformService hotInformService;
 	
 	@RequestMapping(value="top")
 	public String top(Model model){
@@ -171,6 +173,7 @@ public class HomeAction {
 		List<Question> questions=questionService.getHomeData(huiyinPV.getFirstResult(), huiyinPV.getMaxresult());
 		if( questions!=null)
 			model.addAttribute("questions", questions);
+		
 		return SiteUtils.getPage("front.body");
 	}
 	public NewsService getNewsService() {
@@ -214,6 +217,13 @@ public class HomeAction {
 	@Resource
 	public void setVistRecordService(VistRecordService vistRecordService) {
 		this.vistRecordService = vistRecordService;
+	}
+	public HotInformService getHotInformService() {
+		return hotInformService;
+	}
+	@Resource
+	public void setHotInformService(HotInformService hotInformService) {
+		this.hotInformService = hotInformService;
 	}
 	
 }

@@ -270,28 +270,28 @@ public class FileManageAction {
 	   //遍历所有上传文件
 	   JSONArray jsonArray = new JSONArray();
 	   try {
-				while (iterator.hasNext()) {
-						String fileName = iterator.next();
-						MultipartFile multipartFile = request.getFile(fileName);
-						String originName=multipartFile.getOriginalFilename();
-						
-						//保存文件相对路径:download/
-						String relativedir= SiteUtils.getRelativeSavePath("download.file");
-						//保存文件名称
-				        String saveFileName = WebUtils.getFileSaveName(originName);
-						
-				        //保存文件
-				        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
-				        //构造文件实体
-				        Admin admin= (Admin) request.getSession().getAttribute("admin");
-				        DownloadFile downloadFile = new DownloadFile(originName, ColorEnum.BLACK, saveFileName, admin.getAccount(), relativedir+saveFileName, multipartFile.getSize(), WebUtils.getExtFromFilename(saveFileName), null);		
-				        downloadFileService.save(downloadFile);
-				        //构造json
-				        JSONObject fileJson = new JSONObject();
-				        fileJson.put("fileId", downloadFile.getId());
-				        jsonArray.add(fileJson);
-						
-				}
+		while (iterator.hasNext()) {
+				String fileName = iterator.next();
+				MultipartFile multipartFile = request.getFile(fileName);
+				String originName=multipartFile.getOriginalFilename();
+				
+				//保存文件相对路径:download/
+				String relativedir= SiteUtils.getRelativeSavePath("download.file");
+				//保存文件名称
+		        String saveFileName = WebUtils.getFileSaveName(originName);
+				
+		        //保存文件
+		        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
+		        //构造文件实体
+		        Admin admin= (Admin) request.getSession().getAttribute("admin");
+		        DownloadFile downloadFile = new DownloadFile(originName, ColorEnum.BLACK, saveFileName, admin.getAccount(), relativedir+saveFileName, multipartFile.getSize(), WebUtils.getExtFromFilename(saveFileName), null);		
+		        downloadFileService.save(downloadFile);
+		        //构造json
+		        JSONObject fileJson = new JSONObject();
+		        fileJson.put("fileId", downloadFile.getId());
+		        jsonArray.add(fileJson);
+				
+		}
 	   } catch (Exception e) {
 			e.printStackTrace();
 			status.setStatus(0);
