@@ -94,6 +94,14 @@ public class ColumnType {
 		this.classCode = classCode;
 		this.typeDes=ColumnTypeDesEnum.LIST_TYPE;
 	}
+	
+	public ColumnType(String name, String classCode, ColumnTypeDesEnum typeDes, Integer sequence) {
+		super();
+		this.name = name;
+		this.classCode = classCode;
+		this.typeDes = typeDes;
+		this.sequence = sequence;
+	}
 	public ColumnType() {
 		super();
 		// TODO Auto-generated constructor stub

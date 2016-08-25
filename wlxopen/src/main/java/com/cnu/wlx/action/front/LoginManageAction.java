@@ -16,6 +16,7 @@ import com.cnu.wlx.bean.Admin;
 import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.formbean.AdminForm;
 import com.cnu.wlx.formbean.HomeForm;
+import com.cnu.wlx.myenum.ColumnTypeDesEnum;
 import com.cnu.wlx.service.AdminService;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.utils.SiteUtils;
@@ -57,24 +58,20 @@ public class LoginManageAction {
 		//栏目
 		//formbean=new HomeForm("xue", "down", "tong", "job","xy_huo", "xy_feng", "biao","biaozhang");
 		
-		if( columnTypeService.findByClassCode("1system")==null){
+		if( columnTypeService.findByClassCode("XTGL01")==null){
 			
-			//系统管理及子栏目
-			ColumnType systemColumn =  new ColumnType("系统管理", "1system");
-			ColumnType sysc  =new ColumnType("栏目管理", "sys_lmgl");
+			//一、系统管理及子栏目
+			ColumnType systemColumn =  new ColumnType("系统管理", "XTGL01",ColumnTypeDesEnum.SYSTEM_TYPE,4);
+			
+			ColumnType sysc  =new ColumnType("栏目管理", "sys_lmgl",ColumnTypeDesEnum.SYSTEM_TYPE);
+			
 			List<ColumnType> sysChilds = new ArrayList<>();
 			sysChilds.add(sysc);
 			saveColumn(systemColumn, sysChilds,1);
 			
-			//新闻管理及子栏目
-			ColumnType newsColumn =  new ColumnType("新闻管理", "1newsgl");
-			List<ColumnType> newsChilds = new ArrayList<>();
 			
-			ColumnType xue =  new ColumnType("学工新闻", "xue");
-			ColumnType tong =  new ColumnType("通知公告", "tong");
-			ColumnType job =  new ColumnType("就业实习", "job");
-			ColumnType biao =  new ColumnType("学习标兵", "biao");
-			ColumnType biaozhang =  new ColumnType("荣誉表彰", "biaozhang");
+			//二、导航栏目及子栏目
+			ColumnType daohangColumn =  new ColumnType("导航管理", "DHGL01",ColumnTypeDesEnum.SYSTEM_TYPE,3);
 			
 			ColumnType xszz =  new ColumnType("学生组织", "xszz");
 			ColumnType gzzd =  new ColumnType("规章制度", "gzzd");
@@ -84,50 +81,81 @@ public class LoginManageAction {
 			ColumnType jygz =  new ColumnType("就业工作", "jygz");
 			ColumnType gfjy =  new ColumnType("国防教育", "gfjy");
 			ColumnType yjsy =  new ColumnType("研究生院", "yjsy");
+			
+			List<ColumnType> daohChilds = new ArrayList<>();
+			daohChilds.add(xszz);
+			daohChilds.add(gzzd);
+			daohChilds.add(sxjy);
+			daohChilds.add(zzgl);
+			daohChilds.add(xlzx);
+			daohChilds.add(jygz);
+			daohChilds.add(gfjy);
+			daohChilds.add(yjsy);
+			saveColumn(daohangColumn, daohChilds,2);
+			
+			
+			//三、重要通知及子栏目
+			ColumnType hotColumn =  new ColumnType("窗口通知", "CKTZ01",ColumnTypeDesEnum.SYSTEM_TYPE,2);
+			
+			ColumnType hotcont  =new ColumnType("通知内容", "tznr",ColumnTypeDesEnum.SYSTEM_TYPE);
+			
+			List<ColumnType> hotChilds = new ArrayList<>();
+			hotChilds.add(hotcont);
+			saveColumn(hotColumn, hotChilds,6);
+			
+			
+			//四、首页管理及子栏目
+			//1.保存首页栏目
+			ColumnType shouyeColumn =  new ColumnType("首页管理", "SYGL01",ColumnTypeDesEnum.SYSTEM_TYPE,1);
+			columnTypeService.addColumnType(shouyeColumn);
+			
+			//2.保存首页中的新闻栏目及子栏目
+			ColumnType newsColumn =  new ColumnType("新闻管理", "SYXWGL02",ColumnTypeDesEnum.SYSTEM_TYPE);
+			newsColumn.setParent(shouyeColumn);
+			
+			List<ColumnType> newsChilds = new ArrayList<>();
+			ColumnType xue =  new ColumnType("学工新闻", "xue",ColumnTypeDesEnum.SYSTEM_TYPE);
+			ColumnType tong =  new ColumnType("通知公告", "tong",ColumnTypeDesEnum.SYSTEM_TYPE);
+			ColumnType job =  new ColumnType("就业实习", "job",ColumnTypeDesEnum.SYSTEM_TYPE);
+			ColumnType biao =  new ColumnType("学习标兵", "biao",ColumnTypeDesEnum.SYSTEM_TYPE);
+			ColumnType biaozhang =  new ColumnType("荣誉表彰", "biaozhang",ColumnTypeDesEnum.SYSTEM_TYPE);
+			
 			newsChilds.add(xue);
 			newsChilds.add(tong);
 			newsChilds.add(job);
 			newsChilds.add(biao);
 			newsChilds.add(biaozhang);
-			newsChilds.add(xszz);
-			newsChilds.add(gzzd);
-			newsChilds.add(sxjy);
-			newsChilds.add(zzgl);
-			newsChilds.add(xlzx);
-			newsChilds.add(jygz);
-			newsChilds.add(gfjy);
-			newsChilds.add(yjsy);
-			
 			saveColumn(newsColumn, newsChilds,2);
-			//下载管理
-			ColumnType downColumn = new ColumnType("下载管理","1downgl");
-			ColumnType sidown  =new ColumnType("思政下载", "down_sz");
-			List<ColumnType> downChilds = new ArrayList<>();
-			downChilds.add(sidown);
-			saveColumn(downColumn, downChilds,4);
 			
-			//思政管理及子栏目
-
-			ColumnType szColumn = new ColumnType("思政管理","1sigl");
-			columnTypeService.addColumnType(szColumn);
-			
-			ColumnType xyColumn = new ColumnType("校园文化","2xyculture");
-			xyColumn.setParent(szColumn);
+			//3.保存首页中的校园文化及子栏目
+			ColumnType xyColumn = new ColumnType("校园文化","SYXYWH02",ColumnTypeDesEnum.SYSTEM_TYPE);
+			xyColumn.setParent(shouyeColumn);
 			
 			List<ColumnType> xyChilds = new ArrayList<>();
-			ColumnType xy_huo =  new ColumnType("活动掠影", "xy_huo");
-			ColumnType xy_feng =  new ColumnType("校园风光", "xy_feng");
+			ColumnType xy_huo =  new ColumnType("活动掠影", "xy_huo",ColumnTypeDesEnum.SYSTEM_TYPE);
+			ColumnType xy_feng =  new ColumnType("校园风光", "xy_feng",ColumnTypeDesEnum.SYSTEM_TYPE);
 			xyChilds.add(xy_huo);
 			xyChilds.add(xy_feng);
 			
 			saveColumn(xyColumn, xyChilds,3);
 			
-			//留言管理
-			ColumnType liuColumn = new ColumnType("留言管理", "1liuyan");
-
+			
+			//4.保存首页中的下载及子栏目
+			ColumnType downColumn = new ColumnType("下载管理","SYXZGL02",ColumnTypeDesEnum.SYSTEM_TYPE);
+			downColumn.setParent(shouyeColumn);
+			
+			ColumnType sidown  =new ColumnType("思政下载", "down_sz");
+			List<ColumnType> downChilds = new ArrayList<>();
+			downChilds.add(sidown);
+			saveColumn(downColumn, downChilds,4);
+			
+			//5.保存首页中的留言及子栏目
+			ColumnType liuColumn = new ColumnType("留言管理", "SYLYGL02",ColumnTypeDesEnum.SYSTEM_TYPE);
+			liuColumn.setParent(shouyeColumn);
+			
 			List<ColumnType> liuChilds = new ArrayList<>();
 			//回音壁
-			ColumnType huiColu= new ColumnType("回音壁", "1huiyinbi");
+			ColumnType huiColu= new ColumnType("回音壁", "huiyinbi",ColumnTypeDesEnum.SYSTEM_TYPE);
 			liuChilds.add(huiColu);
 			saveColumn(liuColumn, liuChilds,5);
 			
@@ -148,7 +176,7 @@ public class LoginManageAction {
 	 * 
 	 * @param parent
 	 * @param childs
-	 * @param type 1:栏目管理类，2:新闻类 3：图片类 4：文件下载类 5:回音壁
+	 * @param type 1:栏目管理类，2:新闻类 3：图片类 4：文件下载类 5:回音壁 6:窗口通知内容
 	 */
 	public void saveColumn(ColumnType parent,List<ColumnType> childs,int type){
 		String  readurl = "";
@@ -171,6 +199,10 @@ public class LoginManageAction {
 			break;
 		case 5:
 			readurl="control/question/list.action?";
+			manageurl = readurl;
+			break;
+		case 6:
+			readurl="control/hotinform/list.action?";
 			manageurl = readurl;
 			break;
 		default:

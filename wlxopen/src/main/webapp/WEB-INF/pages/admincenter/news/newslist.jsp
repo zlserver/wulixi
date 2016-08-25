@@ -194,7 +194,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   <c:if test="${formbean.editState }">
 			   
 			    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
-			    <td colspan="5" align="center">
+			    <td colspan="6" align="center">
 			   	  <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
 			 
 			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">

@@ -73,10 +73,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</span>
 			 </td>
 			<td> 
-			    <select class="form-control" name="states" >
-				  <option value="YES" ${entity.state.toString().equals("YES")?'selected':'' }>显示</option>
-				  <option value="NO"  ${entity.state.toString().equals("NO")?'selected':'' }>未显示</option>
-				</select>
+			
+				 <c:choose>
+				 	<c:when test="${formbean.editState }">
+						<select class="form-control" name="states" >
+						  <option value="YES" ${entity.state.toString().equals("YES")?'selected':'' }>显示</option>
+						  <option value="NO"  ${entity.state.toString().equals("NO")?'selected':'' }>未显示</option>
+						</select>
+					</c:when>
+				 	<c:otherwise>
+					 	<span >
+					    <font color="blue">${entity.state.toString().equals("YES")?'显示':'' }</font>
+					    <font color="black">${entity.state.toString().equals("YES")?'':'未显示' }</font>
+					   </span>
+				 	</c:otherwise>
+				 </c:choose>
+			    
 			 </td>
 			
 		  </c:forEach>

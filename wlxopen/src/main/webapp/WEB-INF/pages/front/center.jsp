@@ -29,9 +29,9 @@ border-left: 2px solid rgb(223, 248, 223);
 	width: 340px;
 	height: 220px;
 	position: fixed;
-	border: 2px solid #a1a1a1;
+	border: 2px solid red;
 	border-radius:5px;
-	background-color: rgb(223, 248, 223);
+	background-color:#FFFFFF;
 	text-align: center;
 	padding: 2px;
 }
@@ -65,7 +65,7 @@ cursor: pointer;
 </style>   
 </head>
 <body>
-<iframe name="topframe" width="980" id="topframe" frameborder="0"   scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/top.uhtml'/>"></iframe>
+<iframe name="topframe" width="980" id="topframe" frameborder="0"   scrolling="no" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" src="<c:url value='front/top.uhtml?classCode=DHGL01'/>"></iframe>
 
 <iframe name="bodyframe" width="962" id="bodyframe" frameborder="0"   scrolling="no" onload="setHigh(this)" src="<c:url value='front/home.uhtml'/>"></iframe>
 
@@ -75,7 +75,7 @@ cursor: pointer;
  <a href="${inform.link }" class="hita" target="bodyframe">
 <marquee>${inform.title }</marquee>
  </a>
- <a target="bodyframe" href="${inform.link }">
+ <a target="bodyframe" href="${inform.link }" >
  <img alt="" src="front/news/lookImage.uhtml?savePath=${inform.picPath}" >
  </a>
   <span class="glyphicon glyphicon-remove hitoff" id="ok${entity.id}" title="关闭" aria-hidden="true" ></span>
@@ -85,12 +85,20 @@ cursor: pointer;
 <script type="text/javascript">
 var bottom=0;
 var right=0;
+var link ='${inform.link }';
 var show  = '${show}';
 $(document).ready(function(){
 	var divWin=$("#hitwin");
 	divWin.hide();
 	//alert(show);
 	if( show=="true"){
+		//根据链接判断是站内新闻还是站外新闻，站内新闻在当前页显示，站外新闻在新页面显示
+		
+		var index =link.indexOf("wlxopen");
+		if( index<0){//属于站外新闻
+			$("a").attr("target","_blank");
+		}
+			
 		$(".hitoff").bind("click",function(){
 			divWin.hide();
 		});

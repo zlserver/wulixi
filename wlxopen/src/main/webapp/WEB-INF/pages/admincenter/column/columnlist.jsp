@@ -76,7 +76,7 @@ display: none;
 					<td  width="7%">顺序</td>
 				</myc:otherwise>
 			</myc:choose>
-			 <c:if test="${parentName.equals('导航栏目')}">
+			 <c:if test="${parentName.equals('导航管理')}">
 			     <td  width="7%">顺序</td>
 			 </c:if>
 			<td  width="8%">编辑</td>
@@ -131,7 +131,7 @@ display: none;
 				</td>
 				</myc:otherwise>
 			  </myc:choose>
-			    <c:if test="${parentName.equals('导航栏目')}">
+			    <c:if test="${parentName.equals('导航管理')}">
 			    <td> 
 				   <span id="sequence${entity.id}">${entity.sequence }</span>
 				   <input  class="form-control"  type="hidden" id="isequence${entity.id}" name="sequence" value="${entity.sequence }"> 
@@ -147,7 +147,7 @@ display: none;
 			 </td>
 			 <td> 
 			   <input type="button"  value="删除" class="btn btn-info btn-xs" onclick="javascript:deleteColumn('${entity.id}')">&nbsp;&nbsp;
-			   <c:if test="${parentName.equals('导航栏目')}">
+			   <c:if test="${parentName.equals('导航管理')}">
 			   <myc:choose>
 			   	<myc:when test="${entity.visible==true }">
 			   	 <input type="button"  value="下线" class="btn btn-success btn-xs" onclick="javascript:turnColumnState('${entity.id}',false)">&nbsp;&nbsp;

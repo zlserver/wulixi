@@ -75,8 +75,10 @@ public class ColumnTypeManageAction {
 			if( column!=null){
 				try {
 					String classCode = column.getClassCode();
+					ColumnTypeDesEnum ctenum= column.getTypeDes();
 						//非系统栏目才可以修改
-						if(!classCode.equalsIgnoreCase("1system")){
+						/*if(!classCode.equalsIgnoreCase("1system")){*/
+						if(!ctenum.equals(ColumnTypeDesEnum.SYSTEM_TYPE)){
 							column.setClassCode(formbean.getColumn().getClassCode());
 							column.setName(formbean.getColumn().getName());
 							column.setGroupType(formbean.getColumn().getGroupType());
@@ -94,7 +96,7 @@ public class ColumnTypeManageAction {
 							//成功
 							flage = true;
 						}else{
-							formbean.getResult().put("error", "不可修改");
+							formbean.getResult().put("error", "系统类不可修改");
 						}
 						
 				}catch(DataIntegrityViolationException de){

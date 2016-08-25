@@ -48,7 +48,7 @@ public class HomeAction {
 	private HotInformService hotInformService;
 	
 	@RequestMapping(value="top")
-	public String top(Model model){
+	public String top(Model model,String classCode){
 		
 			//导航栏目
 			
@@ -58,7 +58,7 @@ public class HomeAction {
 			//父类不为null      
 			String wherejpql="o.parent.classCode = ?  and o.visible =?";
 			List<Object> params = new ArrayList<Object>();
-			params.add("DHLM1");
+			params.add(classCode);
 			params.add(true);
 			QueryResult<ColumnType> queryResult =columnTypeService.getScrollData(0,8, wherejpql, params.toArray(), orderby);
 			

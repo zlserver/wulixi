@@ -59,6 +59,7 @@ public class ColumnTypeServiceImpl implements ColumnTypeService {
 
 		//结果集根据栏目的顺序升序排列
 		LinkedHashMap<String,String> orderby=new LinkedHashMap<String,String>();
+		orderby.put("visible", "desc");
 		orderby.put("sequence", "asc");
 
 		//父类不为null

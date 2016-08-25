@@ -42,6 +42,8 @@ public class ControlCenterAction {
 	@RequestMapping(value="left",method=RequestMethod.GET)
 	public String left(Model model){//获取顶级父类栏目
 		List<ColumnType> topColumns= columnTypeService.getTopColumns();
+		//查询到“导航管理”顶级栏目，将其子栏目按照visible降序排列，使visible为true的在前面
+		
 		//保存到
 		model.addAttribute("topColumns", topColumns);
 		return SiteUtils.getPage("control.center.left");
