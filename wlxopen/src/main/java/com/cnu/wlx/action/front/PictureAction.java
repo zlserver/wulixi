@@ -59,7 +59,6 @@ public class PictureAction {
 		
 		List<Object> params = new ArrayList<Object>();
 		String qpreClassCode=preClassCode.replace("_", "\\_");
-		System.out.println("前缀："+qpreClassCode);
 		params.add(qpreClassCode+"%");
 		
 		List<ColumnType>  columns = columnTypeService.getAllData(wherejpql, params.toArray(), orderby);
@@ -91,7 +90,7 @@ public class PictureAction {
 		model.addAttribute("pageView", pageView);
 		
 		model.addAttribute("formbean",formbean);
-		
+		model.addAttribute("piccount", queryResult.getResultlist().size());
 		
 		return SiteUtils.getPage("front.picture.more");
 	}

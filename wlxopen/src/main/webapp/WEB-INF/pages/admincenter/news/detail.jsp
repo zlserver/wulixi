@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
     <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -31,9 +32,8 @@ padding-top: 20px;
 <body>
 <div  class="panel panel-default">
   <div class="panel-heading">
-    <a href="control/news/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+    <myc:navigation  model="news" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}"/>  
+  
   </div>
   <div class="panel-body">
 	<div id="title">

@@ -17,6 +17,7 @@ import com.cnu.wlx.bean.ColumnType;
 import com.cnu.wlx.formbean.AdminForm;
 import com.cnu.wlx.formbean.HomeForm;
 import com.cnu.wlx.myenum.ColumnTypeDesEnum;
+import com.cnu.wlx.myenum.StateEnum;
 import com.cnu.wlx.service.AdminService;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.utils.SiteUtils;
@@ -61,10 +62,9 @@ public class LoginManageAction {
 		if( columnTypeService.findByClassCode("XTGL01")==null){
 			
 			//一、系统管理及子栏目
-			ColumnType systemColumn =  new ColumnType("系统管理", "XTGL01",ColumnTypeDesEnum.SYSTEM_TYPE,4);
+			ColumnType systemColumn =  new ColumnType("系统管理", "XTGL01",ColumnTypeDesEnum.SYSTEM_TYPE,5);
 			
 			ColumnType sysc  =new ColumnType("栏目管理", "sys_lmgl",ColumnTypeDesEnum.SYSTEM_TYPE);
-			
 			List<ColumnType> sysChilds = new ArrayList<>();
 			sysChilds.add(sysc);
 			saveColumn(systemColumn, sysChilds,1);
@@ -73,14 +73,14 @@ public class LoginManageAction {
 			//二、导航栏目及子栏目
 			ColumnType daohangColumn =  new ColumnType("导航管理", "DHGL01",ColumnTypeDesEnum.SYSTEM_TYPE,3);
 			
-			ColumnType xszz =  new ColumnType("学生组织", "xszz");
-			ColumnType gzzd =  new ColumnType("规章制度", "gzzd");
-			ColumnType sxjy =  new ColumnType("思想教育", "sxjy");
-			ColumnType zzgl =  new ColumnType("资助管理", "zzgl");
-			ColumnType xlzx =  new ColumnType("心理咨询", "xlzx");
-			ColumnType jygz =  new ColumnType("就业工作", "jygz");
-			ColumnType gfjy =  new ColumnType("国防教育", "gfjy");
-			ColumnType yjsy =  new ColumnType("研究生院", "yjsy");
+			ColumnType xszz =  new ColumnType("学生组织", "xszz",true);
+			ColumnType gzzd =  new ColumnType("规章制度", "gzzd",true);
+			ColumnType sxjy =  new ColumnType("思想教育", "sxjy",true);
+			ColumnType zzgl =  new ColumnType("资助管理", "zzgl",true);
+			ColumnType xlzx =  new ColumnType("心理咨询", "xlzx",true);
+			ColumnType jygz =  new ColumnType("就业工作", "jygz",true);
+			ColumnType gfjy =  new ColumnType("国防教育", "gfjy",true);
+			ColumnType yjsy =  new ColumnType("研究生院", "yjsy",true);
 			
 			List<ColumnType> daohChilds = new ArrayList<>();
 			daohChilds.add(xszz);
@@ -94,7 +94,7 @@ public class LoginManageAction {
 			saveColumn(daohangColumn, daohChilds,2);
 			
 			
-			//三、重要通知及子栏目
+			//三、窗口通知及子栏目
 			ColumnType hotColumn =  new ColumnType("窗口通知", "CKTZ01",ColumnTypeDesEnum.SYSTEM_TYPE,2);
 			
 			ColumnType hotcont  =new ColumnType("通知内容", "tznr",ColumnTypeDesEnum.SYSTEM_TYPE);
@@ -103,8 +103,15 @@ public class LoginManageAction {
 			hotChilds.add(hotcont);
 			saveColumn(hotColumn, hotChilds,6);
 			
+			//四、员工管理及子栏目
+			ColumnType employeeColumn =  new ColumnType("员工管理", "YGGL01",ColumnTypeDesEnum.SYSTEM_TYPE,4);
 			
-			//四、首页管理及子栏目
+			ColumnType employeecont  =new ColumnType("管理员", "YGGLY02",ColumnTypeDesEnum.SYSTEM_TYPE);
+			List<ColumnType> employeeChilds = new ArrayList<>();
+			employeeChilds.add(employeecont);
+			saveColumn(employeeColumn, employeeChilds,7);
+			
+			//五、首页管理及子栏目
 			//1.保存首页栏目
 			ColumnType shouyeColumn =  new ColumnType("首页管理", "SYGL01",ColumnTypeDesEnum.SYSTEM_TYPE,1);
 			columnTypeService.addColumnType(shouyeColumn);
@@ -176,7 +183,7 @@ public class LoginManageAction {
 	 * 
 	 * @param parent
 	 * @param childs
-	 * @param type 1:栏目管理类，2:新闻类 3：图片类 4：文件下载类 5:回音壁 6:窗口通知内容
+	 * @param type 1:栏目管理类，2:新闻类 3：图片类 4：文件下载类 5:回音壁 6:窗口通知内容 7:员工管理
 	 */
 	public void saveColumn(ColumnType parent,List<ColumnType> childs,int type){
 		String  readurl = "";
@@ -205,6 +212,10 @@ public class LoginManageAction {
 			readurl="control/hotinform/list.action?";
 			manageurl = readurl;
 			break;
+		case 7:
+			readurl="control/employee/list.action?";
+			manageurl = readurl;
+			break;
 		default:
 			break;
 		}
@@ -228,10 +239,10 @@ public class LoginManageAction {
 		// 1.进行校验码验证、进行用户名密码校验
 		if (formbean.validateCheckCode(request)&&formbean.validateAccountAndPass()) {
 			// 2.根据用户名和密码登录
-			String ac = formbean.getAdmin().getAccount();
-			String pa = formbean.getAdmin().getPassword();
+			String ac = formbean.getAccount();
+			String pa = formbean.getPassword();
 			Admin ad = adminService.login(ac, pa);
-			if (ad != null) {
+			if (ad != null&&ad.getState().equals(StateEnum.YES)) {
 				// 4.登录成功,更新登录次数
 				ad.updateLoginCount();
 				ad.updateLoginTime();

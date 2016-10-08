@@ -4,6 +4,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>添加热点问题</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
 <style type="text/css">
 .quesarea{
 text-align: left;
@@ -30,9 +31,9 @@ margin: 0px;
 <body>
 <div class="panel panel-default">
   <div class="panel-heading">
-  	<a href="control/question/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+  	
+  <myc:navigation  model="question" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}"/>  
+  
   </div>
   <div class="panel-body">
   
@@ -54,29 +55,6 @@ margin: 0px;
   
   </div>
 </div>
-<script type="text/javascript">
-function checkcontent() {
-	var title =$("#q_title").val();
-	var content =$("#q_content").val();
-	var answer = $("#q_answer").val();
-	if( !title || title.trim()==""){
-
-		alert("请输入问题");
-		return false;
-	}
-	if( !content || content.trim()==""){
-
-		alert("请输入问题描述");
-		return false;
-	}
-	if( !answer || answer.trim()==""){
-
-		alert("请输入问题答案");
-		return false;
-	}
-	
-	return true;
-}
-</script>
+<script type="text/javascript" src="js/control/addhot.js"></script>
 </body>
 </html>

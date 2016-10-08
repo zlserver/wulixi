@@ -135,5 +135,72 @@
         <type>java.lang.String</type>
     </attribute>
   </tag>
-
+<tag>
+    <description>
+          根据角色数字输出对应的文字
+    </description>
+    <name>roleStr</name>
+    <tag-class>com.cnu.wlx.tag.RoleTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>
+         	角色数字代号
+        </description>
+        <name>role</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+  
+  <tag>
+    <description>
+          根据操作模块,栏目id,栏目名称,编辑状态来生成导航链接
+    </description>
+    <name>navigation</name>
+    <tag-class>com.cnu.wlx.tag.NavigationTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>
+         	操作模块名称
+        </description>
+        <name>model</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+    <attribute>
+        <description>
+         	栏目id
+        </description>
+        <name>columnId</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+     <attribute>
+        <description>
+         	栏目名
+        </description>
+        <name>columnName</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>java.lang.String</type>
+    </attribute>
+     <attribute>
+        <description>
+         	编辑状态
+        </description>
+        <name>editState</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+     <attribute>
+        <description>
+         	文件类型，非必要属性，
+        </description>
+        <name>type</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
   </taglib>

@@ -25,14 +25,14 @@ public class FileUploadController {
     	   
     	   
     	   MyStatus status = new MyStatus();
-    		System.out.println(testName+"-建立了--"+name);
+    		//System.out.println(testName+"-建立了--"+name);
 			Iterator<String> iterator = request.getFileNames();
 			
 			while (iterator.hasNext()) {
 					String fileName = iterator.next();
 					MultipartFile multipartFile = request.getFile(fileName);
 					String originName=multipartFile.getOriginalFilename();
-					System.out.println(originName+"----");
+					//System.out.println(originName+"----");
 					try {
 						//保存
 						

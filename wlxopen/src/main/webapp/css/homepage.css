@@ -43,6 +43,9 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 .TGCont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
 	background:url(../images/AritTGMid.jpg) repeat-y;height: 120px;
 }
+.JYXCont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
+	background:url(../images/AritJYXMid.jpg) repeat-y;height: 120px;
+}
 .XXBont {*margin-top:-3px; padding-top:6px; padding-bottom:4px; *padding-bottom:0px;
 	background:url(../images/AritTGMid.jpg) repeat-y;height: 114px;
 }
@@ -60,7 +63,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 }
 
 #AritYx ul {margin:0px; padding:0; *margin-top:-4px; padding-left:15px; padding-top:8px; padding-bottom:2px; line-height:1.8em;
-	background:url(../images/JYMid.jpg) repeat-y; list-style:none;height: 120px;
+	 list-style:none;height: 120px;
 }
 
 #AritYx ul li {padding-left:15px;
@@ -69,7 +72,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #banMid { clear:both; margin-top:0px; padding:0px; position:relative; top:-4px; *top:4px !important; *top:-4px;}
 
-#Box2 {margin:0px; padding:0px; margin-bottom:8px; *margin-bottom:16px !important; *margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
+#Box2 {margin:0px; padding:0px; margin-bottom:13px; *margin-bottom:16px !important; *margin-bottom:8px; position:relative; *top:8px !important; *top:0px;
 	width:714px; height: 225px;
 }
 /*ר��*/
@@ -152,7 +155,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 
 #artiHYB ul li { position:relative;}
 /*ʦ����ģ*/
-#AritSS {margin:0px; margin-top:9px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:0px; 	 
+#AritSS {margin:0px; margin-top:9px;margin-left:4px; padding:0px; padding-bottom:6px; margin-bottom:10px; 	 
 		 width:237px;  background:url(../images/AritTGBot.jpg) no-repeat left bottom;
 }
 
@@ -168,7 +171,7 @@ index style sheet( version:1.0 / author:Leo Chen / date:09_2_24 / e-mail:chenhy8
 .AritBM {*margin-top:-3px; padding-bottom:4px; *padding-bottom:0px;
 	background:url(../images/AritJLGMid.jpg) repeat-y; }
 
-.AritBMCont1 {padding-left:28px; padding-top:0px; padding-bottom:0px; background:url(../images/bmry_border_out.jpg) no-repeat 0px 23px; height:190px;
+.AritBMCont1 {padding-left:24px; padding-top:48px; padding-bottom:0px; background:url(../images/bmry_border_out.jpg) no-repeat 0px 23px; height:190px;
 }
 
 

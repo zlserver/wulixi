@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">
-<title>标题</title>
+<title>新闻详细主界面</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
  <frameset rows="65,*" cols="*" frameborder="yes" border="1" framespacing="2">

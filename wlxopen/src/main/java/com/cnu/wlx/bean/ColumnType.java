@@ -95,6 +95,12 @@ public class ColumnType {
 		this.typeDes=ColumnTypeDesEnum.LIST_TYPE;
 	}
 	
+	public ColumnType(String name, String classCode, Boolean visible) {
+		super();
+		this.name = name;
+		this.classCode = classCode;
+		this.visible = visible;
+	}
 	public ColumnType(String name, String classCode, ColumnTypeDesEnum typeDes, Integer sequence) {
 		super();
 		this.name = name;
@@ -186,6 +192,29 @@ public class ColumnType {
 	}
 	public void setChildrens(Set<ColumnType> childrens) {
 		this.childrens = childrens;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((classCode == null) ? 0 : classCode.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ColumnType other = (ColumnType) obj;
+		if (classCode == null) {
+			if (other.classCode != null)
+				return false;
+		} else if (!classCode.equals(other.classCode))
+			return false;
+		return true;
 	}
 	
 }

@@ -24,11 +24,23 @@ text-align: center;
 
 <table border="1px">
 <thead>
-<tr><td colspan="4"><h4>最后一级栏目的分类码命名规则，*代表任意名称，对于不是最后一级的栏目命名可以随意，不要超过15个字符。</h4></td></tr>
+<tr><td colspan="4"><h4>可添加的栏目，*代表任意名称，对于不是最后一级的栏目命名可以随意，不要超过15个字符。</h4></td></tr>
 <tr><td class="title">栏目名称</td><td class="title">分类码命名</td><td class="title">浏览链接</td><td class="title">管理链接</td></tr>
 </thead>
 <tbody>
-
+<tr>
+<td class="title">新闻类栏目</td><td>*</td>
+<td>control/news/list.action?</td><td>control/news/list.action?</td>
+</tr>
+<tr>
+<td >学生组织</td><td>xszz</td>
+<td>control/news/list.action?</td><td>control/news/list.action?</td>
+</tr>
+<tr>
+<td >规章制度</td><td>gzzd</td>
+<td>control/news/list.action?</td><td>control/news/list.action?</td>
+</tr>
+<!-- 
 <tr>
 <td class="title">新闻类栏目</td><td>*</td>
 <td>control/news/list.action?</td><td>control/news/list.action?</td>
@@ -87,13 +99,13 @@ text-align: center;
 <tr>
 <td>荣誉表彰</td><td>biaozhang</td>
 <td>control/news/list.action?</td><td>control/news/list.action?</td>
-</tr>
-<tr>
-<td class="title">图片类的栏目</td><td>*</td>
+</tr>-->
+<tr> 
+<td class="title">图片类栏目</td><td>*</td>
 <td>control/download/list.action?type=IMAGE&</td><td>control/download/list.action?type=IMAGE&</td>
 </tr>
 <tr>
-<td class="title">校园风光类的栏目</td><td>xy_*</td>
+<td class="title">校园文化类子栏目</td><td>xy_*</td>
 <td>control/download/list.action?type=IMAGE&</td><td>control/download/list.action?type=IMAGE&</td>
 </tr>
 <tr>
@@ -105,29 +117,57 @@ text-align: center;
 <td>control/download/list.action?type=IMAGE&</td><td>control/download/list.action?type=IMAGE&</td>
 </tr>
 <tr>
-<td class="title">下载文件类的栏目</td><td>down_*</td> 
+<td class="title">下载管理类子栏目</td><td>down_*</td> 
+<td>control/download/list.action?type=NO_IMAGE&</td><td>control/download/list.action?type=NO_IMAGE&</td>
+</tr>
+<tr>
+<td>思政下载</td><td>down_sz</td>
 <td>control/download/list.action?type=NO_IMAGE&</td><td>control/download/list.action?type=NO_IMAGE&</td>
 </tr>
 <tr>
 <td class="title">回音壁</td><td>*</td>
 <td>control/question/list.action?</td><td>control/question/list.action?</td>
 </tr>
+<tr>
+<td class="title">窗口通知类</td><td>*</td>
+<td>control/hotinform/list.action?</td><td>control/hotinform/list.action?</td>
+</tr>
+<tr>
+<td >窗口内容</td><td>tznr</td>
+<td>control/hotinform/list.action?</td><td>control/hotinform/list.action?</td>
+</tr>
 </tbody>
 </table>
 
 <table border="1px">
 <thead>
-<tr><td colspan="3"><h4>一级栏目的分类码命名规则，*代表任意名称，不要超过15个字符。</h4></td></tr>
+<tr><td colspan="3"><h4>栏目的分类码命名规则，*代表任意名称，不要超过15个字符。</h4></td></tr>
 <tr><td class="title">栏目名称</td><td class="title">分类码命名</td><td class="title">说明</td></tr>
 </thead>
 <tbody>
 
 <tr>
-<td class="title">系统栏目</td><td>1system</td>
+<td class="title">一级栏目</td><td>*01</td>
 <td>不可修改</td>
 </tr>
 <tr>
-<td class="title">其它一级栏目</td><td>1*</td>
+<td class="title">二级栏目</td><td>*02</td>
+<td>可修改</td>
+</tr>
+<tr>
+<td class="title">最后一级栏目</td><td>*</td>
+<td>可修改</td>
+</tr>
+<tr>
+<td >首页管理</td><td>SYGL01</td>
+<td>不可修改</td>
+</tr>
+<tr>
+<td >首页管理-》新闻管理</td><td>SYXWGL02</td>
+<td>不可修改</td>
+</tr>
+<tr>
+<td >首页管理-》新闻管理-》学工新闻</td><td> 	xue</td>
 <td>可修改</td>
 </tr>
 </tbody>

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -11,6 +13,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.cnu.wlx.myenum.StateEnum;
 
 /**
 * @author 周亮 
@@ -50,10 +54,9 @@ public class Admin {
 	private Date loginTime ;
 	
 	/**
-	 * 启用状态，true:启用,默认启用
+	 * 是否可见
 	 */
-	private Boolean visible=true;
-	
+	private StateEnum state =StateEnum.YES;
 	public Admin(String account, String password) {
 		super();
 		this.account = account;
@@ -99,11 +102,14 @@ public class Admin {
 	public void setPublishCount(Integer publishCount) {
 		this.publishCount = publishCount;
 	}
-	public Boolean getVisible() {
-		return visible;
+
+	@Enumerated(EnumType.STRING)
+	public StateEnum getState() {
+		return state;
 	}
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
+
+	public void setState(StateEnum state) {
+		this.state = state;
 	}
 
 	public Date getLoginTime() {

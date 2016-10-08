@@ -1,0 +1,10 @@
+.td{
+text-align: center;
+}
+.editClass{
+cursor:pointer;
+}
+.xeditClass{
+cursor:pointer;
+display: none;
+}

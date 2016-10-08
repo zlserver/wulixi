@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -28,9 +29,9 @@ left: 265px;
 <body>
 <div class="panel panel-default">
   <div class="panel-heading">
-  	<a href="control/hotinform/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+  
+  <myc:navigation  model="hotinform" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}" />
+ 
   </div>
   <div class="panel-body">
 	<form id="newsform" method="post" action="control/hotinform/save.action" class="form-horizontal" enctype="multipart/form-data" >	
@@ -78,7 +79,7 @@ left: 265px;
 			</tr>
 			<tr>
 				<td  align="center">
-					<input type="submit"  value="保存" class="btn btn-success" onclick="return _action('save')" >
+					<input type="submit"  value="保存" class="btn btn-success" onclick="return submit_action('save')" >
 				    <span style="color: red">${formbean.result.error }</span>
 				</td>
 			</tr>
@@ -92,7 +93,7 @@ left: 265px;
 <script>
 
 /*  */
-function _action(choice) {
+function submit_action(choice) {
 	
 	var state = $("#state");
 	

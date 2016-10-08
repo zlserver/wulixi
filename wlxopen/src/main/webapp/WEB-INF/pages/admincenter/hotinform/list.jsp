@@ -11,12 +11,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>新闻预览图片</title> 
+<title>通知列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
-
-<link href="css/uploadfile.css" rel="stylesheet">
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
 
 </head>
 <body style="position: relative;">
@@ -24,9 +22,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="panel panel-default">
   <div class="panel-heading">
-  	<a href="control/hotinform/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+
+  <myc:navigation  model="hotinform" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}"/>
+  
   </div>
   <div class="panel-body">
 	<form id="newsform" action="<c:url value='control/hotinform/list.action'/>" method="post">
@@ -98,8 +96,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			 <td >全选 &nbsp; <input type="checkbox" onclick="selectAll(this)">  </td>
 			 <td colspan="5" align="center">
 			     <a href="control/hotinform/addUi.action" class="btn btn-success" >添加</a>
-			   	 <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
-			     <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+			   	 <input type="button" class="btn btn-info" onclick="javascript:_action('hotinform','update')"	value="确认修改">
+			     <input type="button" class="btn btn-warning" onclick="javascript:_action('hotinform','delete')"	value="删除">
 			 </td>
 		</tr>
 		</c:if>
@@ -116,80 +114,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<img id="winimg" class="img-rounded"  alt="" src="" >
 </div>
 </body>
+<script type="text/javascript" src="js/control/base.js"></script>
 
-<script src="js/jquery1.9.1/jquery.min.js"></script>
-<script src="js/jquery.uploadfile.min.js"></script>
-<script>
-
-$(document).ready(function() {
-	
-	//获取img标签  
-    var imgs = $(".hitimg");
-	var winimg = $("#winimg").width("350px").height("300px");
-	//设置div的样式  
-    var windiv = $("#windiv").css("border"," 1px solid #F9F9F9")  
-    .width("350px").height("300px").css("position","absolute").css("z-index","99")  
-    .css("background","white");  
-  //隐藏  
-    windiv.hide(); 
-  //注册鼠标移动上上面事件  
-    imgs.mouseover(function(event) {  
-    	windiv.show();  
-    	var imgNode = $(this); 
-    	var strattr= imgNode.attr("src");
-    	winimg.attr("src",strattr);
-        //出现在鼠标右下方  
-        //解决不同浏览器创建事件对象的差异  
-        var myEvent = event || window.event;  
-        windiv.css("left",myEvent.clientX+15+"px").css("top",myEvent.clientY+5+"px");  
-    });  
-    //注册鼠标离开时事件  
-    imgs.mouseout(function() {  
-    	windiv.hide();  
-    });  
-	
-});
-/* 全选 */
-function selectAll(checkNode){
-	var checkeds=document.getElementsByName("checkeds");
-	var state=checkNode.checked;
-	for( var i = 0;i <checkeds.length;i++)
-	  checkeds[i].checked=state;
-}
-//查询
-function topage(page){
-		var form = document.forms[0];
-	form.page.value= page;
-	form.submit();
-}
-
-function _action(method) {
-	//如果未选中则不操作
-	var checkeds=document.getElementsByName("checkeds");
-	var flage = false;
-	for( var i = 0;i <checkeds.length;i++)
-		if(checkeds[i].checked ){
-			flage = true;
-			break;
-		}
-	if( flage){
-		if( method=="delete")
-		{
-			if( !confirm("确定删除"))
-			{
-				return false;
-			}
-		}
-		var form = document.forms[0];
-		form.action="control/hotinform/"+method+".action";
-		          
-		form.submit();
-    }
-}
-function query() {
-	var form = document.forms[0];
-	form.page.value=1;
-	form.submit();
-}
-</script>
 </html>

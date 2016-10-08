@@ -35,7 +35,7 @@
   </filter-mapping>
 
  <!-- 管理员过滤器 -->
-   <filter>
+   <!-- <filter>
     <display-name>AdminFilter</display-name>
     <filter-name>AdminFilter</filter-name>
     <filter-class>com.cnu.wlx.filter.AdminFilter</filter-class>
@@ -43,7 +43,7 @@
   <filter-mapping>
     <filter-name>AdminFilter</filter-name>
     <url-pattern>/control/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
   <filter>
     <filter-name>OpenSessionInViewFilter</filter-name>

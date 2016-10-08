@@ -20,6 +20,7 @@ import com.cnu.wlx.bean.base.PageView;
 import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.formbean.BaseForm;
 import com.cnu.wlx.formbean.HomeForm;
+import com.cnu.wlx.formbean.HomeForm.NewsPreview;
 import com.cnu.wlx.myenum.FileTypeEnum;
 import com.cnu.wlx.service.ColumnTypeService;
 import com.cnu.wlx.service.DownloadFileService;
@@ -88,19 +89,29 @@ public class HomeAction {
 		//学工新闻
 		ColumnType xueCt = columnTypeService.findByClassCode(formbean.getXueClassCode());
 		if( xueCt!=null){
-			PageView<News> xuePV = new PageView<News>(10, 0);
+			PageView<News> xuePV = new PageView<News>(10,0);
 			QueryResult<News> xueNews=newsService.getHomeScrollData(xuePV.getFirstResult(), xuePV.getMaxresult(), xueCt.getId());
 			List<News> xuesNews =xueNews.getResultlist();
 			model.addAttribute("xueNews",xuesNews);
 			if( xuesNews!=null && xuesNews.size()>0)
-			model.addAttribute("hotNews",xuesNews.get(0));
-			//获取第一个新闻的预览图
+			  model.addAttribute("hotNews",xuesNews.get(0));
+			//获取前5个新闻的预览图
+			
 			if( xuesNews!=null &&xuesNews.size()>0)
 			{
-				News xueNew = xuesNews.get(0);
-				//查询条件：所属新闻，文件类型
-				NewsFile xuePic=newsFileService.getHomeData(xueNew.getId(), FileTypeEnum.IMAGE);
-				model.addAttribute("xuePic", xuePic);
+				List<NewsPreview> listxp = new ArrayList<>();
+				int count =0;
+				for( News news : xuesNews){
+					if( count ==5)
+						break;
+					NewsFile xuePic=newsFileService.getHomeData(news.getId(), FileTypeEnum.IMAGE);
+					HomeForm.NewsPreview xp = new NewsPreview(news.getTitle(), "xue", news.getId(), xuePic.getSavePath());
+					listxp.add(xp);
+					count++;
+				}
+				model.addAttribute("listxp", listxp);
+				model.addAttribute("xuecount", listxp.size());
+				
 			}
 		}
 		//下载专区
@@ -157,15 +168,21 @@ public class HomeAction {
 		//荣誉表彰
 		ColumnType biaozhangCt = columnTypeService.findByClassCode(formbean.getBiaozhangClassCode());
 		if( biaozhangCt!=null){
-			PageView<News> biaozhangPV = new PageView<News>(1, 0);
-			QueryResult<News> biaozhangNews=newsService.getHomeScrollData(biaozhangPV.getFirstResult(), biaozhangPV.getMaxresult(),biaozhangCt.getId());
+			PageView<News> biaozhangPV = new PageView<News>(10, 0);
 			
+			QueryResult<News> biaozhangNews=newsService.getHomeScrollData(biaozhangPV.getFirstResult(), biaozhangPV.getMaxresult(),biaozhangCt.getId());
 			if(biaozhangNews!=null &&biaozhangNews.getTotalrecord()>0){
-				News biaozhangNew = biaozhangNews.getResultlist().get(0);
-				model.addAttribute("biaozhangNew", biaozhangNew);
-				//查询条件：所属新闻，文件类型
-				NewsFile biaoPic=newsFileService.getHomeData(biaozhangNew.getId(), FileTypeEnum.IMAGE);
-				model.addAttribute("biaozhangPic", biaoPic);
+				List<News> biaolist= biaozhangNews.getResultlist();
+				List<NewsPreview> nplist = new ArrayList<>();
+				for( News news: biaolist){
+					NewsFile biaoPic=newsFileService.getHomeData(news.getId(), FileTypeEnum.IMAGE);
+					if(biaoPic!=null){
+						NewsPreview np = new NewsPreview(news.getTitle(),"biaozhang", news.getId(), biaoPic.getSavePath());
+						nplist.add(np);
+					}
+				}
+				model.addAttribute("nplist", nplist);
+				model.addAttribute("biaocount", nplist.size());
 			}
 		}
 		//回音壁

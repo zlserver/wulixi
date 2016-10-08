@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <base href="<%=basePath%>" target="mainFrame">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>内容</title>
+<title>左侧导航列表</title>
 <link rel="stylesheet" type="text/css" href="js/tree_themes/SimpleTree.css"/>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <style type="text/css">
@@ -51,10 +51,6 @@ font-size: 20px;
 	<div class="st_tree">
 		<ul>
 			<c:forEach items="${topColumns }" var="column">
-				<%--非系统栏目直接显示，系统栏目有权限才可以显示 --%>
-			 <c:choose>
-			 
-			  <c:when test="${!column.classCode.equals('1system')}">
 			  	 <li><a href="javascript:void(0)" >${column.name }</a></li>
 				  <ul show="false">
 					  <c:forEach items="${column.childrens }" var="child">
@@ -98,63 +94,14 @@ font-size: 20px;
 						</c:if> 
 					  </c:forEach>
 				  </ul>
-			  </c:when>
-			  <c:otherwise>
-				  <%--超级管理员才显示 --%>  
-			     <c:if test="${admin.role==1}">
-				      <li><a href="javascript:void(0)" >${column.name }</a></li>
-				  <ul show="false">
-					  <c:forEach items="${column.childrens }" var="child">
-					  	<!-- 无二级子类 -->
-					  	<c:if test="${fn:length(child.childrens)<=0}">
-					      <li>
-					      <myc:choose>
-							  	<myc:when test="${child.readUrl}">
-							  	<a target="mainFrame" onclick="action('${child.readUrl }','${child.id}','${child.name}',false)" href="javascript:void(0)"> ${child.name}</a>
-					       		</myc:when>
-							  	<myc:otherwise>
-							  	<a target="mainFrame" href="javascript:void()" >${child.name}</a>
-					     		</myc:otherwise>
-						  </myc:choose>
-						    <c:if test="${!child.manageUrl.equals('')}">
-						    &nbsp;[<a target="mainFrame" onclick="action('${child.manageUrl }','${child.id}','${child.name}',true)"  href="javascript:void(0)"><font color="red">管理</font></a>]
-				 		   </c:if>
-				 		  </li>
-						</c:if>
-						<!-- 有二级子类 -->
-						 <c:if test="${fn:length(child.childrens)>0}">
-						   <li><a href="javascript:void(0)" >${child.name }</a></li>
-							<ul>
-								<c:forEach  items="${child.childrens }" var="cchild">
-								 <li>
-								 
-								  <myc:choose>
-								  	<myc:when test="${cchild.readUrl}">
-								  	 <a target="mainFrame"  onclick="action('${cchild.readUrl }','${cchild.id}','${cchild.name}',false)" href="javascript:void(0)" >${cchild.name}</a>
-									</myc:when>
-								  	<myc:otherwise>
-								  	 <a target="mainFrame" href="javascript:void()" >${cchild.name}</a>
-									</myc:otherwise>
-								  </myc:choose>
-									  <c:if test="${!cchild.manageUrl.equals('')}">
-									    &nbsp;[<a target="mainFrame"  onclick="action('${cchild.manageUrl }','${cchild.id}','${cchild.name}',true)"  href="javascript:void(0)" ><font color="red">管理</font></a>]
-									  </c:if>
-								  </li>    
-								 </c:forEach>
-					        </ul> 
-						</c:if> 
-					  </c:forEach>
-				  </ul>
-			     </c:if>
-			  </c:otherwise>
-			 </c:choose>
-			
+			 
 			</c:forEach>
 		</ul>
 	</div>
 	
 	<div id="logindes" >
 		 <p >登录用户:<font > ${admin.account } </font></p>
+		 <p >管理员身份:<font > <myc:roleStr role="${admin.role }"/> </font></p>
 		 <p >登录时间:<font ><fmt:formatDate value="${admin.loginTime}" pattern="yy-MM-dd HH:mm"/> </font></p>
 		 <p >登录次数:<font > ${admin.loginCount } </font></p>
 		 <p >发稿篇数:<font > ${admin.publishCount } </font></p>

@@ -1,7 +1,10 @@
 package com.cnu.wlx.service;
 
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+
 import com.cnu.wlx.bean.Admin;
-import com.cnu.wlx.formbean.AdminForm;
+import com.cnu.wlx.bean.base.QueryResult;
 
 public interface AdminService {
 	
@@ -30,4 +33,9 @@ public interface AdminService {
 	 * @param admin
 	 */
 	public void update(Admin admin);
+	
+	public QueryResult<Admin> getScrollData(int firstindex, int maxresult,LinkedHashMap<String, String> orderby);
+
+	public void delete(Serializable... id);
+	
 }

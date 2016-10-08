@@ -12,10 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
 <base href="<%=basePath%>">   
-<title>新闻列表</title> 
+<title>下载图片列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
 <link href="css/uploadfile.css" rel="stylesheet">
 
 </head>
@@ -24,9 +24,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <div class="panel panel-default">
   <div class="panel-heading">
-  	<a href="control/download/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}&type=${navigationType}">
+<%--   	<a href="control/download/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}&type=${navigationType}">
   	${navigationColumnName}
-  </a>
+  </a> --%>
+   <myc:navigation  model="download" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}" type="${navigationType}"/>
+ 
   </div>
   <div class="panel-body" >
   
@@ -42,9 +44,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<c:if test="${formbean.editState }">
 			  <td  width="6%">选项</td>
 			</c:if>
-			<td  width="50%">名称</td>
-			<td  width="10%">作者</td>
-			<td width="10%">大小</td>
+			<td  width="7%">名称</td>
+			<td  width="49%">介绍</td>
+			<td  width="7%">作者</td>
+			<td width="7%">大小</td>
 			<td  width="10%">
 			<select class="form-control" name="suggest" onchange="query()">
 				  <option value="0" ${formbean.suggest==0?'selected':'' }>推荐状态</option>
@@ -75,13 +78,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			     <span >
 			       <img style="width:50px;height: 30px;" class="img-rounded hitimg" alt="" src="<c:url value='control/download/lookImage.action?savePath=${entity.savePath}'/>">
 				 
-				  &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
-				</span>
+				<%--   &nbsp;&nbsp;&nbsp;&nbsp; <font color="#CAC7F5"> <fmt:formatDate value="${entity.createTime }" pattern="yyyy-MM-dd hh:mm" /></font>
+				 --%></span>
 			 </td>
+			  <td> 
+			  <myc:choose>
+			  	<myc:when test="${formbean.editState }">
+			  	 <input  class="form-control  input-sm"  type="text" name="dess" value="${entity.des }"> 
+			  
+			  	</myc:when>
+			  	<myc:otherwise>
+			  	${entity.des }
+			  	</myc:otherwise>
+			  </myc:choose>
+				
+			   </td>
 			  <td> 
 				${entity.author }
 			   </td>
-			 
 			 <td> 
 			   <span ><myc:convert size="${entity.size}"/> </span>
 			 </td>
@@ -131,10 +145,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 <c:if test="${formbean.editState }">
 		 
 		    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
-			 <td colspan="6" align="center">
+			 <td colspan="7" align="center">
 			   	  <input id="addBtn" type="button" class="btn btn-success" onclick="javascript:saveFile('add')"  disabled="disabled"	value="添加">
-			     <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
-			      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+			     <input type="button" class="btn btn-info" onclick="javascript:_action('download','update')"	value="确认修改">
+			      <input type="button" class="btn btn-warning" onclick="javascript:_action('download','delete')"	value="删除">
 			 </td>
 			</c:if>
 		</tr>
@@ -154,132 +168,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script src="js/jquery1.9.1/jquery.min.js"></script>
 <script src="js/jquery.uploadfile.min.js"></script>
-<script>
+<script type="text/javascript" src="js/control/base.js"></script>
+<script type="text/javascript" src="js/control/down_listpic.js"></script>
+<script type="text/javascript" src="js/control/showpic.js"></script>
 
-$(document).ready(function() {
-	//获取img标签  
-    var imgs = $(".hitimg");
-	var winimg = $("#winimg").width("350px").height("300px");
-	//设置div的样式  
-    var windiv = $("#windiv").css("border"," 1px solid #F9F9F9")  
-    .width("350px").height("300px").css("position","absolute").css("z-index","99")  
-    .css("background","white");  
-  //隐藏  
-    windiv.hide(); 
-  //注册鼠标移动上上面事件  
-    imgs.mouseover(function(event) {  
-    	windiv.show();  
-    	var imgNode = $(this); 
-    	var strattr= imgNode.attr("src");
-    	winimg.attr("src",strattr);
-        //出现在鼠标右下方  
-        //解决不同浏览器创建事件对象的差异  
-        var myEvent = event || window.event;  
-        windiv.css("left",myEvent.clientX+15+"px").css("top",myEvent.clientY+5+"px");  
-    });  
-    //注册鼠标离开时事件  
-    imgs.mouseout(function() {  
-    	windiv.hide();  
-    });  
-    
-    /* 上传文件代码 */
-	$("#fileuploader").uploadFile({
-		url:"control/download/ajaxuploadFile.action", //后台处理方法
-		fileName:"myfile",   //文件的名称，此处是变量名称，不是文件的原名称
-		dragDrop:true,  //可以取消
-		abortStr:"取消",
-		sequential:true,  //按顺序上传
-		sequentialCount:1,  //按顺序上传
-		autoSubmit :"false",  //取消自动上传
-		acceptFiles:"image/jpeg,image/png,application/msword" , //限制上传文件格式
-		extErrorStr:"上传文件格式不对",
-		maxFileCount:10,       //上传文件数量
-		maxFileSize:5*1024*1024, //大小限制5M
-		sizeErrorStr:"上传文件不能大于5M", 
-		dragDropStr: "<span><b>附件拖放于此</b></span>",
-		showFileCounter:false,
-		returnType:"json",  //返回数据格式为json
-		onSuccess:function(files,data,xhr,pd)  //上传成功事件，data为后台返回数据
-		{
-			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Success for: "+JSON.stringify(data));
-			var downloadform = $("#downloadform");
-		   if( data.status==1){
-				for( var i=0;i<data.data.length;i++){
-					var inputNode='<input type="hidden" id="'+data.data[i].fileId+'" name="nfileIds" value="'+data.data[i].fileId+'" >';
-					downloadform.append(inputNode);
-					$("#addBtn").removeAttr("disabled");
-				}
-			}else{
-				alert("上传失败");
-				alert(data.message);
-			} 
-		},
-		showDelete: true,//删除按钮
-		statusBarWidth:600,
-		dragdropWidth:600,
-		deleteCallback: function (data, pd) {
-			 var fileId=data.data[0].fileId;
-			 $.post("control/download/ajaxdeleteFile.action", {fileId:fileId},
-		            function (resp,textStatus, jqXHR) {
-		                //alert(textSatus);
-		      }); 
-		    //删除input标签
-		    $("#"+fileId).remove();
-		    pd.statusbar.hide(); //You choice.
-		}
-	});
-});
-/* 全选 */
-function selectAll(checkNode){
-	var checkeds=document.getElementsByName("checkeds");
-	var state=checkNode.checked;
-	for( var i = 0;i <checkeds.length;i++)
-	  checkeds[i].checked=state;
-}
-//查询
-function topage(page){
-		var form = document.forms[0];
-	form.page.value= page;
-	form.submit();
-}
-
-function _action(method) {
-	//如果未选中则不操作
-	var checkeds=document.getElementsByName("checkeds");
-	var flage = false;
-	for( var i = 0;i <checkeds.length;i++)
-		if(checkeds[i].checked ){
-			flage = true;
-			break;
-		}
-	if( flage){
-		if( method=="delete")
-		{
-			if( !confirm("确定删除"))
-			{
-				return false;
-			}
-		}
-		var form = document.forms[0];
-		form.action="control/download/"+method+".action";
-		          
-		form.submit();
-    }
-}
-
-/**
- 将上传的附件保存
-*/
-function saveFile(method){
-	var form = document.forms[0];
-	form.action="control/download/"+method+".action";
-	          
-	form.submit();
-}
-function query() {
-	var form = document.forms[0];
-	form.page.value=1;
-	form.submit();
-}
-</script>
 </html>

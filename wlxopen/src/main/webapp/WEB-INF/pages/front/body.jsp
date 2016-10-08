@@ -12,7 +12,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">   
 <title>首页body</title> 
- <link href="css/default.css" type="text/css" rel="stylesheet">
     <style type="text/css">
         <!--
         @import url(css/default.css);
@@ -20,10 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         -->
     </style>
 
-    <script type="text/javascript" src="js/prototype.js"></script>
-    <script type="text/javascript" src="js/scriptaculous.js?load=effects"></script>
-    <script type="text/javascript" src="js/lightbox.js"></script>
-    <script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/jquery1.9.1/jquery.min.js"></script>
+
      <style type="text/css">
         #header{padding:0px 0 10px 0;}
         #menu { font:12px verdana, arial, sans-serif; }
@@ -39,10 +36,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             width:963px;
             margin-left: -8px;
         }
+        #xgbox{
+        	width: 340px;
+        	height: 224px;
+        	padding:0px;
+        	position: relative;
+          	overflow: hidden;
+        }
+        #xgbox ul{
+            position: absolute;
+        	width: 600%;
+        	height:220px;
+        	top:0px;
+        	left:0px;
+        	margin: 0px;
+        	padding: 0px;
+            list-style: none;
+        }
+        #xgbox ul li{
+        	height: 220px;
+        	width: 340px;
+        	float: left;
+        	margin:0px;
+        	padding:0px;
+            list-style:none;
+        }
+        #xgbox ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+        #xgbox ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+            list-style:none;
+            padding: 0px;
+        }
+        #xgbox ol li.current {
+            background: yellow;
+        }
+        
+        #rybzbox{
+        	width: 190px;
+        	height: 125px;
+        	padding:0px;
+        	position: relative;
+          	overflow: hidden;
+        }
+        #rybzbox ul{
+        	position: absolute;
+        	width: 600%;
+        	height:125px;
+        	top:0px;
+        	left:0px;
+        	margin: 0px;
+        	padding: 0px;
+            list-style: none;
+        }
+        #rybzbox ul li{
+        	height: 125px;
+        	width: 190px;
+        	float: left;
+        	margin:0px;
+        	padding:0px;
+            list-style:none;
+        }
+        #rybztarget ul img{
+          width=190px;
+          height=125px;
+        }
+        
     </style>
+    
+   
 </head>
 <body>
-
 <div id="container">
     <div id="main">
 
@@ -58,17 +133,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <table cellpadding="0" cellspacing="0" border="0" width="695">
                             <tr>
                                 <td width="340" align="center">
-                                    <div id="fgImg">
-                                     <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
+                                  <%-- <div id="fgImg">
+                                   
+                                   
+                                      <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
                                        <img src="front/news/lookImage.uhtml?savePath=${xuePic.savePath}" alt="" width="340" height="220" />
-                                     </a>
-                                   </div>
-                                    <!--新闻链接-->
-                                    <%-- <a  title="${hotNews.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${hotNews.id }">
-                                          <font color="${hotNews.titleColor.toString()}">
-                                           <myc:strout value="${hotNews.title}" length="30" suffix="..." /> 
-                                           </font>
-                                     </a> --%>
+                                     </a> 
+                                   </div> --%>
+                                   
+                                   <div id="xgbox">
+                                   	  <ul id="xgtarget">
+                                   	  	 <c:forEach items="${listxp}" var="xp">
+                                   	  	  <li>
+                                   	       <a title="${xp.title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${xp.newsId }">
+		                                      <img src="front/news/lookImage.uhtml?savePath=${xp.savePath}" alt="" width="340" height="220" />
+		                                   </a> 
+		                                  </li>
+                                   	  	 </c:forEach>
+                                   	  	  <li>
+                                   	       <a title="${listxp.get(0).title}" href="front/news/siglenews.uhtml?classCode=xue&newsId=${listxp.get(0).newsId }">
+		                                      <img src="front/news/lookImage.uhtml?savePath=${listxp.get(0).savePath}" alt="" width="340" height="220" />
+		                                   </a> 
+		                                  </li>
+                                   	   </ul>
+									    <ol>
+									   
+									    </ol>
+                                   </div> 
                                 </td>
                                 <td valign="top">
                                     <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -123,7 +214,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <map id="AritYXMap" name="AritYXMap">
                         <area shape="rect" coords="260,2,325,23" href="front/news/siglenews.uhtml?classCode=job" alt="更多" title="更多">
                     </map>
-                    
+                   <div class="JYXCont">
                     <ul>
                        <c:forEach items="${jobNews }" var="jobNew">
                             <li style="color:#FF6600;">
@@ -135,6 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </li>
                         </c:forEach>
                     </ul>
+                   </div>
                 </div>
             </div>
 
@@ -150,11 +242,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <tr>
                             <td style="width: 178px">
                                 <div class="zhuanTi">
-                                    <a href="http://202.204.208.108/jyw_ss/index.jsp?classcode=717" target="_blank"><img src="images/test1.jpg" alt="深入学习实践科学发展观" width="176" height="39" /></a>
+                                    <a href="http://jy.cnu.edu.cn/" target="_blank"><img src="images/test1.jpg" alt="深入学习实践科学发展观" width="176" height="39" /></a>
                                 </div></td>
                         </tr>
                         <tr>
-                            <td class="titl" style="width: 184px"><a href="http://kxfz.people.com.cn/GB/index.html" target="_blank" style="font-size: 10px">就业网</a>
+                            <td class="titl" style="width: 184px"><a href="http://jy.cnu.edu.cn/" target="_blank" style="font-size: 10px">就业网</a>
                                 <p></p></td>
                         </tr>
                         <tr>
@@ -238,7 +330,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                          <a href="http://qq.ip138.com/day/" target="_blank">
                          <img src="images/wnl.jpg" alt="万年历"  width="90px"/>
                          </a>
-                         <a href="http://www.cnu.edu.cn/pages/info_details.jsp?seq=2425&boardid=71103&classcode=71103" target="_blank">
+                         <a href="http://www.cnu.edu.cn/fwzn/xl/index.htm" target="_blank">
                          <img src="images/xl.jpg" alt="校历"  width="90px"/>
                          </a>
                     </div>
@@ -342,10 +434,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="AritBM">
                 <img id="AritBM1" src="images/AritBM.jpg" alt="部门荣誉" width="237" height="40" />
                 <div class="AritBM">
-                    <div class="AritBMCont1">
-                        <a href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${biaozhangNew.id }"  >
+                    <div class="AritBMCont1" style="padding-left:24px; padding-top:48px;">
+                       <%--   <a href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${biaozhangNew.id }"  >
                         <img src="front/news/lookImage.uhtml?savePath=${biaozhangPic.savePath}" width="190" height="125" style="border:none; position:relative; left:-4px; top:48px;" />
-                        </a>
+                        </a> --%> 
+                          <div id="rybzbox">
+                            <ul id="rybztarget">
+                            <c:forEach items="${nplist }" var="np">
+                             <li >
+							  <a title="${np.title }" href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${np.newsId }"  >
+                       		   <img src="front/news/lookImage.uhtml?savePath=${np.savePath}" width="190" height="125" />
+                        	  </a>
+                        	</li>
+                           </c:forEach>
+                           <li >
+							  <a title="${nplist.get(0).title }" href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${nplist.get(0).newsId }"  >
+                       		   <img src="front/news/lookImage.uhtml?savePath=${nplist.get(0).savePath}" width="190" height="125" />
+                        	  </a>
+                        	</li>
+ 						</ul>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -353,6 +461,96 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
 </div>
+ <script type="text/javascript">
 
+	//学工新闻
+	var xg_current =0;
+	var xg_imageWidth =340;
+	var xg_setId;
+    var xg_target = $("#xgtarget");
+    var xuecount ='${xuecount}';
+	xuecount++;
+ 	var xuewidthpow=xuecount*100;
+ 	$("#xgbox ul").width(xuewidthpow+"%");//设置记账图片长度
+ 	
+    for(var i=1;i<xuecount;i++){
+    	if(i==1)
+    		$("#xgbox ol").append("<li class='current'>"+i+"</li>");
+    	else
+    		$("#xgbox ol").append("<li>"+i+"</li>");
+    }
+ 	 //获取ol中所有的li
+ 	$("#xgbox ol li").bind("click",function(event){
+ 		var index = event.currentTarget.innerHTML;
+ 		
+ 		$("#xgbox ol li").each(function(){
+ 			$(this).removeAttr("class");
+ 		});
+ 		$(this).attr("class","current");
+ 		//alert(index);
+ 		clearInterval(xg_setId);
+
+ 		xg_current=index;
+ 		var leftmargin=-((index-1)*xg_imageWidth);
+ 		
+ 		xg_target.css("left",leftmargin+"px");
+ 	    xg_setId=setInterval(xgcyc,3000);
+ 	});
+ 	
+	//学工新闻窗口移动
+    function xgcyc() {
+    	$("#xgbox ol li").each(function(){
+ 			$(this).removeAttr("class");
+ 		});
+    	//xg_current=leftcyc(xg_target,xg_imageWidth,xg_current);
+    	
+ 		$("#xgbox ol li:eq("+xg_current+")").attr("class","current");
+ 		if(xg_current==(xuecount-1))
+ 	 		$("#xgbox ol li:eq(0)").attr("class","current");
+    	if( xg_current==xuecount){
+    		xg_target.css("left",0+"px");
+    		xg_current=1;
+ 	 		$("#xgbox ol li:eq(1)").attr("class","current");
+		}
+		var leftmargin=-(xg_current*xg_imageWidth);
+		$(xg_target).animate({left:leftmargin},{duration:500});
+		xg_current++;
+	}
+	
+
+	//荣誉表彰
+	var rybz_current =0;
+	var rybz_imageWidth =190;
+	var rybz_setId;
+ 	var rybz_target = $("#rybztarget");
+
+ 	var biaocount= '${biaocount}';
+ 	biaocount++;
+ 	var widthpow=biaocount*100;
+ 	$("#rybzbox ul").width(widthpow+"%");//设置记账图片长度
+	//荣誉表彰 
+    function rybzcyc() {
+    	rybz_current=leftcyc(rybz_target,rybz_imageWidth,rybz_current);
+    	
+	}
+    /* 轮播
+    mnode:要移动的ul
+    iwidth:每次移动的距离
+    current:当前移动到mnode中的第几个li
+    */
+	function leftcyc(mnode,iwidth,current) {
+		if( current==biaocount){
+			mnode.css("left",0+"px");
+			current=1;
+		}
+		var leftmargin=-(current*iwidth);
+		$(mnode).animate({left:leftmargin},{duration:500});
+		current++;
+		return current;
+	}
+	xg_setId=setInterval(xgcyc,3000);
+	rybz_setId=setInterval(rybzcyc,3000);
+  	
+    </script>
 </body>
 </html>

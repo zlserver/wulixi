@@ -45,13 +45,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div align="center" class="form-group">
 				<label for="inputAccount" class="col-sm-2 control-label">账号</label>
 				<div class="col-sm-8">
-					<input type="text" value="${formbean.admin.account }"   required="required" class="form-control" id="account" name="admin.account">
+					<input type="text" value="${formbean.account }"   required="required" class="form-control" id="account" name="account">
 				    </div>
 			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="col-sm-2 control-label">密码</label>
 				<div class="col-sm-8">
-					<input type="password" value="${formbean.admin.password}"   required="required" class="form-control" id="password" name="admin.password">
+					<input type="password" value="${formbean.password}"   required="required" class="form-control" id="password" name="password">
 					</div>
 			</div>
 			<div class="form-group">

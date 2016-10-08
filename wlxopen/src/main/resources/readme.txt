@@ -29,3 +29,8 @@ control/download/list.action?type=IMAGE&
 control/question/list.action?
 管理连接：
 control/question/list.action?
+
+5.员工浏览链接
+control/employee/list.action?
+管理连接：
+control/employee/list.action?

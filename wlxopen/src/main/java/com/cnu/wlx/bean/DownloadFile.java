@@ -61,6 +61,10 @@ public class DownloadFile {
 	 */
 	private String ext;
 	/**
+	 * 文件描述
+	 */
+	private String des;
+	/**
 	 * 文件类型
 	 */
 	private FileTypeEnum type;
@@ -133,6 +137,15 @@ public class DownloadFile {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public String getDes() {
+		return des;
+	}
+
+	public void setDes(String des) {
+		this.des = des;
+	}
+
 	@Column(nullable=false,length=100)
 	public String getOriginName() {
 		return originName;

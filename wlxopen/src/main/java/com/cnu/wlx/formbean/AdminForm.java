@@ -1,5 +1,7 @@
 package com.cnu.wlx.formbean;
 
+import java.util.List;
+
 import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,19 +14,71 @@ import com.cnu.wlx.bean.Admin;
  * admin类的表单类
  */
 public class AdminForm  extends BaseForm{
-	private Admin admin;
+	//private Admin admin;
 	/**
 	 * 校验码
 	 */
 	private String checkCode;
+
+	private String account;
+	private String password;
+	private int role;
+	/**
+	 * 批量操作
+	 */
+	private List<String> accounts;
+	private List<String> passwords;
+	private List<String>  states;
 	
-	public Admin getAdmin() {
-		return admin;
+	public List<String> getStates() {
+		return states;
 	}
 
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
+	public void setStates(List<String> states) {
+		this.states = states;
 	}
+
+	public List<String> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<String> accounts) {
+		this.accounts = accounts;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<String> getPasswords() {
+		return passwords;
+	}
+
+	public void setPasswords(List<String> passwords) {
+		this.passwords = passwords;
+	}
+
+	
 	/**
 	 * 校验账号和密码是否合理
 	 * @return
@@ -32,7 +86,7 @@ public class AdminForm  extends BaseForm{
 	public boolean validateAccountAndPass(){
 		//标识
 		boolean flage = true;
-		if(!validateLen(admin.getAccount(), 3, 20)||!validateLen(admin.getPassword(), 3, 20))
+		if(!validateLen(account, 3, 20)||!validateLen(password, 3, 20))
 		{
 			this.getResult().put("error", "账号或密码有误!");//账号长度在3-20之间!
 			flage = false;

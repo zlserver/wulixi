@@ -13,15 +13,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">   
 <title>图片列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
+<link href="css/front/picture_list.css">
 <style type="text/css">
 #container{
 text-align: center;
 height:100%;
-/* border-right: 2px solid #DFF8DF;
-border-left: 2px solid #DFF8DF;
-margin-left: 15px; */
-/* background:url(images/AritTGMid.jpg) repeat-y; */
 }
 #left{
 text-align:left;
@@ -37,25 +34,20 @@ border-right: 2px solid #A6C58A;
 #right{
 width: 730px;
 float: right;
-padding-left:6px;
+padding-left:10%;
+padding-top:5%;
 padding-right:6px;
 padding-bottom:6px;
 margin-left:5px;
 margin-top:3px;
 margin-bottom:5px;
 border: 2px solid #DFF8DF;
+text-align: center;
 }
 
 #title{
 text-align: center;
 border-bottom: 1px solid gray;
-}
-#info{
-text-align: center;
-}
-#article{
-border-top: 1px solid gray;
-padding-top: 20px;
 }
 
 .left_list {margin-top:-3px; padding-top:6px; padding-bottom:4px; padding-bottom:0px;
@@ -72,12 +64,6 @@ padding-left:10px;
  width:220px;
  height: 20px;
 }
-/* 附件 */
-#attach{
-margin-top:5px;
-text-align: left;
-
-}
 #clearfolat{
 clear: both;
 }
@@ -91,13 +77,72 @@ left: 10px;
 color: #376934;
 font: bold;
 }
-tr{
-border-bottom: 1px solid #BDC9D5;
-}
-td{
- height: 28px;
- 
-}
+
+  #xgbox{
+        	width: 540px;
+        	height: 330px;
+        	padding:0px;
+        	position: relative;
+          	overflow: hidden;
+          	text-align: center;
+        }
+        #xgbox ul{
+            position: absolute;
+        	width: 600%;
+        	top:0px;
+        	left:0px;
+        	margin: 0px;
+        	padding: 0px;
+            list-style: none;
+        }
+        #xgbox ul li{
+        	height: 330px;
+        	width: 540px;
+        	float: left;
+        	margin:0px;
+        	padding:0px;
+            list-style:none;
+        }
+        #xgbox ul li img{
+        	width: 540px;
+        	height: 330px;
+        }
+        
+         #arr {
+            display:none;
+        }
+
+        #arr span {
+            width: 50px;
+            height: 100px;
+            position: absolute;
+         
+            top: 40%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '����';
+            font-size: 40px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+            padding:23px 0px 0px 0px;
+        }
+	   #left_span{
+	      left: 5px;
+	   }
+       #right_span {
+            right: 5px;
+            left: auto;
+        }
+        #pic_des{
+        	padding-top: 5px;
+        	font-size: 14px;
+        	text-align: center;
+        }
 </style>
 </head>
 <body>
@@ -126,36 +171,103 @@ td{
           </div>
 	</div>
 	<div id="right">
-		<form  action="front/picture/pictureList.uhtml" method="get">
+		<div id="xgbox">
+	        <ul id="xgtarget">
+	        <c:forEach  items="${pageView.records }" var="entity" varStatus="status" >
+			   <li>
+			   <img alt="${entity.des }" src="front/download/lookImage.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
+			   </li>
+			</c:forEach> 
+	        <li>
+			   <img alt="${pageView.records.get(0).des }" src="front/download/lookImage.uhtml?savePath=${pageView.records.get(0).savePath }&originName=${pageView.records.get(0).originName}">
+		    </li>
+	       </ul>
+	        <div id="arr"><span id="left_span">&lt;</span><span id="right_span">&gt;</span></div>
+  	
+      </div>
+      <div>
+	     <p id="pic_des">${pageView.records.get(0).des }</p>
+	  </div>
+	  <form  action="front/picture/pictureList.uhtml" method="get">
 		 <input type="hidden" name="preClassCode" value="${preClassCode}">
 	    <input type="hidden" name="columnId" value="${formbean.columnId}">
 	    <input type="hidden" name="page" >
-	  	
-		 <table> 
-			
-			<tbody>
-			 <c:forEach  items="${pageView.records }" var="entity" varStatus="status" >
-			 <c:if test="${status.index%2==0 }">
-			 <tr>
-			 </c:if>
-				 <td style="text-align: left;padding-left: 20px;">
-					<img style="width: 300px;height: 280px;margin-left: 20px;" alt="" src="front/download/lookImage.uhtml?savePath=${entity.savePath }&originName=${entity.originName}">
-				 	<p align="center">校园风光</p>
-				 </td>
-		    <c:if test="${status.index%2==1 }">
-			 </tr>
-			 </c:if>
-			 </c:forEach> 
-			</tbody>
-		</table>
-	   <div> 
+	    <div> 
 	    <%@ include file="/WEB-INF/pages/share/fenye.jsp"%>
 		</div>
 	</form>
-  	</div>
+	 </div>
   	<p id="clearfolat"></p>
 </div>
+
+<script type="text/javascript" src="js/jquery1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+//学工新闻
+var xg_current =0;
+var xg_imageWidth =540;
+var xg_setId;
+var xg_target = $("#xgtarget");
+var xg_box = $("#xgbox");
+var piccount='${piccount}';
+piccount++;
+
+var xuewidthpow=piccount*100;
+$("#xgtarget").width(xuewidthpow+"%");//设置记账图片长度
+	
+ xg_box.bind('mouseover',function(){
+	
+	$("#arr").show();
+});
+xg_box.bind('mouseout',function(){
+	
+	$("#arr").hide();
+}); 
+$("#left_span").bind('click',function(){
+	clearInterval(xg_setId);
+	xg_current--;
+	if(xg_current<0)
+		xg_current=piccount-1;
+	var leftmargin=-((xg_current)*xg_imageWidth);
+	xg_target.css("left",leftmargin+"px");
+
+	var des=$("#xgtarget li img:eq("+xg_current+")").attr("alt");
+
+	$("#pic_des").html(des);
+	xg_setId=setInterval(xgcyc,3000);
+});
+
+$("#right_span").bind('click',function(){
+	clearInterval(xg_setId);
+	
+	xg_current++;
+	if(xg_current>=(piccount-1))
+			xg_current=0;
+	var leftmargin=-((xg_current)*xg_imageWidth);
+	xg_target.css("left",leftmargin+"px");
+	var des=$("#xgtarget li img:eq("+xg_current+")").attr("alt");
+
+	$("#pic_des").html(des);
+	xg_setId=setInterval(xgcyc,3000);
+});
+//学工新闻窗口移动
+function xgcyc() {
+	
+	var des=$("#xgtarget li img:eq("+xg_current+")").attr("alt");
+	
+	if(xg_current==(piccount-1))
+		var des=$("#xgtarget li img:eq(0)").attr("alt");
+	if( xg_current==piccount){
+		xg_target.css("left",0+"px");
+		xg_current=1;
+		var des=$("#xgtarget li img:eq(1)").attr("alt");
+	}
+	var leftmargin=-(xg_current*xg_imageWidth);
+	$(xg_target).animate({left:leftmargin},{duration:500});
+	xg_current++;
+	$("#pic_des").html(des);
+}
+
+xg_setId=setInterval(xgcyc,3000);
 //查询
 function topage(page)
 {

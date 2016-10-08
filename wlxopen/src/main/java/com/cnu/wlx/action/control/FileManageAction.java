@@ -169,9 +169,10 @@ public class FileManageAction {
 				int i = formbean.getCheckeds().get(j);
 				String id= formbean.getFileIds().get(i);
 				String state = formbean.getStates().get(i);
+				String des = formbean.getDess().get(i);
 				int suggest = formbean.getSuggests().get(i);
 				DownloadFile downloadFile = downloadFileService.find(id);
-				
+				downloadFile.setDes(des);
 				downloadFile.setState(FileStateEnum.valueOf(state));
 				downloadFile.setSuggest(suggest);
 				downloadFileService.update(downloadFile);

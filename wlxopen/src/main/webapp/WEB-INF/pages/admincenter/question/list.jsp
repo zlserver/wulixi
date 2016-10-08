@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,63 +14,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>留言列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
 <style type="text/css">
 
 </style>
-<script type="text/javascript">
-	//查询
-	function topage(page){
-   		var form = document.forms[0];
-		form.page.value= page;
-		form.submit();
-	}
-	
-	function _action(method) {
-		//如果未选中则不操作
-		var checkeds=document.getElementsByName("checkeds");
-		var flage = false;
-		for( var i = 0;i <checkeds.length;i++)
-			if(checkeds[i].checked ){
-				flage = true;
-				break;
-			}
-		if( flage){
-			if( method=="delete")
-			{
-				if( !confirm("确定删除"))
-				{
-					return false;
-				}
-			}
-			var form = document.forms[0];
-			form.action="control/question/"+method+".action";
-			          
-			form.submit();
-	    }
-	}
-	
-	function query() {
-		var form = document.forms[0];
-		form.submit();
-	}
-	/* 全选 */
-	function selectAll(checkNode){
-		var checkeds=document.getElementsByName("checkeds");
-		var state=checkNode.checked;
-		for( var i = 0;i <checkeds.length;i++)
-		  checkeds[i].checked=state;
-	}
-</script>
+
 </head>
 <body style="position: relative;">
 
 
 <div class="panel panel-default">
   <div class="panel-heading">
-  	<a href="control/question/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+  
+  <myc:navigation  model="question" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}"/>  
+  
   </div>
   <div class="panel-body">
 	<form  action="<c:url value='control/question/list.action'/>" method="post">
@@ -206,15 +164,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   <tr>
 		    <td >全选  <input type="checkbox" onclick="selectAll(this)">  </td>
 		   <td colspan="6" align="center">
-		   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
-		      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+		   	  <input type="button" class="btn btn-info" onclick="javascript:_action('question','update')"	value="确认修改">
+		      <input type="button" class="btn btn-warning" onclick="javascript:_action('question','delete')"	value="删除">
 		       <a class="btn btn-primary" href="control/question/addHotUi.action">设置热点问题</a>
 			 
 		    </td>
 		    </tr>
 		  </c:if>
 		</tbody>
-	</table>
+	</table> 
 	</form>
   </div>
    <div class="panel-footer">
@@ -223,5 +181,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
 </div>
 
+<script type="text/javascript" src="js/control/base.js"></script>
 </body>
 </html>

@@ -1,5 +1,8 @@
 package com.cnu.wlx.service.impl;
 
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+
 import javax.annotation.Resource;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.cnu.wlx.bean.Admin;
+import com.cnu.wlx.bean.base.QueryResult;
 import com.cnu.wlx.dao.AdminDao;
 import com.cnu.wlx.formbean.AdminForm;
 import com.cnu.wlx.formbean.BaseForm;
@@ -24,7 +28,8 @@ public class AdminServiceImpl implements AdminService{
 	
 	public Admin login(String account, String password) {
 		if( BaseForm.validateStr(account)&& BaseForm.validateStr(password)){
-			String md5ps = WebUtils.MD5Encode(password.trim());
+			//String md5ps = WebUtils.MD5Encode(password.trim());
+			String md5ps = password.trim();
 			
 			Admin  ad =adminDao.find(account.trim());
 			if( ad!=null && ad.getPassword().equals(md5ps))
@@ -34,8 +39,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 	public boolean add(Admin admin ) {
 		if( admin !=null){
-			String pas = WebUtils.MD5Encode(admin.getPassword());
-			admin.setPassword(pas);
+			
+			//String pas = WebUtils.MD5Encode(admin.getPassword());
+			admin.setPassword(admin.getPassword());
 			try {
 				adminDao.save(admin);
 			} catch (Exception e) {
@@ -71,4 +77,15 @@ public class AdminServiceImpl implements AdminService{
 			throw new RuntimeException("更新用户为null");
 		}
 	}
+	@Override
+	public QueryResult<Admin> getScrollData(int firstindex, int maxresult,LinkedHashMap<String, String> orderby) {
+		// TODO Auto-generated method stub
+		return adminDao.getScrollData(firstindex, maxresult,orderby);
+	}
+	@Override
+	public void delete(Serializable... id) {
+		// TODO Auto-generated method stub
+		adminDao.delete(id);
+	}
+	
 }

@@ -16,9 +16,13 @@
 <!-- SpringMvc注解 ，会默认装配好一个LocalValidatorFactoryBean，
       JSR-303的校验是基于注解的,通过在处理方法的入参上标注@Valid注解即可让SpringMvc在完成数据绑定后执行数据校验工作-->
 	<!--  <mvc:annotation-driven />  -->
-	 
+	 <mvc:interceptors>
+	     <mvc:interceptor>
+	        <mvc:mapping path="/control/**"/>
+	        <bean class="com.cnu.wlx.filter.AdminLoginInterceptor"></bean>
+	    </mvc:interceptor>
+	 </mvc:interceptors>
 	
-	 
 	 
 	 <!-- 校验器 -->
 	 <!-- <bean id="validator"

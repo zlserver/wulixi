@@ -88,5 +88,36 @@ public class HomeForm extends BaseForm {
 	public void setBiaoClassCode(String biaoClassCode) {
 		this.biaoClassCode = biaoClassCode;
 	}
-	
+	/**
+	 * 新闻预览图片Vo
+	 * @author liang
+	 * @version 创建时间 2016年10月8日
+	 * 说明:
+	 *
+	 */
+	public static class NewsPreview{
+		private String title;
+		private String classCode;
+		private String newsId;
+		private String savePath;
+		public NewsPreview(String title, String classCode, String newsId, String savePath) {
+			super();
+			this.title = title;
+			this.classCode = classCode;
+			this.newsId = newsId;
+			this.savePath = savePath;
+		}
+		public String getTitle() {
+			return title;
+		}
+		public String getClassCode() {
+			return classCode;
+		}
+		public String getNewsId() {
+			return newsId;
+		}
+		public String getSavePath() {
+			return savePath;
+		}
+	}
 }

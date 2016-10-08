@@ -48,7 +48,19 @@ public class DownloadFileForm extends BaseForm {
 	 * 是否推荐
 	 */
 	private List<Integer> suggests;
+	/**
+	 * 文件描述
+	 */
+	private List<String> dess;
 
+
+	public List<String> getDess() {
+		return dess;
+	}
+
+	public void setDess(List<String> dess) {
+		this.dess = dess;
+	}
 
 	public List<String> getStates() {
 		return states;

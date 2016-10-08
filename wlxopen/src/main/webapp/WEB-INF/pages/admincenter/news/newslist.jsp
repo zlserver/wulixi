@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/wlx/myc" prefix="myc" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,62 +14,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>新闻列表</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<jsp:include page="/WEB-INF/pages/share/bootstrap.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/pages/share/bootstrap_simple.jsp"></jsp:include>
 <style type="text/css">
-
 </style>
-<script type="text/javascript">
-	//查询
-	function topage(page)
-	{
-		var form = document.forms[0];
-		form.page.value= page;
-		form.submit();
-	}
-	
-	function _action(method) {
-		//如果未选中则不操作
-		var checkeds=document.getElementsByName("checkeds");
-		var flage = false;
-		for( var i = 0;i <checkeds.length;i++)
-			if(checkeds[i].checked ){
-				flage = true;
-				break;
-			}
-		if( flage){
-			if( method=="delete")
-			{
-				if( !confirm("确定删除"))
-				{
-					return false;
-				}
-			}
-			var form = document.forms[0];
-			form.action="control/news/"+method+".action";
-			form.submit();
-	    }
-	}
-	
-	function query() {
-		var form = document.forms[0];
-		form.page.value=1;
-		form.submit();
-	}
-	/* 全选 */
-	function selectAll(checkNode){
-		var checkeds=document.getElementsByName("checkeds");
-		var state=checkNode.checked;
-		for( var i = 0;i <checkeds.length;i++)
-		  checkeds[i].checked=state;
-	}
-</script>
 </head>
 <body style="position: relative;">
 <div class="panel panel-default">
   <div class="panel-heading">
-  <a href="control/news/list.action?columnId=${navigationColumnId}&editState=${navigationColumnEditState}&columnName=${navigationColumnName}">
-  	${navigationColumnName}
-  </a>
+ 
+  <myc:navigation  model="news" editState="${navigationColumnEditState}" columnName="${navigationColumnName}" columnId="${navigationColumnId}"/>  
   </div>
   <div class="panel-body">
 	<form  action="<c:url value='control/news/list.action'/>" method="post">
@@ -197,8 +151,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    <td colspan="6" align="center">
 			   	  <a class="btn btn-primary" href="control/news/addUi.action?columnId=${formbean.columnId}">发布新闻</a>
 			 
-			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('update')"	value="确认修改">
-			      <input type="button" class="btn btn-warning" onclick="javascript:_action('delete')"	value="删除">
+			   	  <input type="button" class="btn btn-info" onclick="javascript:_action('news','update')"	value="确认修改">
+			      <input type="button" class="btn btn-warning" onclick="javascript:_action('news','delete')"	value="删除">
 			     </td>
 			   </c:if>
 			 
@@ -212,6 +166,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    </div>
   
 </div>
+<script type="text/javascript" src="js/control/base.js"></script>
 
 </body>
 </html>

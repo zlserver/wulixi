@@ -232,68 +232,6 @@ public class NewsManageAction {
 	}
 	
 	/**
-	 * 上传附件
-	 * @return
-	 * {
-	 *   "status":1,
-	 *    "message":"ok",
-	 *    "data":[
-	 *     {"fileId":"20164225567979423"}
-	 *     {"fileId":"20164225567979423"}
-	 *     {"fileId":"20164225567979423"}
-	 *     ...
-	 *    ]
-	 * }
-	 */
-	@RequestMapping(value="ajaxuploadFile", method=RequestMethod.POST)
-	public String ajaxuploadFile(MultipartHttpServletRequest request,Model model){
-	   
-	   MyStatus status = new MyStatus();
-	   JSONObject json= new JSONObject();
-	   
-	   Iterator<String> iterator = request.getFileNames();
-	   //遍历所有上传文件
-	   JSONArray jsonArray = new JSONArray();
-		while (iterator.hasNext()) {
-				String fileName = iterator.next();
-				MultipartFile multipartFile = request.getFile(fileName);
-				String originName=multipartFile.getOriginalFilename();
-				
-				//保存文件相对路径:files/
-				String relativedir= SiteUtils.getRelativeSavePath("news.file");
-				//保存文件名称
-		        String saveFileName = WebUtils.getFileSaveName(originName);
-				try {
-			        //保存文件
-			        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
-			        //构造文件实体
-			        NewsFile newsFile = new NewsFile();
-			        newsFile.setOriginName(originName);
-			        newsFile.setSaveName(saveFileName);
-			        newsFile.setSavePath(relativedir+saveFileName);
-			        newsFile.setExt(WebUtils.getExtFromFilename(saveFileName));
-			        newsFile.setSize(multipartFile.getSize());
-			        newsFileService.save(newsFile);
-			        //构造json
-			        JSONObject fileJson = new JSONObject();
-			        fileJson.put("fileId", newsFile.getId());
-			        jsonArray.add(fileJson);
-				} catch (Exception e) {
-					e.printStackTrace();
-					status.setStatus(0);
-					status.setMessage(e.getMessage());
-					break;
-				}
-		}
-		//返回json数据
-		json.put("status", status.getStatus());
-		json.put("message", status.getMessage());
-		json.put("data", jsonArray);
-		model.addAttribute("json", json.toString());
-		return SiteUtils.getPage("json");
-	}
-	
-	/**
 	 * 查询新闻列表
 	 * @param formbean
 	 * @return
@@ -533,6 +471,69 @@ public class NewsManageAction {
 			return SiteUtils.getPage("control.news.addUi");
 		}
 	}
+
+	/**
+	 * 上传附件
+	 * @return
+	 * {
+	 *   "status":1,
+	 *    "message":"ok",
+	 *    "data":[
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     {"fileId":"20164225567979423"}
+	 *     ...
+	 *    ]
+	 * }
+	 */
+	@RequestMapping(value="ajaxuploadFile", method=RequestMethod.POST)
+	public String ajaxuploadFile(MultipartHttpServletRequest request,Model model){
+	   
+	   MyStatus status = new MyStatus();
+	   JSONObject json= new JSONObject();
+	   
+	   Iterator<String> iterator = request.getFileNames();
+	   //遍历所有上传文件
+	   JSONArray jsonArray = new JSONArray();
+		while (iterator.hasNext()) {
+				String fileName = iterator.next();
+				MultipartFile multipartFile = request.getFile(fileName);
+				String originName=multipartFile.getOriginalFilename();
+				
+				//保存文件相对路径:files/
+				String relativedir= SiteUtils.getRelativeSavePath("news.file");
+				//保存文件名称
+		        String saveFileName = WebUtils.getFileSaveName(originName);
+				try {
+			        //保存文件
+			        BaseForm.saveFile(relativedir, saveFileName, multipartFile);
+			        //构造文件实体
+			        NewsFile newsFile = new NewsFile();
+			        newsFile.setOriginName(originName);
+			        newsFile.setSaveName(saveFileName);
+			        newsFile.setSavePath(relativedir+saveFileName);
+			        newsFile.setExt(WebUtils.getExtFromFilename(saveFileName));
+			        newsFile.setSize(multipartFile.getSize());
+			        newsFileService.save(newsFile);
+			        //构造json
+			        JSONObject fileJson = new JSONObject();
+			        fileJson.put("fileId", newsFile.getId());
+			        jsonArray.add(fileJson);
+				} catch (Exception e) {
+					e.printStackTrace();
+					status.setStatus(0);
+					status.setMessage(e.getMessage());
+					break;
+				}
+		}
+		//返回json数据
+		json.put("status", status.getStatus());
+		json.put("message", status.getMessage());
+		json.put("data", jsonArray);
+		model.addAttribute("json", json.toString());
+		return SiteUtils.getPage("json");
+	}
+	
 	/**
 	 * 通过ajax删除暂时上传附件记录（）
 	 * @param fileId
