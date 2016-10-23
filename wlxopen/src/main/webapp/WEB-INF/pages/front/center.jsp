@@ -112,12 +112,15 @@ $(document).ready(function(){
 });
 
 function setHigh(win) {
-	var subWeb= win.contentDocument;
-	var heigh=subWeb.body.scrollHeight;
-	if(heigh<500)
+	var height =win.contentWindow.document.documentElement.scrollHeight;
+	
+	/* var subWeb= win.contentDocument;
+	var heigh=subWeb.body.scrollHeight; */
+	//alert(height+":"+heigh);
+	if(height<500)
 		$(win).height(500);
 	else
-	   $(win).height(heigh);
+	   $(win).height(height);
 }
 </script>
 </html>

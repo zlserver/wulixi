@@ -434,7 +434,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="AritBM">
                 <img id="AritBM1" src="images/AritBM.jpg" alt="部门荣誉" width="237" height="40" />
                 <div class="AritBM">
-                    <div class="AritBMCont1" style="padding-left:24px; padding-top:48px;">
+                    <div class="AritBMCont1">
                        <%--   <a href="front/news/siglenews.uhtml?classCode=biaozhang&newsId=${biaozhangNew.id }"  >
                         <img src="front/news/lookImage.uhtml?savePath=${biaozhangPic.savePath}" width="190" height="125" style="border:none; position:relative; left:-4px; top:48px;" />
                         </a> --%> 
@@ -469,6 +469,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	var xg_setId;
     var xg_target = $("#xgtarget");
     var xuecount ='${xuecount}';
+     //间隔时间
+    var midle = 5000;
 	xuecount++;
  	var xuewidthpow=xuecount*100;
  	$("#xgbox ul").width(xuewidthpow+"%");//设置记账图片长度
@@ -494,7 +496,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		var leftmargin=-((index-1)*xg_imageWidth);
  		
  		xg_target.css("left",leftmargin+"px");
- 	    xg_setId=setInterval(xgcyc,3000);
+ 	    xg_setId=setInterval(xgcyc,midle);
  	});
  	
 	//学工新闻窗口移动
@@ -548,8 +550,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		current++;
 		return current;
 	}
-	xg_setId=setInterval(xgcyc,3000);
-	rybz_setId=setInterval(rybzcyc,3000);
+	xg_setId=setInterval(xgcyc,midle);
+	rybz_setId=setInterval(rybzcyc,midle);
   	
     </script>
 </body>

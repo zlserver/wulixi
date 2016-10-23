@@ -208,6 +208,8 @@ var xg_imageWidth =540;
 var xg_setId;
 var xg_target = $("#xgtarget");
 var xg_box = $("#xgbox");
+//间隔时间
+var midle = 4000;
 var piccount='${piccount}';
 piccount++;
 
@@ -233,7 +235,7 @@ $("#left_span").bind('click',function(){
 	var des=$("#xgtarget li img:eq("+xg_current+")").attr("alt");
 
 	$("#pic_des").html(des);
-	xg_setId=setInterval(xgcyc,3000);
+	xg_setId=setInterval(xgcyc,midle);
 });
 
 $("#right_span").bind('click',function(){
@@ -247,7 +249,7 @@ $("#right_span").bind('click',function(){
 	var des=$("#xgtarget li img:eq("+xg_current+")").attr("alt");
 
 	$("#pic_des").html(des);
-	xg_setId=setInterval(xgcyc,3000);
+	xg_setId=setInterval(xgcyc,midle);
 });
 //学工新闻窗口移动
 function xgcyc() {
@@ -267,7 +269,7 @@ function xgcyc() {
 	$("#pic_des").html(des);
 }
 
-xg_setId=setInterval(xgcyc,3000);
+xg_setId=setInterval(xgcyc,midle);
 //查询
 function topage(page)
 {

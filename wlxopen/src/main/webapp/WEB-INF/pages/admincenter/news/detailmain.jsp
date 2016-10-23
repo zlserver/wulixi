@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>新闻详细主界面</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
- <frameset rows="65,*" cols="*" frameborder="yes" border="1" framespacing="2">
+<frameset rows="65,*" cols="*" frameborder="yes" border="1" framespacing="2">
 	<frame frameborder="1" bordercolor="red"  src='<c:url value='control/news/menu.action?newsId=${id }&columnId=${columnId}'/>' name="menuFrame" scrolling="no"  id="menuFrame" title="menuFrame" />
 	<frame src="<c:url value='control/news/editUi.action?id=${id}&columnId=${columnId}'/>" name="infoFrame" scrolling="yes" id="infoFrame" title="infoFrame" />
 	

@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#000000';
 	config.toolbar= [
-		         	   ['Paste'],
+		         	   ['Source','Paste'],
 		         	   ["Bold","Italic","Underline"],
 		         	   ["NumberedLisst","BulletedList","-","JustifyLeft","JustifyCenter","JustifyRight","JustfyBlock"],
 		         	   ["Image"],

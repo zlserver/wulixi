@@ -56,6 +56,7 @@ text-align: center;
 #article{
 border-top: 1px solid gray;
 padding-top: 20px;
+text-align: left;
 }
 
 .left_list {margin-top:-3px; padding-top:6px; padding-bottom:4px; padding-bottom:0px;
